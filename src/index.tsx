@@ -1,19 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+export { Banner } from './components/Banner/index'
+export { Button } from './components/Button/index'
+export { ButtonRadiusIcon } from './components/ButtonRadiusIcon/index'
+export { ButtonRound } from './components/ButtonRound/index'
+export { IconWrapper } from './components/IconWrapper/index'
+export { Modal } from './components/Modal/index'
+export { Paragraph } from './components/Paragraph/index'
+export { Tabs } from './components/Tabs/index'
+export { theme } from './components/Themes/index'
+export { Title } from './components/Title/index'
+export { docCheckSVG, alertSVG, commentSVG, imageSVG, closeSVG } from './assets/icon/index'
