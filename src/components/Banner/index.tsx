@@ -8,7 +8,7 @@ import { theme } from '../Themes'
 const {
   colors: { cyan40, mint40, honey40, red40, shade40, shade30 },
 } = theme
-export const Banner: React.FC<BannerTypes> = ({ title, onClick, variant, subTitle }) => {
+export const Banner: React.FC<BannerTypes> = ({ title, onClick, variant, subTitle, ...props }) => {
   const searchIcon = () => {
     switch (variant) {
       case 'notice':
@@ -27,7 +27,7 @@ export const Banner: React.FC<BannerTypes> = ({ title, onClick, variant, subTitl
   const { icon, color } = searchIcon()
 
   return (
-    <BannerStyled variant={variant}>
+    <BannerStyled variant={variant} {...props}>
       <div className={'bannerWrapper'}>
         <IconWrapper src={icon} className={'buttonRadiusWrapperIcon'} />
         <span>
