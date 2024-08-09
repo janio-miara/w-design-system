@@ -10,15 +10,16 @@ export const ButtonRound: React.FC<ButtonRoundTypes> = ({
   icon,
   outline,
   badge,
+  size = 'medium',
   ...props
 }) => (
-  <ButtonStyled variant={variant} disabled={disabled} outline={outline} badge={badge} {...props}>
-    {badge && <span className={'buttonRoundBadge'}>{badge}</span>}
+  <ButtonStyled variant={variant} disabled={disabled} outline={outline} badge={badge} size={size} {...props}>
+    {badge && size === 'medium' && <span className={'buttonRoundBadge'}>{badge}</span>}
     <IconWrapper
       src={icon || ''}
       color={'white'}
-      width={'20px'}
-      height={'20px'}
+      width={size === 'small' ? '16px' : '20px'}
+      height={size === 'small' ? '16px' : '20px'}
       className={'buttonRadiusWrapperIcon'}
     />
   </ButtonStyled>

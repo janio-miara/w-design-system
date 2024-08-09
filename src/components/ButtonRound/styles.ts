@@ -98,8 +98,8 @@ export const ButtonStyled = styled.button<ButtonRoundTypes>`
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  height: 48px;
-  width: 48px;
+  height: ${({ size }) => (size === 'small' ? '32px' : '40px')};
+  width: ${({ size }) => (size === 'small' ? '32px' : '40px')};
   font-size: 16px;
   font-weight: 600;
   line-height: 140%;
@@ -111,7 +111,7 @@ export const ButtonStyled = styled.button<ButtonRoundTypes>`
     background-color 0.3s,
     opacity 0.3s;
   color: white;
-  gap: 12px;
+  gap: ${({ size }) => (size === 'small' ? '8' : '12px')};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   ${({ variant = 'primary', outline }) => colorScheme[variant]};
@@ -124,8 +124,8 @@ export const ButtonStyled = styled.button<ButtonRoundTypes>`
     margin-bottom: 24px;
     margin-left: 54px;
     position: absolute;
-    width: 26px;
-    height: 26px;
+    width: ${({ size }) => (size === 'small' ? '16px' : '26px')};
+    height: ${({ size }) => (size === 'small' ? '16px' : '26px')};
     border-radius: 100%;
     font-size: 12px;
     display: flex;

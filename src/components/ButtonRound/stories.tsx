@@ -39,12 +39,12 @@ export const Playground: Story = {
     icon: exampleIcon,
   },
 }
+
 export const ButtonBadge: Story = {
   args: {
-    variant: 'success',
+    variant: 'primary',
     children: 'ButtonPlayground',
     disabled: false,
     icon: exampleIcon,
-    badge: 10,
   },
 }

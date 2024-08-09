@@ -23,6 +23,7 @@ export interface ButtonRoundTypes extends ButtonHTMLAttributes<HTMLButtonElement
   icon?: string
   outline?: boolean
   badge?: number
+  size?: 'small' | 'medium'
 }
 
 export interface BannerTypes extends HTMLAttributes<HTMLDivElement> {
