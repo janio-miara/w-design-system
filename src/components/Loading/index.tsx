@@ -15,27 +15,17 @@ const FullScreenWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgb(164, 162, 162);
   z-index: 9999;
 `
 
 // Estilos para o wrapper do contêiner
-const ContainerWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.8);
-`
+const ContainerWrapper = styled.div``
 
 // Estilos para o wrapper do conteúdo
 const ContainerWrapperStyles = styled.div`
@@ -75,7 +65,7 @@ export const ContainerLoading: React.FC<LoadingProps> = ({ size = 'medium' }) =>
   <ContainerWrapper>
     <ContainerWrapperStyles>
       <LoadingImage src={spinSVG} alt="loading" size={size} />
-      <Paragraph color={theme.colors.shade40} size="x-small">
+      <Paragraph color={theme.colors.shade30} size="x-small">
         CARREGANDO
       </Paragraph>
     </ContainerWrapperStyles>

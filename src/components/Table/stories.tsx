@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Table } from './index'
 import React from 'react'
 import { ButtonRound } from '../ButtonRound'
 import { dumpSVG, editSVG } from '../../assets/icon'
+import Table from './index'
 import CardStories from '../CardStories'
-import { ContainerLoading } from '../Loading'
+import { Paragraph } from '../Paragraph'
 
 const meta: Meta<typeof Table> = {
   title: 'Components/Table',
@@ -22,6 +22,14 @@ const meta: Meta<typeof Table> = {
       control: 'object',
       description: 'Array of data objects',
     },
+    loading: {
+      control: 'boolean',
+      description: 'Loading state of the table',
+    },
+    emptyStateMessage: {
+      control: 'text',
+      description: 'Message to display when there is no data',
+    },
   },
 } satisfies Meta<typeof Table>
 
@@ -30,62 +38,161 @@ type Story = StoryObj<typeof meta>
 
 const columns = [
   {
-    header: 'Title',
-    accessor: 'title',
-    width: 'auto',
-    sortable: true, // aqui deixar uma opção para ordenar passando uma função
-    onClick: (row: any) => alert('Title'),
-    align: 'center',
+    header: 'id',
+    accessor: 'id',
+    width: '30px',
   },
   {
-    header: 'Year',
-    accessor: 'year',
+    header: 'item',
+    accessor: 'item',
     width: 'auto',
+    sortable: true,
+  },
+  {
+    header: 'unidades',
+    accessor: 'unidades',
+    width: 'auto',
+    sortable: true,
+  },
+  {
+    header: 'marca/ fabricante',
+    accessor: 'marca_fabricante',
+    width: '100px',
+    Cell: (row: any) => (
+      <div
+        onClick={() => alert('aqui')}
+        style={{
+          background: 'red',
+          color: 'white',
+          padding: '4px, 2px',
+          borderRadius: '8px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {row.marca_fabricante}
+      </div>
+    ),
+  },
+  {
+    header: 'modelo',
+    accessor: 'modelo',
+    width: 'auto',
+    sortable: true,
+  },
+  {
+    header: 'quantidade solitada',
+    accessor: 'quantidade_solitada',
+    width: '100px',
+    sortable: true,
+  },
+  {
+    header: 'valor estimado unitario',
+    accessor: 'valor_estimado_unitario',
+    width: '100px',
+    sortable: true,
+  },
+  {
+    header: 'valor estimado total',
+    accessor: 'valor_estimado_total',
+    width: '100px',
+    sortable: true,
   },
   {
     header: 'Actions',
-    accessor: 'id',
-    width: '50px',
-    onClick: () => alert('Title'),
+    accessor: 'valor_estimado_total',
+    width: '100px',
+    align: 'center',
+    Cell: (row: any, handleExpandClick: (id: number) => void) => (
+      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+        <ButtonRound icon={editSVG} onClick={() => handleExpandClick(row.id)} />
+        <ButtonRound icon={dumpSVG} onClick={() => alert(`Delete ID: ${row.id}`)} />
+      </div>
+    ),
   },
 ]
 
 export const Default: Story = {
   args: {
-    maxHeight: '300px',
-    columns: [
-      {
-        header: 'Title',
-        accessor: 'title',
-        width: 'auto',
-        sortable: true, // aqui deixar uma opção para ordenar passando uma função
-        onClick: (row: string) => alert(row),
-      },
-      {
-        header: 'Year',
-        accessor: 'year',
-        width: 'auto',
-      },
-      {
-        header: 'Actions',
-        accessor: 'id',
-        width: '50px',
-        onClick: (row: string) => alert(row),
-      },
-    ],
+    height: 'auto',
+    columns: columns,
+    striped: true,
     data: [
       {
         id: 1,
-        title: 'Beetlejuice',
-        year: '1988',
+        item: 'Beetlejuice',
+        unidades: '1988',
+        marca_fabricante: 'adidas',
+        modelo: 'modelo',
+        quantidade_solitada: '10000',
+        valor_estimado_unitario: '1000',
+        valor_estimado_total: '10000000',
         colapsed: true,
-        containerColapsed: ({ title }: any) => <div>{title}</div>,
+        containerColapsed: ({ item }: any) => (
+          <div>
+            <Paragraph size={'large'} weight={800}>
+              {item}
+            </Paragraph>
+            <Paragraph>Esta é uma informação adicional sobre .</Paragraph>
+          </div>
+        ),
       },
       {
         id: 2,
-        title: 'Ghostbusters',
-        year: '1984',
+        item: 'Beetlejuice',
+        unidades: '1988',
+        marca_fabricante: 'adidas',
+        modelo: 'modelo',
+        quantidade_solitada: '10000',
+        valor_estimado_unitario: '1000',
+        valor_estimado_total: '10000000',
+        containerColapsed: ({ item }: any) => (
+          <div>
+            <Paragraph size={'large'} weight={800}>
+              {item}
+            </Paragraph>
+            <Paragraph>Esta é uma informação adicional sobre .</Paragraph>
+          </div>
+        ),
+      },
+      {
+        id: 3,
+        item: 'Beetlejuice',
+        unidades: '1988',
+        marca_fabricante: 'adidas',
+        modelo: 'modelo',
+        quantidade_solitada: '10000',
+        valor_estimado_unitario: '1000',
+        valor_estimado_total: '10000000',
+        containerColapsed: ({ item }: any) => (
+          <div>
+            <Paragraph size={'large'} weight={800}>
+              {item}
+            </Paragraph>
+            <Paragraph>Esta é uma informação adicional sobre .</Paragraph>
+          </div>
+        ),
       },
     ],
+    loading: false,
+    emptyStateMessage: 'No data available',
+  },
+}
+
+export const LoadingState: Story = {
+  render: () => (
+    <CardStories title={'Tabela'} subTitle={'tabela-loading'}>
+      <div style={{ width: '900px', height: '800px' }}>
+        <Table columns={columns} loading={true} height={'100%'} data={[]} />
+      </div>
+    </CardStories>
+  ),
+}
+
+export const EmptyState: Story = {
+  args: {
+    ...Default.args,
+    data: [],
   },
 }

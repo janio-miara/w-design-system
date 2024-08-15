@@ -2,115 +2,208 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Paragraph } from '../Paragraph'
 import { theme } from '../Themes'
-import { editSVG, chevronDownSVG } from '../../assets/icon'
-import { ButtonRound } from '../ButtonRound'
 import { ContainerLoading } from '../Loading'
-import { IconWrapper } from '../IconWrapper'
 
-interface Column {
+type Column = {
   header: string
   accessor: string
   width?: string
-  actionIcon?: boolean
-  customRender?: (row: Record<string, any>) => React.ReactNode
   sortable?: boolean
-  onClick?: (row: string) => void
+  onClick?: (row: any) => void
+  Cell?: (row: any, handleExpandClick: (id: number) => void) => React.ReactNode
+  align?: 'left' | 'center' | 'right'
 }
 
-interface TableProps {
-  columns: Column[]
-  data: Record<string, any>[]
-  maxHeight?: string
+type TableProps = {
+  columns: Column[] | any
+  data: any[]
+  height?: string
   loading?: boolean
+  emptyStateMessage?: string
+  striped?: boolean
 }
 
-export const Table: React.FC<TableProps> = ({ columns, data, maxHeight, loading = false }) => {
-  const [editRowIndex, setEditRowIndex] = useState<number | null>(null)
+const TableContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+`
 
-  const handleEditClick = (index: number) => {
-    setEditRowIndex(index === editRowIndex ? null : index)
+const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  height: 100%;
+`
+
+const Thead = styled.thead`
+  display: table-header-group;
+  border-bottom: 1px solid #ddd;
+`
+
+const Tbody = styled.tbody<{ height?: string }>`
+  display: block;
+  width: 100%;
+  overflow-y: auto;
+  height: ${props => props.height || '100%'};
+`
+
+const Tr = styled.tr<{ striped?: boolean }>`
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+`
+const TrRow = styled.tr<{ striped?: boolean }>`
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  &:nth-of-type(n + 2) {
+    background-color: ${props => (props.striped ? '#f9f9f9' : 'transparent')};
+  }
+  &:nth-of-type(odd) {
+    background-color: ${props => (props.striped ? '#fff' : 'transparent')};
+  }
+`
+
+const Th = styled.th<{ width?: string; align?: 'left' | 'center' | 'right' }>`
+  padding: 10px;
+  text-align: ${props => props.align || 'left'};
+  width: ${props => props.width || 'auto'};
+`
+
+const Td = styled.td<{ width?: string; align?: 'left' | 'center' | 'right' }>`
+  padding: 12px;
+  width: ${props => props?.width || 'auto'};
+  text-align: ${props => props?.align || 'left'};
+`
+
+const ExpandableRow = styled.div`
+  padding: 0 8px;
+  min-height: 30px;
+`
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`
+
+const EmptyStateWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+`
+
+const Table: React.FC<TableProps> = ({
+  columns,
+  data,
+  height = '100%',
+  loading = false,
+  emptyStateMessage = 'No data available',
+  striped = false,
+}) => {
+  const [expandedRow, setExpandedRow] = useState<number | null>(null)
+
+  const handleExpandClick = (id: number) => {
+    setExpandedRow(expandedRow === id ? null : id)
   }
 
+  // @ts-ignore
   return (
-    <TableWrapper maxHeight={maxHeight}>
-      <TableStyled>
-        <TheadStyled>
-          <tr>
-            {columns?.map(column => (
-              <ThStyled
-                key={column.accessor}
-                width={column.width}
-                sortable={column.sortable}
-                onClick={() => column.onClick && column.onClick(column?.accessor)}
-              >
-                <Paragraph size="x-small" color={theme.colors.shade30}>
-                  {column.header} {column.sortable && <IconWrapper src={chevronDownSVG} width={'10px'} />}
-                </Paragraph>
-              </ThStyled>
-            ))}
-          </tr>
-        </TheadStyled>
-        <TBodyStyled>
+    <TableContainer>
+      <StyledTable>
+        <Thead>
+          <Tr striped={striped}>
+            {columns.map(
+              (
+                col: {
+                  width: string | undefined
+                  align: string | undefined
+                  header:
+                    | string
+                    | number
+                    | boolean
+                    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+                    | Iterable<React.ReactNode>
+                    | React.ReactPortal
+                    | null
+                    | undefined
+                },
+                index: React.Key | null | undefined,
+              ) => (
+                <Th key={index} width={col.width} align={col.align}>
+                  <Paragraph color={theme.colors.shade30} textTransform={'uppercase'} weight={400}>
+                    {col.header}
+                  </Paragraph>
+                </Th>
+              ),
+            )}
+          </Tr>
+        </Thead>
+        <Tbody height={height}>
           {loading ? (
             <LoadingWrapper>
               <ContainerLoading size={'small'} />
             </LoadingWrapper>
+          ) : data.length === 0 ? (
+            <EmptyStateWrapper>
+              <Paragraph>{emptyStateMessage}</Paragraph>
+            </EmptyStateWrapper>
           ) : (
-            data?.map((row, rowIndex) => (
-              <React.Fragment key={rowIndex}>
-                <TrStyled>
-                  {columns?.map(column => {
-                    if (column.customRender) {
-                      return (
-                        <TdStyled key={column.accessor} width={column.width}>
-                          {column.customRender(row)}
-                        </TdStyled>
-                      )
-                    }
-                    if (column.actionIcon) {
-                      return (
-                        <TdStyled key={column.accessor} width={column.width}>
-                          {row[column.accessor](row)}
-                        </TdStyled>
-                      )
-                    }
-                    if (column.accessor === 'edit') {
-                      return (
-                        <TdActionStyled key={column.accessor} width={column.width}>
-                          <ButtonRound
-                            icon={editSVG}
-                            onClick={() => handleEditClick(rowIndex)}
-                            variant="primary"
-                            size="small"
-                          />
-                        </TdActionStyled>
-                      )
-                    }
-                    return (
-                      <TdStyled key={column.accessor} width={column.width}>
-                        <Paragraph size="small" color={theme.colors.shade40}>
-                          {row[column.accessor]}
-                        </Paragraph>
-                      </TdStyled>
-                    )
-                  })}
-                </TrStyled>
-                {editRowIndex === rowIndex && (
-                  <tr>
-                    <td colSpan={columns.length + 2}>
-                      <EditBox>
-                        <Paragraph size="small" color={theme.colors.shade40}>
-                          Editing row {rowIndex + 1}
-                        </Paragraph>
-                      </EditBox>
-                    </td>
-                  </tr>
+            data.map((row, rowIndex) => (
+              <React.Fragment key={row.id}>
+                <TrRow striped={striped}>
+                  {columns.map(
+                    (
+                      col: {
+                        width: string | undefined
+                        align: string | undefined
+                        Cell: (
+                          arg0: any,
+                          arg1: (id: number) => void,
+                        ) =>
+                          | string
+                          | number
+                          | boolean
+                          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+                          | Iterable<React.ReactNode>
+                          | React.ReactPortal
+                          | null
+                          | undefined
+                        accessor: string | number
+                      },
+                      colIndex: React.Key | null | undefined,
+                    ) => (
+                      <Td key={colIndex} width={col?.width} align={col?.align}>
+                        {col.Cell ? (
+                          col.Cell(row, handleExpandClick)
+                        ) : (
+                          <Paragraph color={theme.colors.shade40}>{row[col.accessor]}</Paragraph>
+                        )}
+                      </Td>
+                    ),
+                  )}
+                </TrRow>
+                {expandedRow === row.id && row.containerColapsed && (
+                  <div>
+                    <div>
+                      <ExpandableRow>{row.containerColapsed(row)}</ExpandableRow>
+                    </div>
+                  </div>
                 )}
               </React.Fragment>
             ))
           )}
-        </TBodyStyled>
-      </TableStyled>
-    </TableWrapper>
+        </Tbody>
+      </StyledTable>
+    </TableContainer>
   )
 }
+
+export default Table

@@ -5,7 +5,8 @@ interface ParagraphProps {
   size?: 'x-small' | 'small' | 'medium' | 'large'
   weight?: 400 | 600 | 700 | 800
   as?: 'span' | 'div' | 'label' | 'p'
-  color?: string // Adicionando a propriedade color
+  color?: string
+  textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' // Adicionando a propriedade textTransform
   children: React.ReactNode
 }
 
@@ -30,12 +31,20 @@ const ParagraphStyled = styled.p<ParagraphProps>`
   font-weight: ${props => (props.weight ? weights[props.weight] : 400)};
   line-height: 140%;
   font-family: 'Nunito Sans', sans-serif;
-  color: ${props => props.color || 'inherit'}; // Aplicando a cor
+  color: ${props => props.color || 'inherit'};
+  text-transform: ${props => props.textTransform || 'none'}; // Aplicando textTransform
 `
 
-export const Paragraph: React.FC<ParagraphProps> = ({ size = 'small', weight, as = 'p', color, children }) => {
+export const Paragraph: React.FC<ParagraphProps> = ({
+  size = 'small',
+  weight,
+  as = 'p',
+  color,
+  textTransform,
+  children,
+}) => {
   return (
-    <ParagraphStyled as={as} size={size} weight={weight} color={color}>
+    <ParagraphStyled as={as} size={size} weight={weight} color={color} textTransform={textTransform}>
       {children}
     </ParagraphStyled>
   )
