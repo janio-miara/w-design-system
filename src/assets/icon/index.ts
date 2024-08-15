@@ -5,4 +5,6 @@ import { default as imageSVG } from './image.svg'
 import { default as closeSVG } from './close.svg'
 import { default as dumpSVG } from './dump.svg'
 import { default as editSVG } from './edit.svg'
-export { docCheckSVG, alertSVG, commentSVG, imageSVG, closeSVG, dumpSVG, editSVG }
+import { default as spinSVG } from './spin.svg'
+import { default as chevronDownSVG } from './chevron-down.svg'
+export { docCheckSVG, alertSVG, commentSVG, imageSVG, closeSVG, dumpSVG, editSVG, spinSVG, chevronDownSVG }
