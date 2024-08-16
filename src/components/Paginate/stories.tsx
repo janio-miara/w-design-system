@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { action } from '@storybook/addon-actions'
 import { fn } from '@storybook/test'
@@ -20,8 +20,34 @@ const meta: Meta<PropsPaginate> = {
 
 export default meta
 
+const NewPaginate = (args: PropsPaginate) => {
+  const [currentPage, setCurrentPage] = useState(args.currentPage)
+  const [itemCount, setItemCount] = useState(args.itemCount)
+  const [itemsPerPage, setItemsPerPage] = useState(args.itemsPerPage)
+
+  const handleChangePage = (page: number) => {
+    setCurrentPage(page)
+    action('changePage')(page)
+  }
+
+  const handleChangeItemsPerPage = (items: number) => {
+    setItemsPerPage(items)
+    action('changeItemsPerPage')(items)
+  }
+  return (
+    <Paginate
+      {...args}
+      currentPage={currentPage}
+      itemCount={itemCount}
+      itemsPerPage={itemsPerPage}
+      onChangePage={handleChangePage}
+      onChangeItemsPerPage={handleChangeItemsPerPage}
+    />
+  )
+}
+
 export const Default: StoryObj<PropsPaginate> = {
-  render: args => (
-    <Paginate {...args} onChangePage={action('changePage')} onChangeItemsPerPage={action('changeItemsPerPage')} />
-  ),
+  render: args => {
+    return <NewPaginate {...args} />
+  },
 }

@@ -27,7 +27,7 @@ export const Playground: Story = {
         <div style={{ background: 'white', padding: '50px 20px', borderRadius: '8px', marginTop: '-5px' }}>
           {activeTab === 'Tab 1' && (
             <>
-              <Paragraph size={'medium'} weight={800}>
+              <Paragraph size={'medium'} heavyBod>
                 Tab 1
               </Paragraph>
               <Paragraph>
@@ -40,7 +40,7 @@ export const Playground: Story = {
           )}
           {activeTab === 'Tab 2' && (
             <>
-              <Paragraph size={'medium'} weight={800}>
+              <Paragraph size={'medium'} heavyBod>
                 Tab 2
               </Paragraph>
               <Paragraph>
@@ -56,7 +56,7 @@ export const Playground: Story = {
           )}
           {activeTab === 'Tab 3' && (
             <>
-              <Paragraph size={'medium'} weight={800}>
+              <Paragraph size={'medium'} heavyBod>
                 Tab 3
               </Paragraph>
               <Paragraph>

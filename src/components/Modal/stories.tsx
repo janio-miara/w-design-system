@@ -34,7 +34,7 @@ export const Playground: Story = {
               </>
             }
           >
-            <Paragraph size={'medium'} weight={800}>
+            <Paragraph size={'medium'} heavyBod>
               Modal Title
             </Paragraph>
             <Paragraph>

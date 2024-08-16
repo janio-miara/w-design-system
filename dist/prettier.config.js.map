@@ -1,0 +1,1 @@
+{"version":3,"file":"prettier.config.js","sourceRoot":"","sources":["../src/prettier.config.js"],"names":[],"mappings":";AAAA,MAAM,CAAC,OAAO,GAAG;IACf,IAAI,EAAE,KAAK;IACX,QAAQ,EAAE,CAAC;IACX,WAAW,EAAE,IAAI;IACjB,aAAa,EAAE,KAAK;IACpB,WAAW,EAAE,OAAO;IACpB,UAAU,EAAE,GAAG;IACf,cAAc,EAAE,KAAK;IACrB,kBAAkB,EAAE,KAAK;IACzB,cAAc,EAAE,IAAI;CACrB,CAAA"}

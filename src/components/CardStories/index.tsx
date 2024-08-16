@@ -45,7 +45,7 @@ const CardStories = ({ title, subTitle, children }: CardStoriesProps) => {
     <ContainerCardStories>
       <Wrapper>{children}</Wrapper>
       <WrapperFooter>
-        <Paragraph color={theme.colors.shade50} weight={800}>
+        <Paragraph color={theme.colors.shade50} heavyBod>
           {title}
         </Paragraph>
         <Paragraph size={'x-small'} color={theme.colors.shade30}>

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
 import { ButtonRound } from '../ButtonRound'
 import { dumpSVG, editSVG } from '../../assets/icon'
-import Table from './index'
+import { Table } from './index'
 import CardStories from '../CardStories'
 import { Paragraph } from '../Paragraph'
 
@@ -40,7 +40,7 @@ const columns = [
   {
     header: 'id',
     accessor: 'id',
-    width: '30px',
+    width: 'auto',
   },
   {
     header: 'item',
@@ -57,7 +57,7 @@ const columns = [
   {
     header: 'marca/ fabricante',
     accessor: 'marca_fabricante',
-    width: '100px',
+    width: 'auto',
     Cell: (row: any) => (
       <div
         onClick={() => alert('aqui')}
@@ -84,19 +84,19 @@ const columns = [
   {
     header: 'quantidade solitada',
     accessor: 'quantidade_solitada',
-    width: '100px',
+    width: 'auto',
     sortable: true,
   },
   {
     header: 'valor estimado unitario',
     accessor: 'valor_estimado_unitario',
-    width: '100px',
+    width: 'auto',
     sortable: true,
   },
   {
     header: 'valor estimado total',
     accessor: 'valor_estimado_total',
-    width: '100px',
+    width: 'auto',
     sortable: true,
   },
   {
@@ -107,7 +107,7 @@ const columns = [
     Cell: (row: any, handleExpandClick: (id: number) => void) => (
       <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
         <ButtonRound icon={editSVG} onClick={() => handleExpandClick(row.id)} />
-        <ButtonRound icon={dumpSVG} onClick={() => alert(`Delete ID: ${row.id}`)} />
+        <ButtonRound icon={dumpSVG} onClick={() => alert(`Delete ID: ${row.id}`)} variant={'danger'} />
       </div>
     ),
   },
@@ -118,6 +118,8 @@ export const Default: Story = {
     height: 'auto',
     columns: columns,
     striped: true,
+    loading: false,
+    emptyStateMessage: 'No data available',
     data: [
       {
         id: 1,
@@ -131,7 +133,7 @@ export const Default: Story = {
         colapsed: true,
         containerColapsed: ({ item }: any) => (
           <div>
-            <Paragraph size={'large'} weight={800}>
+            <Paragraph size={'large'} heavyBod>
               {item}
             </Paragraph>
             <Paragraph>Esta é uma informação adicional sobre .</Paragraph>
@@ -149,7 +151,7 @@ export const Default: Story = {
         valor_estimado_total: '10000000',
         containerColapsed: ({ item }: any) => (
           <div>
-            <Paragraph size={'large'} weight={800}>
+            <Paragraph size={'large'} heavyBod>
               {item}
             </Paragraph>
             <Paragraph>Esta é uma informação adicional sobre .</Paragraph>
@@ -167,7 +169,7 @@ export const Default: Story = {
         valor_estimado_total: '10000000',
         containerColapsed: ({ item }: any) => (
           <div>
-            <Paragraph size={'large'} weight={800}>
+            <Paragraph size={'large'} heavyBod>
               {item}
             </Paragraph>
             <Paragraph>Esta é uma informação adicional sobre .</Paragraph>
@@ -175,8 +177,6 @@ export const Default: Story = {
         ),
       },
     ],
-    loading: false,
-    emptyStateMessage: 'No data available',
   },
 }
 

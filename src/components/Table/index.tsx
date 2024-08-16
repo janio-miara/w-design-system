@@ -72,15 +72,15 @@ const Th = styled.th<{ width?: string; align?: 'left' | 'center' | 'right' }>`
   width: ${props => props.width || 'auto'};
 `
 
-const Td = styled.td<{ width?: string; align?: 'left' | 'center' | 'right' }>`
+const Td = styled.td<{ width?: string; align: 'left' | 'center' | 'right' }>`
   padding: 12px;
   width: ${props => props?.width || 'auto'};
   text-align: ${props => props?.align || 'left'};
 `
 
 const ExpandableRow = styled.div`
-  padding: 0 8px;
-  min-height: 30px;
+  padding: 8px;
+  min-height: 50px;
 `
 
 const LoadingWrapper = styled.div`
@@ -100,7 +100,7 @@ const EmptyStateWrapper = styled.div`
   padding: 20px;
 `
 
-const Table: React.FC<TableProps> = ({
+export const Table: React.FC<TableProps> = ({
   columns,
   data,
   height = '100%',
@@ -124,7 +124,7 @@ const Table: React.FC<TableProps> = ({
               (
                 col: {
                   width: string | undefined
-                  align: string | undefined
+                  align: any
                   header:
                     | string
                     | number
@@ -138,7 +138,7 @@ const Table: React.FC<TableProps> = ({
                 index: React.Key | null | undefined,
               ) => (
                 <Th key={index} width={col.width} align={col.align}>
-                  <Paragraph color={theme.colors.shade30} textTransform={'uppercase'} weight={400}>
+                  <Paragraph color={theme.colors.shade30} textTransform={'uppercase'}>
                     {col.header}
                   </Paragraph>
                 </Th>
@@ -163,7 +163,7 @@ const Table: React.FC<TableProps> = ({
                     (
                       col: {
                         width: string | undefined
-                        align: string | undefined
+                        align: any
                         Cell: (
                           arg0: any,
                           arg1: (id: number) => void,
@@ -191,11 +191,7 @@ const Table: React.FC<TableProps> = ({
                   )}
                 </TrRow>
                 {expandedRow === row.id && row.containerColapsed && (
-                  <div>
-                    <div>
-                      <ExpandableRow>{row.containerColapsed(row)}</ExpandableRow>
-                    </div>
-                  </div>
+                  <ExpandableRow>{row.containerColapsed(row)}</ExpandableRow>
                 )}
               </React.Fragment>
             ))
@@ -205,5 +201,3 @@ const Table: React.FC<TableProps> = ({
     </TableContainer>
   )
 }
-
-export default Table
