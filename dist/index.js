@@ -8,5 +8,7 @@ export { Paragraph } from './components/Paragraph/index';
 export { Tabs } from './components/Tabs/index';
 export { theme } from './components/Themes/index';
 export { Title } from './components/Title/index';
+export { Table } from './components/Table/index';
+export { Paginate } from './components/Paginate/index';
 export { docCheckSVG, alertSVG, commentSVG, imageSVG, closeSVG } from './assets/icon/index';
 //# sourceMappingURL=index.js.map
