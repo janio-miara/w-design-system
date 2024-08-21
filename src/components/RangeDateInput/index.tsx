@@ -147,6 +147,11 @@ export const RangeDateInput: React.FC<RangeDateInputProps> = ({
   const todayString = new Date().toDateString()
   let firstDate = startCustomDate
   let secondDate = endCustomDate ?? currentMouseHoverDate
+  if (firstDate && secondDate && firstDate > secondDate) {
+    const temp = firstDate
+    firstDate = secondDate
+    secondDate = temp
+  }
 
   while (day.getMonth() === currentMonth) {
     const isSelected = (firstDate && secondDate && day >= firstDate && day <= secondDate) ?? false
