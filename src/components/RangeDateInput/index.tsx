@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, useEffect, useId, useMemo, useRef } from 'react'
+import React, { HTMLAttributes, ReactNode, useEffect, useId, useMemo, useRef, useState } from 'react'
 import {
   CalendarDay,
   CalendarGrid,
@@ -8,17 +8,26 @@ import {
   DropdownWrapper,
   DefaultOptionButton,
   InputDateWrapper,
+  CalendarDaySelectedBackground,
+  CalendarDayValue,
 } from './styles'
-import { chevronLeftSVG, chevronRightSVG } from '../../assets/icon'
+import { calendarSVG, chevronDownSVG, chevronLeftSVG, chevronRightSVG } from '../../assets/icon'
 import { IconWrapper } from '../IconWrapper'
 import { Input } from '../Input'
+import { theme } from '../Themes'
 
-export interface DateInputProps extends HTMLAttributes<HTMLDivElement> {
+export interface RangeDateInputProps extends HTMLAttributes<HTMLDivElement> {
+  isRange?: boolean
   placeholder?: string
   label: string
-  defaultOptions?: number[]
-  selectedOption?: number
+  defaultOptions?: { text: string; id: number }[]
+  selectedOption?: number | null
+  readonly?: boolean
+  disabled?: boolean
   onSelectedOptionChange?: (option: number | null) => void
+  startCustomDate: Date | null
+  endCustomDate: Date | null
+  onSelectedCustomRange: (start: Date | null, end: Date | null) => void
 }
 
 export interface Position {
@@ -41,20 +50,41 @@ interface Day {
   date: Date
 }
 
+const monthNames = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+]
+
+const weekDays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB']
+
 type DayType = EmptyDay | Day
-export const RangeDateInput: React.FC<DateInputProps> = ({
+export const RangeDateInput: React.FC<RangeDateInputProps> = ({
   label,
   defaultOptions,
   selectedOption,
   onSelectedOptionChange,
+  placeholder,
+  onSelectedCustomRange,
+  startCustomDate,
+  endCustomDate,
+  isRange,
   ...props
 }) => {
-  const [currentYear, setCurrentYear] = React.useState(0)
-  const [currentMonth, setCurrentMonth] = React.useState(0)
-  const [firstSelectedDate, setFirstSelectedDate] = React.useState<Date | null>(null)
-  const [secondSelectedDate, setSecondSelectedDate] = React.useState<Date | null>(null)
-  const [currentMouseHoverDate, setCurrentMouseHoverDate] = React.useState<Date | null>(null)
-  const [open, setOpen] = React.useState(false)
+  const [currentYear, setCurrentYear] = useState(0)
+  const [currentMonth, setCurrentMonth] = useState(0)
+  const [currentMouseHoverDate, setCurrentMouseHoverDate] = useState<Date | null>(null)
+  const [open, setOpen] = useState(false)
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const date = new Date()
@@ -73,27 +103,36 @@ export const RangeDateInput: React.FC<DateInputProps> = ({
   const onSelectedOptionChangeHandler = (option: number | null) => {
     if (onSelectedOptionChange) {
       onSelectedOptionChange(option)
+      if (onSelectedCustomRange) onSelectedCustomRange(null, null)
       setOpen(false)
     }
   }
 
   const onDayClick = (date: Date) => {
     if (onSelectedOptionChange) onSelectedOptionChange(null)
-    if (!firstSelectedDate) {
-      setFirstSelectedDate(date)
+    if (!startCustomDate) {
+      onSelectedCustomRange && onSelectedCustomRange(date, null)
       currentMouseHoverDate && setCurrentMouseHoverDate(date)
-    } else if (!secondSelectedDate) {
-      setSecondSelectedDate(date)
+      if (isRange === false) setOpen(false)
+    } else if (!endCustomDate) {
+      let firstDate = startCustomDate
+      let secondDate = date
+      if (firstDate && secondDate && firstDate > secondDate) {
+        const temp = firstDate
+        firstDate = secondDate
+        secondDate = temp
+      }
+      onSelectedCustomRange && onSelectedCustomRange(firstDate, secondDate)
       setOpen(false)
     } else {
-      setFirstSelectedDate(date)
+      if (isRange === false) setOpen(false)
+      onSelectedCustomRange && onSelectedCustomRange(date, null)
       setCurrentMouseHoverDate(date)
-      setSecondSelectedDate(null)
     }
   }
 
   const onMouseEnter = (date: Date) => {
-    if (firstSelectedDate && !secondSelectedDate) {
+    if (startCustomDate && !endCustomDate) {
       setCurrentMouseHoverDate(date)
     }
   }
@@ -106,13 +145,8 @@ export const RangeDateInput: React.FC<DateInputProps> = ({
   }
 
   const todayString = new Date().toDateString()
-  let firstDate = firstSelectedDate
-  let secondDate = secondSelectedDate ?? currentMouseHoverDate
-  if (firstDate && secondDate && firstDate > secondDate) {
-    const temp = firstDate
-    firstDate = secondDate
-    secondDate = temp
-  }
+  let firstDate = startCustomDate
+  let secondDate = endCustomDate ?? currentMouseHoverDate
 
   while (day.getMonth() === currentMonth) {
     const isSelected = (firstDate && secondDate && day >= firstDate && day <= secondDate) ?? false
@@ -126,26 +160,9 @@ export const RangeDateInput: React.FC<DateInputProps> = ({
     day.setDate(day.getDate() + 1)
   }
 
-  const monthNames = [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro',
-  ]
-
-  const weekDays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB']
-
   const value = useMemo(() => {
-    if (selectedOption) return `Últimos ${selectedOption} dias`
-    if (!firstDate && !secondDate) return 'Selecione um período'
+    if (selectedOption !== null) return defaultOptions?.find(option => option.id === selectedOption)?.text ?? ''
+    if (!firstDate && !secondDate) return ''
     if (firstDate && !secondDate) return firstDate.toLocaleDateString()
 
     if (secondDate && firstDate?.toLocaleDateString() === secondDate.toLocaleDateString())
@@ -153,27 +170,67 @@ export const RangeDateInput: React.FC<DateInputProps> = ({
 
     if (firstDate && secondDate) return `${firstDate.toLocaleDateString()} - ${secondDate.toLocaleDateString()}`
 
-    return 'Selecione um período'
+    return ''
   }, [selectedOption, firstDate, secondDate])
 
+  useEffect(() => {
+    if (!open) return
+    const handler = (event: MouseEvent) => {
+      let element: HTMLElement | null = event.target as HTMLElement
+      console.log(element)
+      while (element && element !== document.body.parentElement) {
+        if (element === wrapperRef.current) break
+        element = element.parentElement
+      }
+      if (element === document.body.parentElement) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('click', handler)
+
+    return () => {
+      document.removeEventListener('click', handler)
+    }
+  }, [open])
+
+  placeholder = placeholder ?? 'Selecione um período'
   return (
-    <InputDateWrapper {...props}>
-      <Input label={label} value={value} readonly onClick={() => setOpen(!open)} />
+    <InputDateWrapper {...props} ref={wrapperRef}>
+      <Input
+        iconLeft={
+          <IconWrapper className="icon" src={calendarSVG} width="20px" height="20px" color={theme.colors.shade30} />
+        }
+        iconRight={
+          <IconWrapper
+            className={`icon ${open ? 'icon-rotate' : ''}`}
+            src={chevronDownSVG}
+            width="16px"
+            color={theme.colors.shade30}
+          />
+        }
+        placeholder={placeholder}
+        label={label}
+        value={value}
+        readonly
+        onClick={() => setOpen(!open)}
+      />
       {open && (
         <DropdownWrapper>
           <Dropdown>
-            <div>
-              {defaultOptions?.map((option, index) => (
-                <DefaultOptionButton
-                  selected={selectedOption === option}
-                  key={index}
-                  onClick={() => onSelectedOptionChangeHandler(option)}
-                >
-                  Últimos {option} dias
-                </DefaultOptionButton>
-              ))}
-              <DefaultOptionButton selected={selectedOption === null}>Período Personalizado</DefaultOptionButton>
-            </div>
+            {(defaultOptions?.length ?? 0) > 0 && (
+              <div>
+                {defaultOptions?.map(option => (
+                  <DefaultOptionButton
+                    selected={option.id === selectedOption}
+                    key={option.id}
+                    onClick={() => onSelectedOptionChangeHandler(option.id)}
+                  >
+                    {option.text}
+                  </DefaultOptionButton>
+                ))}
+                <DefaultOptionButton selected={!!firstDate}>Período Personalizado</DefaultOptionButton>
+              </div>
+            )}
             <CalendarHeader>
               <IconWrapper className="icon" src={chevronLeftSVG} width="14px" onClick={() => changeMonth(-1)} />
               {monthNames[currentMonth]} {currentYear}
@@ -190,14 +247,14 @@ export const RangeDateInput: React.FC<DateInputProps> = ({
                 }
                 return (
                   <CalendarDay
-                    today={day.today}
-                    selected={day.selected}
                     key={day.value}
+                    today={day.today}
                     onClick={() => onDayClick(day.date)}
                     onMouseEnter={() => onMouseEnter(day.date)}
                     onMouseLeave={() => onMouseLeave(day.date)}
                   >
-                    {day.value}
+                    <CalendarDaySelectedBackground selected={day.selected} today={day.today} />
+                    <CalendarDayValue>{day.value}</CalendarDayValue>
                   </CalendarDay>
                 )
               })}

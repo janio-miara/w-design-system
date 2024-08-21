@@ -122,11 +122,6 @@ export const CalendarDaySelectedBackground = styled.div<CalendarDaySelectedBackg
   width: 100%;
   height: 100%;
   inset: 0;
-
-  &:hover {
-    background-color: rgba(33, 126, 253, 0.16);
-  }
-
   &::before {
     content: '';
     border-radius: 50%;
@@ -141,5 +136,4 @@ export const CalendarDayValue = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
 `

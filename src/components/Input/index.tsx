@@ -3,10 +3,16 @@ import { InputWrapper, StyledInput, StyledInputBorder, StyledInputContent, Style
 
 export interface InputProps extends HTMLAttributes<HTMLDivElement> {
   placeholder?: string
-  icon?: ReactNode
+  iconLeft?: ReactNode
   label: string
   value?: string
   readonly?: boolean
+  disabled?: boolean
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onInput?: (e: React.FormEvent<HTMLInputElement>) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  iconRight?: ReactNode
 }
 
 export interface Position {
@@ -16,7 +22,19 @@ export interface Position {
   height: number
 }
 
-export const Input: React.FC<InputProps> = ({ label, readonly, onChange, onInput, value, onKeyDown, onKeyUp, ...props }) => {
+export const Input: React.FC<InputProps> = ({
+  label,
+  readonly,
+  onChange,
+  onInput,
+  value,
+  onKeyDown,
+  disabled,
+  onKeyUp,
+  iconLeft,
+  iconRight,
+  ...props
+}) => {
   const id = useId()
   const [labelPosition, setLabelPosition] = React.useState<Position>({
     x: 0,
@@ -72,14 +90,15 @@ export const Input: React.FC<InputProps> = ({ label, readonly, onChange, onInput
 
   return (
     <InputWrapper {...props}>
-      <StyledInputContent ref={contentRef} onClick={onClickHandler}>
+      <StyledInputContent disabled={disabled} ref={contentRef} onClick={onClickHandler}>
         <StyledInputBorder content={contentPosition} label={labelPosition} />
         <StyledLabel htmlFor={id} ref={labelRef}>
           {label}
         </StyledLabel>
-
+        {iconLeft}
         <StyledInput
           id={id}
+          disabled={disabled}
           value={value}
           placeholder={props.placeholder}
           ref={inputRef}
@@ -89,6 +108,7 @@ export const Input: React.FC<InputProps> = ({ label, readonly, onChange, onInput
           onKeyUp={onKeyUp}
           readOnly={readonly}
         />
+        {iconRight}
       </StyledInputContent>
     </InputWrapper>
   )

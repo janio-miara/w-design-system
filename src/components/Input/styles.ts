@@ -3,7 +3,6 @@ import { theme } from '../Themes'
 import type { Position } from '.'
 
 export const InputWrapper = styled.div`
-  height: 54px;
   border-radius: 4px;
 `
 
@@ -15,7 +14,7 @@ export const StyledInput = styled.input`
   border: none;
   color: ${theme.colors.shade50};
   z-index: 1;
-
+  background-color: transparent;
   &:active,
   &:focus {
     outline: none;
@@ -25,6 +24,10 @@ export const StyledInput = styled.input`
     color: ${theme.colors.shade30};
     font-size: ${theme.paragraph.medium};
     opacity: 1;
+  }
+  &:disabled {
+    background-color: transparent;;
+    cursor: not-allowed;
   }
 `
 
@@ -40,14 +43,22 @@ export const StyledLabel = styled.label`
   text-wrap: nowrap;
 `
 
-export const StyledInputContent = styled.div`
+export interface StyledInputContentProps {
+  disabled?: boolean
+}
+
+export const StyledInputContent = styled.div<StyledInputContentProps>`
   position: relative;
   padding: 18px 16px 14px 16px;
   display: flex;
   gap: 8px;
+  height: 22px;
   align-items: center;
   justify-content: space-between;
-  cursor: text;
+  border-radius: 4px;
+  cursor: ${({ disabled }: StyledInputContentProps) => (disabled ? 'not-allowed' : 'pointer')};
+  background-color: ${({ disabled }: StyledInputContentProps) =>
+    disabled ? theme.colors.shade10 : theme.colors.white};
 `
 
 export interface StyledInputBorderProps {
