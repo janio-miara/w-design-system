@@ -15,37 +15,51 @@ import { ButtonStyled } from './styles';
 import { spinSVG } from '../../assets/icon';
 import { theme } from '../Themes';
 const { colors } = theme;
-const handleColorLoading = (variante) => {
-    if (variante === 'primary') {
+const handleColorLoading = ({ variant, outline }) => {
+    if (outline) {
+        if (variant === 'primary') {
+            return colors.cyan50;
+        }
+        if (variant === 'secondary') {
+            return colors.cyan30;
+        }
+        if (variant === 'danger') {
+            return colors.red40;
+        }
+        if (variant === 'warning') {
+            return colors.honey30;
+        }
+        if (variant === 'gray') {
+            return colors.shade30;
+        }
+        if (variant === 'success') {
+            return colors.mint40;
+        }
+        if (variant === 'yellow') {
+            return colors.yellow30;
+        }
+    }
+    if (variant === 'primary') {
+        return 'white';
+    }
+    if (variant === 'primary') {
         return colors.cyan50;
     }
-    if (variante === 'primary') {
-        return colors.cyan50;
-    }
-    if (variante === 'secondary') {
-        return colors.cyan30;
-    }
-    if (variante === 'danger') {
-        return colors.red40;
-    }
-    if (variante === 'warning') {
+    if (variant === 'warning') {
         return colors.honey30;
     }
-    if (variante === 'gray') {
-        return colors.shade30;
+    if (variant === 'gray') {
+        return colors.shade40;
     }
-    if (variante === 'success') {
-        return colors.mint40;
-    }
-    if (variante === 'yellow') {
+    if (variant === 'yellow') {
         return colors.yellow30;
     }
-    return colors.cyan50;
+    return 'white';
 };
 export const Button = (_a) => {
     var { variant = 'primary', children, disabled = false, icon, radius, outline, halfLeft, halfRight, fullWidth, size, loading } = _a, props = __rest(_a, ["variant", "children", "disabled", "icon", "radius", "outline", "halfLeft", "halfRight", "fullWidth", "size", "loading"]);
     return (React.createElement(ButtonStyled, Object.assign({ variant: variant, disabled: disabled, radius: radius, outline: outline, halfLeft: halfLeft, halfRight: halfRight, fullWidth: fullWidth, size: size }, props),
-        loading && React.createElement(IconWrapper, { src: spinSVG, loading: true, color: outline ? handleColorLoading(variant) : 'white' }),
+        loading && React.createElement(IconWrapper, { src: spinSVG, loading: true, color: handleColorLoading({ variant, outline }) }),
         icon && (React.createElement(IconWrapper, { src: icon, color: 'white', className: 'buttonRadiusWrapperIcon', width: size !== 'large' ? '20px' : '24px', height: size !== 'large' ? '20px' : '24px' })),
         children));
 };
