@@ -13,6 +13,7 @@ export const Button: React.FC<ButtonTypes> = ({
   halfLeft,
   halfRight,
   fullWidth,
+  size,
   ...props
 }) => (
   <ButtonStyled
@@ -23,9 +24,18 @@ export const Button: React.FC<ButtonTypes> = ({
     halfLeft={halfLeft}
     halfRight={halfRight}
     fullWidth={fullWidth}
+    size={size}
     {...props}
   >
-    {icon && <IconWrapper src={icon} color={'white'} className={'buttonRadiusWrapperIcon'} />}
+    {icon && (
+      <IconWrapper
+        src={icon}
+        color={'white'}
+        className={'buttonRadiusWrapperIcon'}
+        width={size !== 'large' ? '20px' : '24px'}
+        height={size !== 'large' ? '20px' : '24px'}
+      />
+    )}
     {children}
   </ButtonStyled>
 )

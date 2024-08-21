@@ -92,16 +92,28 @@ const colorScheme = {
     ${buttonRadiusWrapperIconStyles(colors.yellow30)};
   `,
 };
+const sizeScheme = {
+    small: css `
+    font-size: 12px;
+    height: 40px;
+  `,
+    medium: css `
+    font-size: 14px;
+    height: 40px;
+  `,
+    large: css `
+    font-size: 16px;
+    height: 48px;
+  `,
+};
 export const ButtonStyled = styled.button `
   display: inline-flex;
   box-sizing: border-box;
-  height: 48px;
+
   padding: 0;
   margin: 0;
   justify-content: space-between;
-  min-width: 190px;
   font-style: normal;
-  font-size: 16px;
   font-weight: 600;
   line-height: 140%;
   border: none;
@@ -116,6 +128,7 @@ export const ButtonStyled = styled.button `
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   ${({ variant = 'primary' }) => colorScheme[variant]};
+  ${({ size = 'medium' }) => sizeScheme[size]};
 
   .buttonRadiusIconContainer {
     display: flex;
@@ -123,7 +136,7 @@ export const ButtonStyled = styled.button `
     align-items: center;
     padding: 0 24px;
     gap: 6px;
-    height: 48px;
+    height: 100%;
   }
   .buttonRadiusIconTitle {
     color: ${colors.shade40};

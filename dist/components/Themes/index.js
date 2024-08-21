@@ -74,6 +74,7 @@ export const theme = {
         large: '34px',
     },
     paragraph: {
+        'xx-small': '10px',
         'x-small': '12px',
         small: '14px',
         medium: '16px',

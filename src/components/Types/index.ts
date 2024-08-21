@@ -10,12 +10,14 @@ export interface ButtonTypes extends ButtonHTMLAttributes<HTMLButtonElement> {
   halfLeft?: boolean
   halfRight?: boolean
   fullWidth?: boolean
+  size?: 'small' | 'medium' | 'large'
 }
 
 export interface ButtonRadiusIconTypes extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ColorsVariant
   icon?: string
   subTitle?: string
+  size?: 'small' | 'medium' | 'large'
 }
 
 export interface ButtonRoundTypes extends ButtonHTMLAttributes<HTMLButtonElement> {

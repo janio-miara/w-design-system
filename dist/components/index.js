@@ -10,4 +10,5 @@ export { theme } from './Themes/index';
 export { Title } from './Title/index';
 export { Paginate } from './Paginate/index';
 export { Table } from './Table/index';
+export { Input } from './Input/index';
 //# sourceMappingURL=index.js.map

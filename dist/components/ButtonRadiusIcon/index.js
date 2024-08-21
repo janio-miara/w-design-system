@@ -13,13 +13,13 @@ import React from 'react';
 import { IconWrapper } from '../IconWrapper';
 import { ButtonStyled } from './styles';
 export const ButtonRadiusIcon = (_a) => {
-    var { variant = 'primary', children, disabled = false, icon, subTitle } = _a, props = __rest(_a, ["variant", "children", "disabled", "icon", "subTitle"]);
-    return (React.createElement(ButtonStyled, Object.assign({ variant: variant, disabled: disabled, subTitle: subTitle }, props),
+    var { variant = 'primary', children, disabled = false, icon, subTitle, size } = _a, props = __rest(_a, ["variant", "children", "disabled", "icon", "subTitle", "size"]);
+    return (React.createElement(ButtonStyled, Object.assign({ variant: variant, disabled: disabled, subTitle: subTitle }, props, { size: size }),
         React.createElement("span", { className: 'buttonRadiusIconContainer' },
             children,
             " ",
             subTitle && React.createElement("p", { className: 'buttonRadiusIconTitle' }, subTitle)),
         React.createElement("span", { className: 'buttonRadiusIconWrapperIcon' },
-            React.createElement(IconWrapper, { src: icon || '', color: 'white', className: 'buttonRadiusWrapperIcon' }))));
+            React.createElement(IconWrapper, { src: icon || '', color: 'white', className: 'buttonRadiusWrapperIcon', width: size !== 'large' ? '20px' : '24px', height: size !== 'large' ? '20px' : '24px' }))));
 };
 //# sourceMappingURL=index.js.map

@@ -13,9 +13,9 @@ import React from 'react';
 import { IconWrapper } from '../IconWrapper';
 import { ButtonStyled } from './styles';
 export const Button = (_a) => {
-    var { variant = 'primary', children, disabled = false, icon, radius, outline, halfLeft, halfRight, fullWidth } = _a, props = __rest(_a, ["variant", "children", "disabled", "icon", "radius", "outline", "halfLeft", "halfRight", "fullWidth"]);
-    return (React.createElement(ButtonStyled, Object.assign({ variant: variant, disabled: disabled, radius: radius, outline: outline, halfLeft: halfLeft, halfRight: halfRight, fullWidth: fullWidth }, props),
-        icon && React.createElement(IconWrapper, { src: icon, color: 'white', className: 'buttonRadiusWrapperIcon' }),
+    var { variant = 'primary', children, disabled = false, icon, radius, outline, halfLeft, halfRight, fullWidth, size } = _a, props = __rest(_a, ["variant", "children", "disabled", "icon", "radius", "outline", "halfLeft", "halfRight", "fullWidth", "size"]);
+    return (React.createElement(ButtonStyled, Object.assign({ variant: variant, disabled: disabled, radius: radius, outline: outline, halfLeft: halfLeft, halfRight: halfRight, fullWidth: fullWidth, size: size }, props),
+        icon && (React.createElement(IconWrapper, { src: icon, color: 'white', className: 'buttonRadiusWrapperIcon', width: size !== 'large' ? '20px' : '24px', height: size !== 'large' ? '20px' : '24px' })),
         children));
 };
 //# sourceMappingURL=index.js.map

@@ -80,7 +80,7 @@ export const Table = ({ columns, data, height = '100%', loading = false, emptySt
         React.createElement(StyledTable, null,
             React.createElement(Thead, null,
                 React.createElement(Tr, { striped: striped }, columns.map((col, index) => (React.createElement(Th, { key: index, width: col.width, align: col.align },
-                    React.createElement(Paragraph, { color: theme.colors.shade30, textTransform: 'uppercase' }, col.header)))))),
+                    React.createElement(Paragraph, { color: theme.colors.shade30, textTransform: 'uppercase', strongBod: true }, col.header)))))),
             React.createElement(Tbody, { height: height }, loading ? (React.createElement(LoadingWrapper, null,
                 React.createElement(ContainerLoading, { size: 'small' }))) : data.length === 0 ? (React.createElement(EmptyStateWrapper, null,
                 React.createElement(Paragraph, null, emptyStateMessage))) : (data.map((row, rowIndex) => (React.createElement(React.Fragment, { key: row.id },

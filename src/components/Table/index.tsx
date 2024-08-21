@@ -138,7 +138,7 @@ export const Table: React.FC<TableProps> = ({
                 index: React.Key | null | undefined,
               ) => (
                 <Th key={index} width={col.width} align={col.align}>
-                  <Paragraph color={theme.colors.shade30} textTransform={'uppercase'}>
+                  <Paragraph color={theme.colors.shade30} textTransform={'uppercase'} strongBod>
                     {col.header}
                   </Paragraph>
                 </Th>

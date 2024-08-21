@@ -70,6 +70,7 @@ export declare const theme: {
         large: string;
     };
     paragraph: {
+        'xx-small': string;
         'x-small': string;
         small: string;
         medium: string;
