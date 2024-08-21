@@ -26,5 +26,6 @@ import { default as moneySVG } from './money.svg';
 import { default as eyesSVG } from './eyes.svg';
 import { default as checkSVG } from './check.svg';
 import { default as portalSVG } from './portal.svg';
-export { appsSVG, alertSVG, bindSVG, bellSVG, checkSVG, calendarSVG, chevronDownSVG, chevronLeftSVG, chevronRightSVG, closeSVG, commentSVG, docCheckSVG, docSVG, dumpSVG, dashboardSVG, docDownloadSVG, docUploadSVG, editSVG, editalSVG, imageSVG, monitoringSVG, settingSVG, financeSVG, spreadsheetSVG, orderSVG, moneySVG, eyesSVG, portalSVG, };
+import { default as spinSVG } from './spin.svg';
+export { appsSVG, alertSVG, bindSVG, bellSVG, checkSVG, calendarSVG, chevronDownSVG, chevronLeftSVG, chevronRightSVG, closeSVG, commentSVG, docCheckSVG, docSVG, dumpSVG, dashboardSVG, docDownloadSVG, docUploadSVG, editSVG, editalSVG, imageSVG, monitoringSVG, settingSVG, spinSVG, financeSVG, spreadsheetSVG, orderSVG, moneySVG, eyesSVG, portalSVG, };
 //# sourceMappingURL=index.js.map

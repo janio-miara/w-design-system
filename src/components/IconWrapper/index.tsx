@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes, css } from 'styled-components'
 import { ReactSVG } from 'react-svg'
 
 interface IconWrapperProps {
@@ -9,35 +9,58 @@ interface IconWrapperProps {
   height?: string
   className?: string
   onClick?: () => void
+  loading?: boolean
 }
 
-interface IconWrappeProps {
+interface StyledIconWrapperProps {
   color?: string
   width?: string
   height?: string
-  onClick?: () => void
+  clickable?: boolean
+  loading?: boolean
 }
 
-const StyledIconWrapper = styled.div<IconWrappeProps>`
+const spinAnimation = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`
+
+const StyledIconWrapper = styled.div<StyledIconWrapperProps>`
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  cursor: ${props => (props.onClick ? 'pointer' : 'default')};
+  cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
+
   svg {
-    width: ${props => props.width || '24px'};
-    height: ${props => props.height || '24px'};
-    fill: ${props => props.color || 'black'};
+    width: ${({ width }) => width || '24px'};
+    height: ${({ height }) => height || '24px'};
+    fill: ${({ color }) => color || 'black'};
+
+    ${({ loading }) =>
+      loading &&
+      css`
+        animation: ${css`
+            ${spinAnimation}`} 2s linear infinite;
+      `}
 
     path {
-      fill: ${props => props.color || 'black'};
+      fill: ${({ color }) => color || 'black'};
     }
   }
 `
 
-export const IconWrapper: React.FC<IconWrapperProps> = ({ src, color, width, height, className, onClick }) => (
-  <StyledIconWrapper color={color} width={width} height={height} className={className} onClick={onClick}>
+export const IconWrapper: React.FC<IconWrapperProps> = ({ src, color, width, height, className, onClick, loading }) => (
+  <StyledIconWrapper
+    color={color}
+    width={width}
+    height={height}
+    className={className}
+    clickable={!!onClick}
+    loading={loading}
+    onClick={onClick}
+  >
     <ReactSVG src={src} />
   </StyledIconWrapper>
 )

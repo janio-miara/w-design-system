@@ -1,8 +1,15 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { theme } from '../Themes'
 import { ButtonTypes } from '../Types'
 
 const { colors } = theme
+
+// Animação de rotação
+const spinAnimation = keyframes`
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+`
+
 const buttonRadiusWrapperIconStyles = (color: string) => css`
   .buttonRadiusWrapperIcon {
     margin-top: 4px;
@@ -180,6 +187,15 @@ const sizeScheme = {
     font-size: 16px;
   `,
 } as const
+
+export const LoadingImage = styled.img<{
+  size: 'small' | 'medium' | 'large'
+  variant: 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'gray' | 'yellow'
+}>`
+  width: ${({ size }) => (size === 'small' ? '20px' : size === 'medium' ? '24px' : '24px')};
+  height: ${({ size }) => (size === 'small' ? '20px' : size === 'medium' ? '24px' : '24px')};
+  animation: ${spinAnimation} 2s linear infinite;
+`
 
 export const ButtonStyled = styled.button<ButtonTypes>`
   display: inline-flex;

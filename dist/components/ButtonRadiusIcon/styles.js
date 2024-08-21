@@ -99,7 +99,7 @@ const sizeScheme = {
   `,
     medium: css `
     font-size: 14px;
-    height: 40px;
+    height: 48px;
   `,
     large: css `
     font-size: 16px;

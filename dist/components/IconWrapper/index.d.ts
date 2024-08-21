@@ -6,6 +6,7 @@ interface IconWrapperProps {
     height?: string;
     className?: string;
     onClick?: () => void;
+    loading?: boolean;
 }
 export declare const IconWrapper: React.FC<IconWrapperProps>;
 export {};

@@ -1,6 +1,11 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { theme } from '../Themes';
 const { colors } = theme;
+// Animação de rotação
+const spinAnimation = keyframes `
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+`;
 const buttonRadiusWrapperIconStyles = (color) => css `
   .buttonRadiusWrapperIcon {
     margin-top: 4px;
@@ -176,6 +181,11 @@ const sizeScheme = {
     font-size: 16px;
   `,
 };
+export const LoadingImage = styled.img `
+  width: ${({ size }) => (size === 'small' ? '20px' : size === 'medium' ? '24px' : '24px')};
+  height: ${({ size }) => (size === 'small' ? '20px' : size === 'medium' ? '24px' : '24px')};
+  animation: ${spinAnimation} 2s linear infinite;
+`;
 export const ButtonStyled = styled.button `
   display: inline-flex;
   align-items: center;

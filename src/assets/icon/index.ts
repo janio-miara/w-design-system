@@ -26,6 +26,7 @@ import { default as moneySVG } from './money.svg'
 import { default as eyesSVG } from './eyes.svg'
 import { default as checkSVG } from './check.svg'
 import { default as portalSVG } from './portal.svg'
+import { default as spinSVG } from './spin.svg'
 
 export {
   appsSVG,
@@ -50,6 +51,7 @@ export {
   imageSVG,
   monitoringSVG,
   settingSVG,
+  spinSVG,
   financeSVG,
   spreadsheetSVG,
   orderSVG,

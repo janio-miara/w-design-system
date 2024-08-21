@@ -42,4 +42,5 @@ export {
   moneySVG,
   eyesSVG,
   portalSVG,
+  spinSVG,
 } from './assets/icon/index'

@@ -11,6 +11,7 @@ export interface ButtonTypes extends ButtonHTMLAttributes<HTMLButtonElement> {
   halfRight?: boolean
   fullWidth?: boolean
   size?: 'small' | 'medium' | 'large'
+  loading?: boolean
 }
 
 export interface ButtonRadiusIconTypes extends ButtonHTMLAttributes<HTMLButtonElement> {
