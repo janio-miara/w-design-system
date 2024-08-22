@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { DateInput } from './index'
+import { DatePicker as DatePicker } from './index'
 import React from 'react'
 
-const meta: Meta<typeof DateInput> = {
-  title: 'Components/DateInput',
-  component: DateInput,
+const meta: Meta<typeof DatePicker> = {
+  title: 'Components/DatePicker',
+  component: DatePicker,
   tags: ['autodocs'],
   argTypes: {
     placeholder: { control: 'text' },
@@ -12,21 +12,33 @@ const meta: Meta<typeof DateInput> = {
     readonly: { control: 'boolean' },
     disabled: { control: 'boolean' },
   },
-} satisfies Meta<typeof DateInput>
+} satisfies Meta<typeof DatePicker>
 
 export default meta
-type Story = StoryObj<typeof DateInput>
+type Story = StoryObj<typeof DatePicker>
 
 const ComponentWrapper = ({ defaultOptions, ...args }: any) => {
   const [selectedOption, setSelectOption] = React.useState<number | null>(null)
+
   const [customDate, setCustomDate] = React.useState<Date | null>(null)
+  const onSelectedOptionChange = (option: number | null) => {
+    setSelectOption(option)
+    if (option === null) {
+      setCustomDate(null)
+      return
+    }
+    const date = new Date()
+    date.setDate(date.getDate() + option)
+    setCustomDate(date)
+
+  }
   return (
-    <DateInput
+    <DatePicker
       selectedOption={selectedOption}
       customDate={customDate}
-      onSelectedOptionChange={option => setSelectOption(option)}
+      onSelectedOptionChange={onSelectedOptionChange}
       onSelectedCustomDate={date => setCustomDate(date)}
-      defaultOptions={
+      options={
         defaultOptions ?? [
           {
             text: 'Ontem',

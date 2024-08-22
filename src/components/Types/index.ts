@@ -1,7 +1,12 @@
 import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
-
+import type { DatePickerProps } from '../DatePicker'
+import type { DateRangePickerProps } from '../DateRangePicker'
+import type { SelectProps } from '../Select'
+import type { SelectRef } from '../Select'
+import type { PaginateProps } from '../Paginate'
 type ColorsVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'gray' | 'warning' | 'yellow'
 type ColorsVariantBanner = 'notice' | 'success' | 'danger' | 'warning'
+
 export interface ButtonTypes extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ColorsVariant
   icon?: string
@@ -47,3 +52,5 @@ export interface TabsTypes extends HTMLAttributes<HTMLDivElement> {
   defaultActiveTab?: string
   onTabChange?: (activeTab: string) => void
 }
+
+export { DatePickerProps, DateRangePickerProps, SelectProps, SelectRef, PaginateProps }

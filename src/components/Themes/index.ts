@@ -42,6 +42,10 @@ const mint = {
   mint10: '#EBF8EF',
 }
 
+const special = {
+  cyan30opacity16: 'rgba(33, 126, 253, 0.16)',
+}
+
 const white = '#FFFFFF'
 const black = '#333333'
 const transparent = 'transparent'
@@ -84,6 +88,7 @@ export const theme = {
     white,
     black,
     transparent,
+    ...special,
   },
   fonts: ['Nunito Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
   title: {

@@ -1,31 +1,6 @@
 import styled from 'styled-components'
 import { theme } from '../Themes'
 
-export const InputDateWrapper = styled.div`
-  position: relative;
-  .icon {
-    transition: transform 0.3s;
-  }
-  .icon-rotate {
-    transform: rotate(180deg) translateY(5px);
-  }
-`
-
-export const Dropdown = styled.div`
-  position: absolute;
-  width: 252px;
-  padding: 16px;
-  z-index: 1;
-  border-radius: 4px;
-  border: 1px solid ${theme.colors.shade20};
-  margin-top: 7px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-`
-
-export const DropdownWrapper = styled.div`
-  position: relative;
-`
-
 export const CalendarGrid = styled.div`
   display: grid;
   font-family: 'Nunito Sans', sans-serif;
@@ -45,33 +20,6 @@ export const CalendarWeekDayLabel = styled.div`
   color: ${theme.colors.shade30};
   font-weight: 600;
   margin-bottom: 4px;
-`
-
-export interface DefaultOptionButtonProps {
-  selected: boolean
-}
-
-export const DefaultOptionButton = styled.button<DefaultOptionButtonProps>`
-  background-color: transparent;
-  border: none;
-  font-size: ${theme.paragraph.medium};
-  font-family: 'Nunito Sans', sans-serif;
-  color: ${({ selected }) => (selected ? theme.colors.cyan30 : theme.colors.shade40)};
-  cursor: pointer;
-  padding: 0;
-  width: 100%;
-  text-align: left;
-  height: 46px;
-  display: flex;
-  align-items: center;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid ${theme.colors.shade10};
-  }
-
-  &:hover {
-    color: ${theme.colors.cyan30};
-  }
 `
 
 export const CalendarHeader = styled.div`
@@ -102,31 +50,62 @@ export const CalendarHeader = styled.div`
 `
 export interface CalendarDayProps {
   today: boolean
+  isFirstSelected: boolean
+  isLastSelected: boolean
 }
 
 export const CalendarDay = styled.div<CalendarDayProps>`
   position: relative;
   cursor: pointer;
-  color: ${({ today }) => (today ? theme.colors.white : theme.colors.shade50)};
+  color:;
   width: 36px;
   height: 36px;
+  box-sizing: border-box;
+  color: ${({ isFirstSelected, isLastSelected }) =>
+    isFirstSelected || isLastSelected ? theme.colors.white : theme.colors.shade50};
+  border-radius: 50%;
+  border: 1px solid
+    ${({ today, isFirstSelected, isLastSelected }) =>
+      today && !(isFirstSelected || isLastSelected) ? theme.colors.cyan40 : 'transparent'};
 `
 
 export interface CalendarDaySelectedBackgroundProps {
   today: boolean
+  isFirstSelected: boolean
+  isLastSelected: boolean
   selected: boolean
 }
 export const CalendarDaySelectedBackground = styled.div<CalendarDaySelectedBackgroundProps>`
   position: absolute;
-  background-color: ${({ selected }) => selected && 'rgba(33, 126, 253, 0.16)'};
-  width: 100%;
-  height: 100%;
+  background-color: ${({ selected }) => selected && theme.colors.cyan30opacity16};
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
   inset: 0;
+
+  border-radius: ${({ isFirstSelected, isLastSelected }) => {
+    if (isFirstSelected && isLastSelected) return '50%'
+    if (isFirstSelected) return '50% 0 0 50%'
+    if (isLastSelected) return '0 50% 50% 0'
+    return '0'
+  }};
+
+  &:hover {
+    border-radius: ${({ isFirstSelected, isLastSelected, selected }) => {
+      if (isFirstSelected && isLastSelected) return '50%'
+      if (isFirstSelected) return '50% 0 0 50%'
+      if (isLastSelected) return '0 50% 50% 0'
+      if (selected) return '0'
+      return '50%'
+    }};
+    background-color: ${theme.colors.cyan30opacity16};
+  }
+
   &::before {
     content: '';
     border-radius: 50%;
+    background-color: ${({ isFirstSelected, isLastSelected }) =>
+      isFirstSelected || isLastSelected ? theme.colors.cyan40 : 'transparent'};
     position: absolute;
-    background-color: ${({ today }) => (today ? theme.colors.cyan40 : 'transparent')};
     inset: 0;
   }
 `
@@ -136,4 +115,5 @@ export const CalendarDayValue = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 `

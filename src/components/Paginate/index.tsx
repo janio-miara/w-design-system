@@ -2,7 +2,7 @@ import React from 'react'
 import { Container } from './styles'
 import { IconWrapper } from '../IconWrapper'
 import { chevronLeftSVG, chevronRightSVG } from '../../assets/icon'
-export type PropsPaginate = {
+export type PaginateProps = {
   currentPage: number
   itemCount: number
   itemsPerPage?: number
@@ -16,7 +16,7 @@ export const Paginate = ({
   onChangePage,
   itemsPerPage,
   onChangeItemsPerPage,
-}: PropsPaginate) => {
+}: PaginateProps) => {
   // Se itemsPerPage for undefined, o valor default e 20
   let itemsPerPageValue = itemsPerPage || 20
 

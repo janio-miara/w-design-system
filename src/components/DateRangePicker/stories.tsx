@@ -1,11 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { RangeDateInput } from './index'
-import { VARIANTS_TYPES } from '../../utils/constanst'
 import React from 'react'
+import { DateRangePicker, DateRangePickerProps } from './index'
 
-const meta: Meta<typeof RangeDateInput> = {
-  title: 'Components/RangeDateInput',
-  component: RangeDateInput,
+const meta: Meta<typeof DateRangePicker> = {
+  title: 'Components/DateRangePicker',
+  component: DateRangePicker,
   tags: ['autodocs'],
   argTypes: {
     placeholder: { control: 'text' },
@@ -18,18 +17,19 @@ const meta: Meta<typeof RangeDateInput> = {
     onSelectedOptionChange: { action: 'selectedOptionChange' },
     onSelectedCustomRange: { action: 'selectedCustomRange' },
   },
-} satisfies Meta<typeof RangeDateInput>
+} satisfies Meta<typeof DateRangePicker>
 
 export default meta
-type Story = StoryObj<typeof RangeDateInput>
+type Story = StoryObj<typeof DateRangePicker>
 
-const ComponentWrapper = ({ defaultOptions, ...args }: any) => {
+const ComponentWrapper = ({ options, ...args }: Partial<DateRangePickerProps>) => {
   const [selectedOption, setSelectOption] = React.useState<number | null>(null)
   const [startDate, setStartDate] = React.useState<Date | null>(null)
   const [endDate, setEndDate] = React.useState<Date | null>(null)
 
   return (
-    <RangeDateInput
+    <DateRangePicker
+      {...args}
       selectedOption={selectedOption}
       startCustomDate={startDate}
       endCustomDate={endDate}
@@ -38,8 +38,8 @@ const ComponentWrapper = ({ defaultOptions, ...args }: any) => {
         setEndDate(end)
       }}
       onSelectedOptionChange={option => setSelectOption(option)}
-      defaultOptions={
-        defaultOptions ?? [
+      options={
+        options ?? [
           {
             text: 'Últimos 30 dias',
             id: 30,
@@ -54,7 +54,6 @@ const ComponentWrapper = ({ defaultOptions, ...args }: any) => {
           },
         ]
       }
-      {...args}
     />
   )
 }
@@ -64,5 +63,5 @@ export const SelecionarIntervaloDeDatas: Story = {
 }
 
 export const SelecionarIntervaloDeDatasSimples: Story = {
-  render: args => <ComponentWrapper defaultOptions={[]} />,
+  render: args => <ComponentWrapper options={[]} />,
 }

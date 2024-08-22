@@ -3,8 +3,9 @@ import { InputWrapper, StyledInput, StyledInputBorder, StyledInputContent, Style
 
 export interface InputProps extends HTMLAttributes<HTMLDivElement> {
   placeholder?: string
-  iconLeft?: ReactNode
-  label: string
+  rightIcon?: ReactNode
+  leftIcon?: ReactNode
+  label?: string
   value?: string
   readonly?: boolean
   disabled?: boolean
@@ -12,7 +13,6 @@ export interface InputProps extends HTMLAttributes<HTMLDivElement> {
   onInput?: (e: React.FormEvent<HTMLInputElement>) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  iconRight?: ReactNode
 }
 
 export interface Position {
@@ -31,8 +31,8 @@ export const Input: React.FC<InputProps> = ({
   onKeyDown,
   disabled,
   onKeyUp,
-  iconLeft,
-  iconRight,
+  leftIcon,
+  rightIcon,
   ...props
 }) => {
   const id = useId()
@@ -95,7 +95,7 @@ export const Input: React.FC<InputProps> = ({
         <StyledLabel htmlFor={id} ref={labelRef}>
           {label}
         </StyledLabel>
-        {iconLeft}
+        {leftIcon}
         <StyledInput
           id={id}
           disabled={disabled}
@@ -108,7 +108,7 @@ export const Input: React.FC<InputProps> = ({
           onKeyUp={onKeyUp}
           readOnly={readonly}
         />
-        {iconRight}
+        {rightIcon}
       </StyledInputContent>
     </InputWrapper>
   )

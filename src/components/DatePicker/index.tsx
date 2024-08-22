@@ -1,10 +1,10 @@
 import React, { HTMLAttributes } from 'react'
-import { RangeDateInput } from '../RangeDateInput'
+import { DateRangePicker } from '../DateRangePicker'
 
-export interface DateInputProps extends HTMLAttributes<HTMLDivElement> {
+export interface DatePickerProps extends HTMLAttributes<HTMLDivElement> {
   placeholder?: string
   label: string
-  defaultOptions?: { text: string; id: number }[]
+  options?: { text: string; id: number }[]
   selectedOption?: number | null
   readonly?: boolean
   disabled?: boolean
@@ -13,12 +13,12 @@ export interface DateInputProps extends HTMLAttributes<HTMLDivElement> {
   onSelectedCustomDate?: (date: Date | null) => void
 }
 
-export const DateInput: React.FC<DateInputProps> = ({ onSelectedCustomDate, customDate, ...props }) => {
+export const DatePicker: React.FC<DatePickerProps> = ({ onSelectedCustomDate, customDate, ...props }) => {
   const onRangeSelected = (start: Date | null) => {
     if (onSelectedCustomDate) onSelectedCustomDate(start)
   }
   return (
-    <RangeDateInput
+    <DateRangePicker
       {...props}
       isRange={false}
       onSelectedCustomRange={onRangeSelected}
