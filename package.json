@@ -1,6 +1,6 @@
 {
   "name": "w-design-system",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "main": "dist/index.js",
   "dependencies": {
     "@svgr/webpack": "^8.1.0",

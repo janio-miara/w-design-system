@@ -1,8 +1,9 @@
 import React, { HTMLAttributes, ReactNode } from 'react';
 export interface InputProps extends HTMLAttributes<HTMLDivElement> {
     placeholder?: string;
-    iconLeft?: ReactNode;
-    label: string;
+    rightIcon?: ReactNode;
+    leftIcon?: ReactNode;
+    label?: string;
     value?: string;
     readonly?: boolean;
     disabled?: boolean;
@@ -10,7 +11,6 @@ export interface InputProps extends HTMLAttributes<HTMLDivElement> {
     onInput?: (e: React.FormEvent<HTMLInputElement>) => void;
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    iconRight?: ReactNode;
 }
 export interface Position {
     x: number;

@@ -12,7 +12,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React, { useEffect, useId, useRef } from 'react';
 import { InputWrapper, StyledInput, StyledInputBorder, StyledInputContent, StyledLabel } from './styles';
 export const Input = (_a) => {
-    var { label, readonly, onChange, onInput, value, onKeyDown, disabled, onKeyUp, iconLeft, iconRight } = _a, props = __rest(_a, ["label", "readonly", "onChange", "onInput", "value", "onKeyDown", "disabled", "onKeyUp", "iconLeft", "iconRight"]);
+    var { label, readonly, onChange, onInput, value, onKeyDown, disabled, onKeyUp, leftIcon, rightIcon } = _a, props = __rest(_a, ["label", "readonly", "onChange", "onInput", "value", "onKeyDown", "disabled", "onKeyUp", "leftIcon", "rightIcon"]);
     const id = useId();
     const [labelPosition, setLabelPosition] = React.useState({
         x: 0,
@@ -63,8 +63,8 @@ export const Input = (_a) => {
         React.createElement(StyledInputContent, { disabled: disabled, ref: contentRef, onClick: onClickHandler },
             React.createElement(StyledInputBorder, { content: contentPosition, label: labelPosition }),
             React.createElement(StyledLabel, { htmlFor: id, ref: labelRef }, label),
-            iconLeft,
+            leftIcon,
             React.createElement(StyledInput, { id: id, disabled: disabled, value: value, placeholder: props.placeholder, ref: inputRef, onChange: onChange, onInput: onInput, onKeyDown: onKeyDown, onKeyUp: onKeyUp, readOnly: readonly }),
-            iconRight)));
+            rightIcon)));
 };
 //# sourceMappingURL=index.js.map

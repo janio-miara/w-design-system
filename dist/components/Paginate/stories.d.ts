@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { PropsPaginate } from '.';
-declare const meta: Meta<PropsPaginate>;
+import { PaginateProps } from '.';
+declare const meta: Meta<PaginateProps>;
 export default meta;
-export declare const Default: StoryObj<PropsPaginate>;
+export declare const Default: StoryObj<PaginateProps>;
 //# sourceMappingURL=stories.d.ts.map

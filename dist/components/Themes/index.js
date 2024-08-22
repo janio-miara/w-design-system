@@ -36,6 +36,9 @@ const mint = {
     mint20: '#D7EFDE',
     mint10: '#EBF8EF',
 };
+const special = {
+    cyan30opacity16: 'rgba(33, 126, 253, 0.16)',
+};
 const white = '#FFFFFF';
 const black = '#333333';
 const transparent = 'transparent';
@@ -65,9 +68,9 @@ const zIndex = {
 export const theme = {
     zIndex,
     spacing,
-    colors: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, yellow), shades), red), honey), mint), cyan), { white,
+    colors: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, yellow), shades), red), honey), mint), cyan), { white,
         black,
-        transparent }),
+        transparent }), special),
     fonts: ['Nunito Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
     title: {
         medium: '24px',

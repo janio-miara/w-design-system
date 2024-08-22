@@ -34,6 +34,7 @@ export declare const theme: {
         space9: string;
     };
     colors: {
+        cyan30opacity16: string;
         white: string;
         black: string;
         transparent: string;
