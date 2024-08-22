@@ -57,16 +57,22 @@ export interface CalendarDayProps {
 export const CalendarDay = styled.div<CalendarDayProps>`
   position: relative;
   cursor: pointer;
-  color:;
   width: 36px;
   height: 36px;
   box-sizing: border-box;
   color: ${({ isFirstSelected, isLastSelected }) =>
     isFirstSelected || isLastSelected ? theme.colors.white : theme.colors.shade50};
-  border-radius: 50%;
-  border: 1px solid
+
+  &:before {
+    position: absolute;
+    content: '';
+    inset: 0;
+    border-radius: 50%;
+    pointer-events: none;
+
     ${({ today, isFirstSelected, isLastSelected }) =>
-      today && !(isFirstSelected || isLastSelected) ? theme.colors.cyan40 : 'transparent'};
+      today && !(isFirstSelected || isLastSelected) ? `border: 1px solid ${theme.colors.cyan40}` : ''};
+  }
 `
 
 export interface CalendarDaySelectedBackgroundProps {
@@ -78,8 +84,8 @@ export interface CalendarDaySelectedBackgroundProps {
 export const CalendarDaySelectedBackground = styled.div<CalendarDaySelectedBackgroundProps>`
   position: absolute;
   background-color: ${({ selected }) => selected && theme.colors.cyan30opacity16};
-  width: calc(100% + 1px);
-  height: calc(100% + 1px);
+  width: 100%;
+  height: 100%;
   inset: 0;
 
   border-radius: ${({ isFirstSelected, isLastSelected }) => {
