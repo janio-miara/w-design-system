@@ -13,37 +13,44 @@ export const SelectWrapper = styled.div`
 
 export const Dropdown = styled.div`
   position: absolute;
+
+  box-sizing: content-box;
   width: 252px;
+  margin-top: 7px;
   padding: 16px;
-  z-index: 1;
+
   border-radius: 4px;
   border: 1px solid ${theme.colors.shade20};
-  margin-top: 7px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 `
 
 export const DropdownWrapper = styled.div`
   position: relative;
+  z-index: ${theme.zIndex.z9};
 `
-
 
 export interface OptionButtonProps {
   selected: boolean
 }
 
 export const OptionButton = styled.button<OptionButtonProps>`
+  display: flex;
+
+  align-items: center;
+
+  color: ${({ selected }) => (selected ? theme.colors.cyan30 : theme.colors.shade40)};
   background-color: transparent;
   border: none;
-  font-size: ${theme.paragraph.medium};
-  font-family: 'Nunito Sans', sans-serif;
-  color: ${({ selected }) => (selected ? theme.colors.cyan30 : theme.colors.shade40)};
+
   cursor: pointer;
-  padding: 0;
-  width: 100%;
+
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: ${theme.paragraph.medium};
   text-align: left;
+
   height: 46px;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  padding: 0;
 
   &:not(:last-child) {
     border-bottom: 1px solid ${theme.colors.shade10};

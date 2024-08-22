@@ -8,38 +8,46 @@ export const InputWrapper = styled.div`
 
 export const StyledInput = styled.input`
   width: 100%;
-  font-family: ${theme.fonts.join(', ')};
-  outline: none;
-  font-size: ${theme.paragraph.medium};
-  border: none;
-  color: ${theme.colors.shade50};
-  z-index: 1;
+
   background-color: transparent;
+  border: none;
+  outline: none;
+
+  color: ${theme.colors.shade50};
+
+  font-family: ${theme.fonts.join(', ')};
+  font-size: ${theme.paragraph.medium};
+
   &:active,
   &:focus {
     outline: none;
     border: none;
   }
+
   &::placeholder {
     color: ${theme.colors.shade30};
     font-size: ${theme.paragraph.medium};
     opacity: 1;
   }
+
   &:disabled {
-    background-color: transparent;;
+    background-color: transparent;
     cursor: not-allowed;
   }
 `
 
 export const StyledLabel = styled.label`
   position: absolute;
+  color: ${theme.colors.shade50};
+
+  box-sizing: content-box;
   left: 15px;
   top: -8px;
   padding: 0 1px;
-  font-weight: 600;
-  font-size: ${theme.paragraph.small};
-  color: ${theme.colors.shade50};
+
   font-family: 'Nunito Sans', sans-serif;
+  font-size: ${theme.paragraph.small};
+  font-weight: 600;
   text-wrap: nowrap;
 `
 
@@ -49,16 +57,21 @@ export interface StyledInputContentProps {
 
 export const StyledInputContent = styled.div<StyledInputContentProps>`
   position: relative;
-  padding: 18px 16px 14px 16px;
+
   display: flex;
-  gap: 8px;
-  height: 22px;
   align-items: center;
   justify-content: space-between;
+
+  box-sizing: content-box;
+  padding: 18px 16px 14px 16px;
+  height: 22px;
+  gap: 8px;
   border-radius: 4px;
-  cursor: ${({ disabled }: StyledInputContentProps) => (disabled ? 'not-allowed' : 'pointer')};
+
   background-color: ${({ disabled }: StyledInputContentProps) =>
     disabled ? theme.colors.shade10 : theme.colors.white};
+
+  cursor: ${({ disabled }: StyledInputContentProps) => (disabled ? 'not-allowed' : 'pointer')};
 `
 
 export interface StyledInputBorderProps {
@@ -73,9 +86,12 @@ export interface StyledInputBorderProps {
  */
 export const StyledInputBorder = styled.div<StyledInputBorderProps>`
   position: absolute;
+
+  box-sizing: content-box;
   inset: 0px;
   border-radius: 4px;
   border: 1px solid ${theme.colors.shade20};
+
   clip-rule: evenodd;
   clip-path: path(
     '${({ label, content }) =>
