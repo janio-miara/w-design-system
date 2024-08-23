@@ -1,24 +1,34 @@
 import React, { HTMLAttributes } from 'react'
-import { DateRangePicker } from '../DateRangePicker'
+import { DateRangePicker, DateRangePickerProps } from '../DateRangePicker'
 
-export interface DatePickerProps extends HTMLAttributes<HTMLDivElement> {
+type GetElementType<T> = T extends (infer U)[] ? U : never
+
+export interface DatePickerProps<
+  T extends GetElementType<DateRangePickerProps['options']> = GetElementType<DateRangePickerProps['options']>,
+> extends HTMLAttributes<HTMLDivElement> {
   placeholder?: string
   label: string
-  options?: { text: string; id: number }[]
-  selectedOption?: number | null
+  options?: T[]
+  selectedOption?: T | null
   readonly?: boolean
   disabled?: boolean
-  onSelectedOptionChange?: (option: number | null) => void
+  onSelectedOptionChange?: (option: T | null) => void
   customDate: Date | null
   onSelectedCustomDate?: (date: Date | null) => void
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ onSelectedCustomDate, customDate, ...props }) => {
+export const DatePicker = <
+  T extends GetElementType<DateRangePickerProps['options']> = GetElementType<DateRangePickerProps['options']>,
+>({
+  onSelectedCustomDate,
+  customDate,
+  ...props
+}: DatePickerProps<T>) => {
   const onRangeSelected = (start: Date | null) => {
     if (onSelectedCustomDate) onSelectedCustomDate(start)
   }
   return (
-    <DateRangePicker
+    <DateRangePicker<T>
       {...props}
       isRange={false}
       onSelectedCustomRange={onRangeSelected}

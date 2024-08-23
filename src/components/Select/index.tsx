@@ -1,5 +1,4 @@
 import React, {
-  FC,
   HTMLAttributes,
   PropsWithChildren,
   ReactNode,
@@ -7,33 +6,49 @@ import React, {
   useImperativeHandle,
   useMemo,
   useRef,
-  useState,
+  useState
 } from 'react'
 import { chevronDownSVG } from '../../assets/icon'
 import { IconWrapper } from '../IconWrapper'
 import { Input } from '../Input'
 import { theme } from '../Themes'
-import { OptionButton, Dropdown, DropdownWrapper, SelectWrapper } from './styles'
+import { Dropdown, DropdownWrapper, OptionButton, OptionText, SelectWrapper } from './styles'
 
-export interface SelectProps extends HTMLAttributes<HTMLDivElement> {
+export interface SelectProps<
+  T extends { text: string; id: number; icon?: ReactNode } = { text: string; id: number; icon?: ReactNode },
+> extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean
   label?: string
   leftIcon?: ReactNode
-  onOptionChange?: (option: number | null) => void
-  options?: { text: string; id: number }[]
+  onOptionChange?: (option: T | null) => void
+  options?: T[]
   placeholder?: string
   rightIcon?: ReactNode
-  selectedOption?: number | null
+  selectedOption?: T | null
   value?: string
+  dropDownTop?: boolean
+  dropDownWidth?: string
 }
 
 export interface SelectRef {
   setOpen(open: boolean): void
 }
 
-const SelectFowardRef: React.ForwardRefRenderFunction<SelectRef, SelectProps> = (
-  { children, label, leftIcon, onOptionChange, options, placeholder, rightIcon, selectedOption, value, ...props },
-  ref,
+const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode }>(
+  {
+    children,
+    label,
+    leftIcon,
+    onOptionChange,
+    options,
+    placeholder,
+    rightIcon,
+    selectedOption,
+    value,
+    dropDownWidth,
+    ...props
+  }: PropsWithChildren<SelectProps<T>>,
+  ref: React.ForwardedRef<SelectRef>,
 ) => {
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -41,7 +56,7 @@ const SelectFowardRef: React.ForwardRefRenderFunction<SelectRef, SelectProps> = 
   useImperativeHandle(ref, () => ({
     setOpen,
   }))
-  
+
   useEffect(() => {
     if (!open) return
     const handler = (event: MouseEvent) => {
@@ -61,7 +76,7 @@ const SelectFowardRef: React.ForwardRefRenderFunction<SelectRef, SelectProps> = 
     }
   }, [open])
 
-  const onOptionClick = (option: number) => {
+  const onOptionClick = (option: T) => {
     onOptionChange && onOptionChange(option)
     setOpen(false)
   }
@@ -69,8 +84,7 @@ const SelectFowardRef: React.ForwardRefRenderFunction<SelectRef, SelectProps> = 
   const valueComputed = useMemo(() => {
     if (value) return value
     if (selectedOption) {
-      const option = options?.find(option => option.id === selectedOption)
-      return option?.text
+      return selectedOption.text
     }
     return ''
   }, [value, selectedOption, options])
@@ -98,16 +112,17 @@ const SelectFowardRef: React.ForwardRefRenderFunction<SelectRef, SelectProps> = 
       />
       {open && (
         <DropdownWrapper>
-          <Dropdown>
+          <Dropdown dropDownTop={props.dropDownTop} dropDownWidth={dropDownWidth}>
             {(options?.length ?? 0) > 0 && (
               <div>
                 {options?.map(option => (
                   <OptionButton
-                    selected={option.id === selectedOption}
+                    selected={selectedOption?.id === option.id}
                     key={option.id}
-                    onClick={() => onOptionClick(option.id)}
+                    onClick={() => onOptionClick(option)}
                   >
-                    {option.text}
+                    {option.icon}
+                    <OptionText>{option.text}</OptionText>
                   </OptionButton>
                 ))}
               </div>
@@ -120,4 +135,6 @@ const SelectFowardRef: React.ForwardRefRenderFunction<SelectRef, SelectProps> = 
   )
 }
 
-export const Select = React.forwardRef(SelectFowardRef)
+export const Select = React.forwardRef(SelectFowardRef) as <T extends { text: string; id: number; icon?: ReactNode }>(
+  props: PropsWithChildren<SelectProps<T>> & { ref?: React.ForwardedRef<SelectRef> },
+) => React.ReactElement

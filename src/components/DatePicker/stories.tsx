@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { DatePicker as DatePicker } from './index'
+import { DatePicker, DatePickerProps } from './index'
 import React from 'react'
 
 const meta: Meta<typeof DatePicker> = {
@@ -18,19 +18,18 @@ export default meta
 type Story = StoryObj<typeof DatePicker>
 
 const ComponentWrapper = ({ defaultOptions, ...args }: any) => {
-  const [selectedOption, setSelectOption] = React.useState<number | null>(null)
+  const [selectedOption, setSelectOption] = React.useState<DatePickerProps['selectedOption']>(null)
 
   const [customDate, setCustomDate] = React.useState<Date | null>(null)
-  const onSelectedOptionChange = (option: number | null) => {
+  const onSelectedOptionChange = (option: DatePickerProps['selectedOption']) => {
     setSelectOption(option)
-    if (option === null) {
+    if (option == null) {
       setCustomDate(null)
       return
     }
     const date = new Date()
-    date.setDate(date.getDate() + option)
+    date.setDate(date.getDate() + option?.id)
     setCustomDate(date)
-
   }
   return (
     <DatePicker

@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
 import { calendarSVG, chevronLeftSVG, chevronRightSVG } from '../../assets/icon'
 import { IconWrapper } from '../IconWrapper'
-import { Select, SelectRef } from '../Select'
+import { Select, SelectProps, SelectRef } from '../Select'
 import { theme } from '../Themes'
 import {
   CalendarDay,
@@ -12,15 +12,19 @@ import {
   CalendarWeekDayLabel,
 } from './styles'
 
-export interface DateRangePickerProps extends HTMLAttributes<HTMLDivElement> {
+type GetElementType<T> = T extends (infer U)[] ? U : never
+
+export interface DateRangePickerProps<
+  T extends GetElementType<SelectProps['options']> = GetElementType<SelectProps['options']>,
+> extends HTMLAttributes<HTMLDivElement> {
   isRange?: boolean
   placeholder?: string
   label?: string
-  options?: { text: string; id: number }[]
-  selectedOption?: number | null
+  options?: T[]
+  selectedOption?: T | null
   readonly?: boolean
   disabled?: boolean
-  onSelectedOptionChange?: (option: number | null) => void
+  onSelectedOptionChange?: (option: T | null) => void
   startCustomDate: Date | null
   endCustomDate: Date | null
   onSelectedCustomRange: (start: Date | null, end: Date | null) => void
@@ -59,7 +63,7 @@ const monthNames = [
 const weekDays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB']
 
 type DayType = EmptyDay | Day
-export const DateRangePicker: React.FC<DateRangePickerProps> = ({
+export const DateRangePicker = <T extends GetElementType<SelectProps['options']>>({
   label,
   options,
   selectedOption,
@@ -70,7 +74,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
   endCustomDate,
   isRange,
   ...props
-}) => {
+}: DateRangePickerProps<T>) => {
   const [currentYear, setCurrentYear] = useState(0)
   const [currentMonth, setCurrentMonth] = useState(0)
   const [currentMouseHoverDate, setCurrentMouseHoverDate] = useState<Date | null>(null)
@@ -90,7 +94,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     setCurrentMonth(newDate.getMonth())
   }
 
-  const onSelectedOptionChangeHandler = (option: number | null) => {
+  const onSelectedOptionChangeHandler = (option: T | null) => {
     if (onSelectedOptionChange) {
       onSelectedOptionChange(option)
       if (onSelectedCustomRange) onSelectedCustomRange(null, null)
@@ -171,17 +175,22 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
   }, [selectedOption, firstDate, secondDate])
 
   placeholder = placeholder ?? 'Selecione um período'
-  const { customOptionId, optionComputed } = useMemo(() => {
+  const { customOption, optionComputed } = useMemo(() => {
     if (options && options.length > 0) {
       const customOptionId = Math.max(...options.map(option => option.id ?? 0)) + 1
-      const optionComputed = [...options, { text: 'Período Personalizado', id: customOptionId }]
-      return { customOptionId, optionComputed }
+      const customOption = {
+        text: 'Período Personalizado',
+        id: customOptionId,
+      } as T
+      const optionComputed = [...options, customOption]
+      return { customOption, optionComputed }
     }
-    return { customOptionId: 0, optionComputed: [] }
-  }, [selectedOption, options])
+    return { customOption: null, optionComputed: [] }
+  }, [options])
 
   return (
-    <Select
+    <Select<T>
+      dropDownWidth="284px"
       ref={selectRef}
       placeholder={placeholder}
       label={label}
@@ -190,7 +199,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         <IconWrapper className="icon" src={calendarSVG} width="20px" height="20px" color={theme.colors.shade30} />
       }
       options={optionComputed}
-      selectedOption={selectedOption ?? (firstDate ? customOptionId : null)}
+      selectedOption={selectedOption ?? (firstDate ? customOption : null)}
       onOptionChange={onSelectedOptionChangeHandler}
       {...props}
     >

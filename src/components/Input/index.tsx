@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, useEffect, useId, useRef } from 'react'
+import React, { HTMLAttributes, ReactNode, useCallback, useEffect, useId, useRef } from 'react'
 import { InputWrapper, StyledInput, StyledInputBorder, StyledInputContent, StyledLabel } from './styles'
 
 export interface InputProps extends HTMLAttributes<HTMLDivElement> {
@@ -53,7 +53,7 @@ export const Input: React.FC<InputProps> = ({
   const labelRef = useRef<HTMLLabelElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const updatePositions = () => {
+  const updatePositions = useCallback(() => {
     if (contentRef.current) {
       setContentPosition({
         x: 0,
@@ -70,7 +70,7 @@ export const Input: React.FC<InputProps> = ({
         height: labelRef.current.offsetHeight,
       })
     }
-  }
+  }, [])
 
   const onClickHandler = () => {
     inputRef.current?.focus()
@@ -79,9 +79,26 @@ export const Input: React.FC<InputProps> = ({
   useEffect(() => {
     const handler = () => updatePositions()
 
-    window.addEventListener('resize', handler)
+    let resizeObserver: ResizeObserver | null = null
+    if (ResizeObserver) {
+      resizeObserver = new ResizeObserver(handler)
+      if (contentRef.current) {
+        resizeObserver.observe(contentRef.current)
+      }
+      if (labelRef.current) {
+        resizeObserver.observe(labelRef.current)
+      }
+    } else {
+      window.addEventListener('resize', handler)
+    }
 
-    return () => window.removeEventListener('resize', handler)
+    return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect()
+      } else {
+        window.removeEventListener('resize', handler)
+      }
+    }
   }, [])
 
   useEffect(() => {

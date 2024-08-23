@@ -23,7 +23,7 @@ export default meta
 type Story = StoryObj<typeof DateRangePicker>
 
 const ComponentWrapper = ({ options, ...args }: Partial<DateRangePickerProps>) => {
-  const [selectedOption, setSelectOption] = React.useState<number | null>(null)
+  const [selectedOption, setSelectOption] = React.useState<DateRangePickerProps['selectedOption']>(null)
   const [startDate, setStartDate] = React.useState<Date | null>(null)
   const [endDate, setEndDate] = React.useState<Date | null>(null)
 

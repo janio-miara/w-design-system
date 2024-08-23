@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import { theme } from '../Themes'
 
 export const SelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   .icon {
     transition: transform 0.3s;
@@ -10,18 +12,24 @@ export const SelectWrapper = styled.div`
     transform: rotate(180deg) translateY(5px);
   }
 `
+export interface DropdownProps {
+  dropDownTop?: boolean
+  dropDownWidth?: string
+}
 
-export const Dropdown = styled.div`
+export const Dropdown = styled.div<DropdownProps>`
   position: absolute;
 
-  box-sizing: content-box;
-  width: 252px;
-  margin-top: 7px;
+  z-index: ${theme.zIndex.z9};
+
+  background-color: ${theme.colors.white};
+  width: ${({ dropDownWidth }) => (dropDownWidth ? dropDownWidth : '100%')};
+  ${({ dropDownTop }) => (dropDownTop ? 'margin-botton: 4px;' : 'margin-top: 4px;')};
   padding: 16px;
 
   border-radius: 4px;
   border: 1px solid ${theme.colors.shade20};
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
 `
 
 export const DropdownWrapper = styled.div`
@@ -37,7 +45,8 @@ export const OptionButton = styled.button<OptionButtonProps>`
   display: flex;
 
   align-items: center;
-
+  justify-content: space-between;
+  gap: 0.5rem;
   color: ${({ selected }) => (selected ? theme.colors.cyan30 : theme.colors.shade40)};
   background-color: transparent;
   border: none;
@@ -59,4 +68,8 @@ export const OptionButton = styled.button<OptionButtonProps>`
   &:hover {
     color: ${theme.colors.cyan30};
   }
+`
+
+export const OptionText = styled.div`
+  flex-grow: 1;
 `

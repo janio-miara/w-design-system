@@ -12,6 +12,7 @@ const meta: Meta<typeof Select> = {
     disabled: { control: 'boolean' },
     selectedOption: { control: 'number' },
     onOptionChange: { action: 'selectedOptionChange' },
+    
   },
 } satisfies Meta<typeof Select>
 
@@ -19,7 +20,7 @@ export default meta
 type Story = StoryObj<typeof Select>
 
 const ComponentWrapper = ({ options, ...args }: SelectProps) => {
-  const [selectedOption, setSelectOption] = React.useState<number | null>(null)
+  const [selectedOption, setSelectOption] = React.useState<SelectProps['selectedOption']>(null)
 
   return (
     <Select
@@ -47,5 +48,5 @@ const ComponentWrapper = ({ options, ...args }: SelectProps) => {
 }
 
 export const Default: Story = {
-  render: args => <ComponentWrapper label="Label" placeholder="Placeholder" />,
+  render: () => <ComponentWrapper label="Label" placeholder="Placeholder" />,
 }
