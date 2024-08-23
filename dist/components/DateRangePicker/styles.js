@@ -50,7 +50,6 @@ export const CalendarDay = styled.div `
   cursor: pointer;
   width: 36px;
   height: 36px;
-  box-sizing: border-box;
   color: ${({ isFirstSelected, isLastSelected }) => isFirstSelected || isLastSelected ? theme.colors.white : theme.colors.shade50};
 
   &:before {
