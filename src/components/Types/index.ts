@@ -1,9 +1,17 @@
 import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 import type { DatePickerProps } from '../DatePicker'
 import type { DateRangePickerProps } from '../DateRangePicker'
-import type { SelectProps } from '../Select'
-import type { SelectRef } from '../Select'
 import type { PaginateProps } from '../Paginate'
+import type { SelectProps, SelectRef } from '../Select'
+import type {
+  SidebarGroupData,
+  SidebarItemData,
+  SidebarLayoutItemTypeGroup,
+  SidebarLayoutItemTypeItem,
+  SidebarLayoutItemTypeSpacer,
+  SidebarProps,
+} from '../Sidebar'
+
 type ColorsVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'gray' | 'warning' | 'yellow'
 type ColorsVariantBanner = 'notice' | 'success' | 'danger' | 'warning'
 
@@ -53,4 +61,16 @@ export interface TabsTypes extends HTMLAttributes<HTMLDivElement> {
   onTabChange?: (activeTab: string) => void
 }
 
-export { DatePickerProps, DateRangePickerProps, SelectProps, SelectRef, PaginateProps }
+export {
+  DatePickerProps,
+  DateRangePickerProps,
+  PaginateProps,
+  SelectProps,
+  SelectRef,
+  SidebarGroupData,
+  SidebarItemData,
+  SidebarLayoutItemTypeGroup,
+  SidebarLayoutItemTypeItem,
+  SidebarLayoutItemTypeSpacer,
+  SidebarProps,
+}
