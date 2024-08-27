@@ -130,15 +130,19 @@ export const DateRangePicker = (_a) => {
         return '';
     }, [selectedOption, firstDate, secondDate]);
     placeholder = placeholder !== null && placeholder !== void 0 ? placeholder : 'Selecione um período';
-    const { customOptionId, optionComputed } = useMemo(() => {
+    const { customOption, optionComputed } = useMemo(() => {
         if (options && options.length > 0) {
             const customOptionId = Math.max(...options.map(option => { var _a; return (_a = option.id) !== null && _a !== void 0 ? _a : 0; })) + 1;
-            const optionComputed = [...options, { text: 'Período Personalizado', id: customOptionId }];
-            return { customOptionId, optionComputed };
+            const customOption = {
+                text: 'Período Personalizado',
+                id: customOptionId,
+            };
+            const optionComputed = [...options, customOption];
+            return { customOption, optionComputed };
         }
-        return { customOptionId: 0, optionComputed: [] };
-    }, [selectedOption, options]);
-    return (React.createElement(Select, Object.assign({ ref: selectRef, placeholder: placeholder, label: label, value: value, leftIcon: React.createElement(IconWrapper, { className: "icon", src: calendarSVG, width: "20px", height: "20px", color: theme.colors.shade30 }), options: optionComputed, selectedOption: selectedOption !== null && selectedOption !== void 0 ? selectedOption : (firstDate ? customOptionId : null), onOptionChange: onSelectedOptionChangeHandler }, props),
+        return { customOption: null, optionComputed: [] };
+    }, [options]);
+    return (React.createElement(Select, Object.assign({ dropDownWidth: "284px", ref: selectRef, placeholder: placeholder, label: label, value: value, leftIcon: React.createElement(IconWrapper, { className: "icon", src: calendarSVG, width: "20px", height: "20px", color: theme.colors.shade30 }), options: optionComputed, selectedOption: selectedOption !== null && selectedOption !== void 0 ? selectedOption : (firstDate ? customOption : null), onOptionChange: onSelectedOptionChangeHandler }, props),
         React.createElement(CalendarHeader, null,
             React.createElement(IconWrapper, { className: "icon", src: chevronLeftSVG, width: "14px", onClick: () => changeMonth(-1) }),
             monthNames[currentMonth],

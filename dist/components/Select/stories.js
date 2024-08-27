@@ -43,6 +43,6 @@ const ComponentWrapper = (_a) => {
         ] }, args)));
 };
 export const Default = {
-    render: args => React.createElement(ComponentWrapper, { label: "Label", placeholder: "Placeholder" }),
+    render: () => React.createElement(ComponentWrapper, { label: "Label", placeholder: "Placeholder" }),
 };
 //# sourceMappingURL=stories.js.map

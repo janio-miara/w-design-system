@@ -1,7 +1,8 @@
 {
   "name": "w-design-system",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^5.17.0",

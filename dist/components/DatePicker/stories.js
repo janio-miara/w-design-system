@@ -9,7 +9,7 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-import { DatePicker as DatePicker } from './index';
+import { DatePicker } from './index';
 import React from 'react';
 const meta = {
     title: 'Components/DatePicker',
@@ -29,12 +29,12 @@ const ComponentWrapper = (_a) => {
     const [customDate, setCustomDate] = React.useState(null);
     const onSelectedOptionChange = (option) => {
         setSelectOption(option);
-        if (option === null) {
+        if (option == null) {
             setCustomDate(null);
             return;
         }
         const date = new Date();
-        date.setDate(date.getDate() + option);
+        date.setDate(date.getDate() + (option === null || option === void 0 ? void 0 : option.id));
         setCustomDate(date);
     };
     return (React.createElement(DatePicker, Object.assign({ selectedOption: selectedOption, customDate: customDate, onSelectedOptionChange: onSelectedOptionChange, onSelectedCustomDate: date => setCustomDate(date), options: defaultOptions !== null && defaultOptions !== void 0 ? defaultOptions : [

@@ -1,20 +1,33 @@
-import React, { HTMLAttributes, ReactNode } from 'react';
-export interface SelectProps extends HTMLAttributes<HTMLDivElement> {
+import React, { HTMLAttributes, PropsWithChildren, ReactNode } from 'react';
+export interface SelectProps<T extends {
+    text: string;
+    id: number;
+    icon?: ReactNode;
+} = {
+    text: string;
+    id: number;
+    icon?: ReactNode;
+}> extends HTMLAttributes<HTMLDivElement> {
     disabled?: boolean;
     label?: string;
     leftIcon?: ReactNode;
-    onOptionChange?: (option: number | null) => void;
-    options?: {
-        text: string;
-        id: number;
-    }[];
+    onOptionChange?: (option: T | null) => void;
+    options?: T[];
     placeholder?: string;
     rightIcon?: ReactNode;
-    selectedOption?: number | null;
+    selectedOption?: T | null;
     value?: string;
+    dropDownTop?: boolean;
+    dropDownWidth?: string;
 }
 export interface SelectRef {
     setOpen(open: boolean): void;
 }
-export declare const Select: React.ForwardRefExoticComponent<SelectProps & React.RefAttributes<SelectRef>>;
+export declare const Select: <T extends {
+    text: string;
+    id: number;
+    icon?: ReactNode;
+}>(props: PropsWithChildren<SelectProps<T>> & {
+    ref?: React.ForwardedRef<SelectRef>;
+}) => React.ReactElement;
 //# sourceMappingURL=index.d.ts.map

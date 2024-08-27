@@ -13,6 +13,8 @@ export { Table } from './components/Table/index';
 export { Tabs } from './components/Tabs/index';
 export { theme } from './components/Themes/index';
 export { Title } from './components/Title/index';
+export { Sidebar } from './components/Sidebar/index';
 export { Select } from './components/Select/index';
+export * from './components/Types/index';
 export { appsSVG, alertSVG, bindSVG, bellSVG, checkSVG, calendarSVG, chevronDownSVG, chevronLeftSVG, chevronRightSVG, closeSVG, commentSVG, docCheckSVG, docSVG, dumpSVG, dashboardSVG, docDownloadSVG, docUploadSVG, editSVG, editalSVG, imageSVG, monitoringSVG, settingSVG, financeSVG, spreadsheetSVG, orderSVG, moneySVG, eyesSVG, portalSVG, spinSVG, } from './assets/icon/index';
 //# sourceMappingURL=index.d.ts.map
