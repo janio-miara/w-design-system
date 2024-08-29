@@ -54,22 +54,19 @@ export const Input: React.FC<InputProps> = ({
   const inputRef = useRef<HTMLInputElement>(null)
 
   const updatePositions = useCallback(() => {
-    if (contentRef.current) {
-      setContentPosition({
-        x: 0,
-        y: 0,
-        width: contentRef.current.offsetWidth,
-        height: contentRef.current.offsetHeight,
-      })
-    }
-    if (labelRef.current) {
-      setLabelPosition({
-        x: labelRef.current.offsetLeft,
-        y: labelRef.current.offsetTop,
-        width: labelRef.current.offsetWidth,
-        height: labelRef.current.offsetHeight,
-      })
-    }
+    const margin = 30
+    setContentPosition({
+      x: (contentRef.current?.offsetLeft ?? 0) - margin,
+      y: (contentRef.current?.offsetTop ?? 0) - margin,
+      width: (contentRef.current?.offsetWidth ?? 0) + margin * 2,
+      height: (contentRef.current?.offsetHeight ?? 0) + margin * 2,
+    })
+    setLabelPosition({
+      x: labelRef.current?.offsetLeft ?? 0,
+      y: labelRef.current?.offsetTop ?? 0,
+      width: labelRef.current?.offsetWidth ?? 0,
+      height: labelRef.current?.offsetHeight ?? 0,
+    })
   }, [])
 
   const onClickHandler = () => {
@@ -99,11 +96,11 @@ export const Input: React.FC<InputProps> = ({
         window.removeEventListener('resize', handler)
       }
     }
-  }, [])
+  }, [updatePositions])
 
   useEffect(() => {
     updatePositions()
-  }, [label])
+  }, [label, updatePositions])
 
   return (
     <InputWrapper {...props}>

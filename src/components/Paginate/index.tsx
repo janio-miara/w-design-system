@@ -2,12 +2,14 @@ import React from 'react'
 import { Container } from './styles'
 import { IconWrapper } from '../IconWrapper'
 import { chevronLeftSVG, chevronRightSVG } from '../../assets/icon'
+import { Select } from '../Select'
 export type PaginateProps = {
   currentPage: number
   itemCount: number
   itemsPerPage?: number
   onChangePage: (page: number) => void
   onChangeItemsPerPage: (itemsPerPage: number) => void
+  dropDownTop?: boolean
 }
 
 export const Paginate = ({
@@ -16,6 +18,7 @@ export const Paginate = ({
   onChangePage,
   itemsPerPage,
   onChangeItemsPerPage,
+  dropDownTop
 }: PaginateProps) => {
   // Se itemsPerPage for undefined, o valor default e 20
   let itemsPerPageValue = itemsPerPage || 20
@@ -55,7 +58,10 @@ export const Paginate = ({
   const minItem = (currentPage - 1) * itemsPerPageValue + 1
   const maxItem = Math.min(currentPage * itemsPerPageValue, itemCount)
 
-  const itemPerPageOptions = Array.from(new Set([10, 20, 50, 100, itemsPerPage]))
+  const itemPerPageOptions = [10, 20, 50, 100]
+  if (itemsPerPage) itemPerPageOptions.push(itemsPerPage)
+
+  const itemPerPageOptionsSorted = Array.from(new Set(itemPerPageOptions)).sort((a, b) => a - b)
 
   return (
     <Container>
@@ -85,20 +91,17 @@ export const Paginate = ({
       </ul>
       <div className="items-per-page-wrapper">
         <div className="item-per-page">Itens por página</div>
-        <select
-          value={itemsPerPageValue}
-          onChange={e => {
-            onChangeItemsPerPage(Number(e.target.value))
+        <Select
+          dropDownTop={dropDownTop !== false}
+          value={itemsPerPageValue.toString()}
+          onOptionChange={option => {
+            option && onChangeItemsPerPage(option.id)
           }}
-        >
-          {itemPerPageOptions.map((item, index) => {
-            return (
-              <option key={index} value={item}>
-                {item}
-              </option>
-            )
-          })}
-        </select>
+          options={itemPerPageOptionsSorted.map(count => ({
+            id: count,
+            text: count?.toString(),
+          }))}
+        />
         <div className="items-per-page-selected">
           {minItem} - {maxItem} de {itemCount}
         </div>

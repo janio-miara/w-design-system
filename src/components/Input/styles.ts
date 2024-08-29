@@ -91,7 +91,6 @@ export const StyledInputBorder = styled.div<StyledInputBorderProps>`
   inset: 0px;
   border-radius: 4px;
   border: 1px solid ${theme.colors.shade20};
-
   clip-rule: evenodd;
   clip-path: path(
     '${({ label, content }) =>

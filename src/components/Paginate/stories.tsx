@@ -35,14 +35,17 @@ const NewPaginate = (args: PaginateProps) => {
     action('changeItemsPerPage')(items)
   }
   return (
-    <Paginate
-      {...args}
-      currentPage={currentPage}
-      itemCount={itemCount}
-      itemsPerPage={itemsPerPage}
-      onChangePage={handleChangePage}
-      onChangeItemsPerPage={handleChangeItemsPerPage}
-    />
+    <>
+      <div style={{ height: '500px', width: '100%' }}></div>
+      <Paginate
+        {...args}
+        currentPage={currentPage}
+        itemCount={itemCount}
+        itemsPerPage={itemsPerPage}
+        onChangePage={handleChangePage}
+        onChangeItemsPerPage={handleChangeItemsPerPage}
+      />
+    </>
   )
 }
 
