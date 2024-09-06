@@ -62,7 +62,7 @@ const SidebarGroup = ({
         groupOpen={groupOpen}
         onClick={onClickHandler}
       >
-        <IconWrapper src={icon} color={color} />
+        <IconWrapper src={icon} color={color} width="20px" />
         {sidebarOpen && (
           <span className="title">
             <Paragraph size="medium" heavyBod={isCurrentGroup} color={disabled ? theme.colors.shade40 : 'white'}>
@@ -75,11 +75,11 @@ const SidebarGroup = ({
             <IconWrapper
               className={`icon ${groupOpen ? 'icon-rotate' : ''}`}
               src={chevronDownSVG}
-              width="16px"
+              width="20px"
               color={theme.colors.shade30}
             />
           ) : (
-            <IconWrapper src={lockSVG} width="14px" color="white" />
+            <IconWrapper src={lockSVG} width="20px" color="white" />
           ))}
       </SidebarGroupHeaderContainer>
       {children}

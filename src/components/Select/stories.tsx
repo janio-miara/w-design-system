@@ -12,7 +12,7 @@ const meta: Meta<typeof Select> = {
     disabled: { control: 'boolean' },
     selectedOption: { control: 'number' },
     onOptionChange: { action: 'selectedOptionChange' },
-    
+    dropDownTop: { control: 'boolean' },
   },
 } satisfies Meta<typeof Select>
 

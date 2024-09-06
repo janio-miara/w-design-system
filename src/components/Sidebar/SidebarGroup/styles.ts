@@ -50,10 +50,10 @@ export const SidebarGroupHeaderContainer = styled.div<SidebarGroupContainerHeade
   align-items: center;
   min-height: ${({ groupOpen, sidebarOpen }) => (groupOpen && sidebarOpen ? '40px' : '40px')};
   ${({ groupOpen, sidebarOpen }) => groupOpen && sidebarOpen && 'border-bottom: 1px solid rgba(255, 255, 255, 0.1)'};
-  justify-content: ${sidebarOpen => (sidebarOpen ? 'space-between' : 'center')};
+  justify-content: ${({ sidebarOpen }) => (sidebarOpen ? 'space-between' : 'center')};
   text-wrap: nowrap;
 
-  padding: 8px 12px;
+  padding: 8px 8px;
   cursor: pointer;
   height: 100%;
   gap: 24px;
@@ -64,9 +64,7 @@ export const SidebarGroupHeaderContainer = styled.div<SidebarGroupContainerHeade
     width: 100%;
   }
 
-  svg {
-    width: 20px;
-  }
+ 
 `
 
 export const LockedModal = styled.div`

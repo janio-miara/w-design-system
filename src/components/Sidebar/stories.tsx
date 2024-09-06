@@ -31,7 +31,7 @@ export const Playground: Story = {
               menuTitle: 'Dashboard',
               icon: dashboardSVG,
               link: '/dashboard',
-              disabled: false,
+              disabled: true,
             },
           }}
           currentItemId={''}

@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
   useMemo,
   useRef,
-  useState
+  useState,
 } from 'react'
 import { chevronDownSVG } from '../../assets/icon'
 import { IconWrapper } from '../IconWrapper'
@@ -46,6 +46,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
     selectedOption,
     value,
     dropDownWidth,
+    disabled,
     ...props
   }: PropsWithChildren<SelectProps<T>>,
   ref: React.ForwardedRef<SelectRef>,
@@ -87,11 +88,12 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
       return selectedOption.text
     }
     return ''
-  }, [value, selectedOption, options])
+  }, [value, selectedOption])
 
   return (
     <SelectWrapper {...props} ref={wrapperRef}>
       <Input
+        disabled={disabled}
         leftIcon={leftIcon}
         rightIcon={
           <>
@@ -108,7 +110,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
         label={label}
         value={valueComputed}
         readonly
-        onClick={() => setOpen(!open)}
+        onClick={() => !disabled && setOpen(!open)}
       />
       {open && (
         <DropdownWrapper>

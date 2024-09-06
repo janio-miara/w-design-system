@@ -15,14 +15,14 @@ const meta: Meta<PaginateProps> = {
     itemsPerPage: 10,
     onChangePage: fn(),
     onChangeItemsPerPage: fn(),
+    dropDownTop: true,
   },
-}
+} satisfies Meta<PaginateProps>
 
 export default meta
 
 const NewPaginate = (args: PaginateProps) => {
   const [currentPage, setCurrentPage] = useState(args.currentPage)
-  const [itemCount, setItemCount] = useState(args.itemCount)
   const [itemsPerPage, setItemsPerPage] = useState(args.itemsPerPage)
 
   const handleChangePage = (page: number) => {
@@ -40,7 +40,7 @@ const NewPaginate = (args: PaginateProps) => {
       <Paginate
         {...args}
         currentPage={currentPage}
-        itemCount={itemCount}
+        itemCount={args.itemCount}
         itemsPerPage={itemsPerPage}
         onChangePage={handleChangePage}
         onChangeItemsPerPage={handleChangeItemsPerPage}
@@ -52,5 +52,11 @@ const NewPaginate = (args: PaginateProps) => {
 export const Default: StoryObj<PaginateProps> = {
   render: args => {
     return <NewPaginate {...args} />
+  },
+}
+
+export const Bottom: StoryObj<PaginateProps> = {
+  render: args => {
+    return <NewPaginate {...args} itemPerPageOptions={[10, 50, 100]} />
   },
 }

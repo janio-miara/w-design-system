@@ -10,6 +10,7 @@ export type PaginateProps = {
   onChangePage: (page: number) => void
   onChangeItemsPerPage: (itemsPerPage: number) => void
   dropDownTop?: boolean
+  itemPerPageOptions?: number[]
 }
 
 export const Paginate = ({
@@ -18,7 +19,8 @@ export const Paginate = ({
   onChangePage,
   itemsPerPage,
   onChangeItemsPerPage,
-  dropDownTop
+  itemPerPageOptions = [],
+  dropDownTop,
 }: PaginateProps) => {
   // Se itemsPerPage for undefined, o valor default e 20
   let itemsPerPageValue = itemsPerPage || 20
@@ -58,10 +60,10 @@ export const Paginate = ({
   const minItem = (currentPage - 1) * itemsPerPageValue + 1
   const maxItem = Math.min(currentPage * itemsPerPageValue, itemCount)
 
-  const itemPerPageOptions = [10, 20, 50, 100]
-  if (itemsPerPage) itemPerPageOptions.push(itemsPerPage)
+  const itemPerPageOptionsCopy = Array.from(itemPerPageOptions)
+  if (itemsPerPage) itemPerPageOptionsCopy.push(itemsPerPage)
 
-  const itemPerPageOptionsSorted = Array.from(new Set(itemPerPageOptions)).sort((a, b) => a - b)
+  const itemPerPageOptionsSorted = Array.from(new Set(itemPerPageOptionsCopy)).sort((a, b) => a - b)
 
   return (
     <Container>
@@ -70,7 +72,7 @@ export const Paginate = ({
           className={currentPage === 1 ? 'icon-disabled' : 'icon'}
           src={chevronLeftSVG}
           width="14px"
-          onClick={() => onChangePage(currentPage - 1)}
+          onClick={() => currentPage !== 1 && onChangePage(currentPage - 1)}
         />
         {pages.map((page, index) => {
           if (page === 'elipsis') {
@@ -86,17 +88,19 @@ export const Paginate = ({
           className={currentPage === pageCount ? 'icon-disabled' : 'icon'}
           src={chevronRightSVG}
           width="14px"
-          onClick={() => onChangePage(currentPage + 1)}
+          onClick={() => currentPage !== pageCount && onChangePage(currentPage + 1)}
         />
       </ul>
       <div className="items-per-page-wrapper">
         <div className="item-per-page">Itens por página</div>
         <Select
+          className="select"
           dropDownTop={dropDownTop !== false}
           value={itemsPerPageValue.toString()}
           onOptionChange={option => {
             option && onChangeItemsPerPage(option.id)
           }}
+          disabled={itemPerPageOptions.length <= 1}
           options={itemPerPageOptionsSorted.map(count => ({
             id: count,
             text: count?.toString(),
