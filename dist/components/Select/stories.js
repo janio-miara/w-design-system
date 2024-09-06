@@ -21,6 +21,7 @@ const meta = {
         disabled: { control: 'boolean' },
         selectedOption: { control: 'number' },
         onOptionChange: { action: 'selectedOptionChange' },
+        dropDownTop: { control: 'boolean' },
     },
 };
 export default meta;

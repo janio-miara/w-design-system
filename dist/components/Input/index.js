@@ -30,22 +30,20 @@ export const Input = (_a) => {
     const labelRef = useRef(null);
     const inputRef = useRef(null);
     const updatePositions = useCallback(() => {
-        if (contentRef.current) {
-            setContentPosition({
-                x: 0,
-                y: 0,
-                width: contentRef.current.offsetWidth,
-                height: contentRef.current.offsetHeight,
-            });
-        }
-        if (labelRef.current) {
-            setLabelPosition({
-                x: labelRef.current.offsetLeft,
-                y: labelRef.current.offsetTop,
-                width: labelRef.current.offsetWidth,
-                height: labelRef.current.offsetHeight,
-            });
-        }
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+        const margin = 30;
+        setContentPosition({
+            x: ((_b = (_a = contentRef.current) === null || _a === void 0 ? void 0 : _a.offsetLeft) !== null && _b !== void 0 ? _b : 0) - margin,
+            y: ((_d = (_c = contentRef.current) === null || _c === void 0 ? void 0 : _c.offsetTop) !== null && _d !== void 0 ? _d : 0) - margin,
+            width: ((_f = (_e = contentRef.current) === null || _e === void 0 ? void 0 : _e.offsetWidth) !== null && _f !== void 0 ? _f : 0) + margin * 2,
+            height: ((_h = (_g = contentRef.current) === null || _g === void 0 ? void 0 : _g.offsetHeight) !== null && _h !== void 0 ? _h : 0) + margin * 2,
+        });
+        setLabelPosition({
+            x: (_k = (_j = labelRef.current) === null || _j === void 0 ? void 0 : _j.offsetLeft) !== null && _k !== void 0 ? _k : 0,
+            y: (_m = (_l = labelRef.current) === null || _l === void 0 ? void 0 : _l.offsetTop) !== null && _m !== void 0 ? _m : 0,
+            width: (_p = (_o = labelRef.current) === null || _o === void 0 ? void 0 : _o.offsetWidth) !== null && _p !== void 0 ? _p : 0,
+            height: (_r = (_q = labelRef.current) === null || _q === void 0 ? void 0 : _q.offsetHeight) !== null && _r !== void 0 ? _r : 0,
+        });
     }, []);
     const onClickHandler = () => {
         var _a;
@@ -74,10 +72,10 @@ export const Input = (_a) => {
                 window.removeEventListener('resize', handler);
             }
         };
-    }, []);
+    }, [updatePositions]);
     useEffect(() => {
         updatePositions();
-    }, [label]);
+    }, [label, updatePositions]);
     return (React.createElement(InputWrapper, Object.assign({}, props),
         React.createElement(StyledInputContent, { disabled: disabled, ref: contentRef, onClick: onClickHandler },
             React.createElement(StyledInputBorder, { content: contentPosition, label: labelPosition }),

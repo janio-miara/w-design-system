@@ -21,7 +21,7 @@ export const Playground = {
                     menuTitle: 'Dashboard',
                     icon: dashboardSVG,
                     link: '/dashboard',
-                    disabled: false,
+                    disabled: true,
                 },
             }, currentItemId: '', currentGroupId: '', setLink: action('setLink'), groups: {
                 group1: {

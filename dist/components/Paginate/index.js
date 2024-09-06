@@ -2,7 +2,8 @@ import React from 'react';
 import { Container } from './styles';
 import { IconWrapper } from '../IconWrapper';
 import { chevronLeftSVG, chevronRightSVG } from '../../assets/icon';
-export const Paginate = ({ currentPage, itemCount, onChangePage, itemsPerPage, onChangeItemsPerPage, }) => {
+import { Select } from '../Select';
+export const Paginate = ({ currentPage, itemCount, onChangePage, itemsPerPage, onChangeItemsPerPage, itemPerPageOptions = [], dropDownTop, }) => {
     // Se itemsPerPage for undefined, o valor default e 20
     let itemsPerPageValue = itemsPerPage || 20;
     const pageCount = Math.ceil(itemCount / itemsPerPageValue);
@@ -30,24 +31,28 @@ export const Paginate = ({ currentPage, itemCount, onChangePage, itemsPerPage, o
     }
     const minItem = (currentPage - 1) * itemsPerPageValue + 1;
     const maxItem = Math.min(currentPage * itemsPerPageValue, itemCount);
-    const itemPerPageOptions = Array.from(new Set([10, 20, 50, 100, itemsPerPage]));
+    const itemPerPageOptionsCopy = Array.from(itemPerPageOptions);
+    if (itemsPerPage)
+        itemPerPageOptionsCopy.push(itemsPerPage);
+    const itemPerPageOptionsSorted = Array.from(new Set(itemPerPageOptionsCopy)).sort((a, b) => a - b);
     return (React.createElement(Container, null,
         React.createElement("ul", { className: "pagination" },
-            React.createElement(IconWrapper, { className: currentPage === 1 ? 'icon-disabled' : 'icon', src: chevronLeftSVG, width: "14px", onClick: () => onChangePage(currentPage - 1) }),
+            React.createElement(IconWrapper, { className: currentPage === 1 ? 'icon-disabled' : 'icon', src: chevronLeftSVG, width: "14px", onClick: () => currentPage !== 1 && onChangePage(currentPage - 1) }),
             pages.map((page, index) => {
                 if (page === 'elipsis') {
                     return React.createElement("li", { key: `elipsis-${index}` }, "...");
                 }
                 return (React.createElement("li", { key: page, className: page === currentPage ? 'page-active' : 'page', onClick: () => onChangePage(page) }, page));
             }),
-            React.createElement(IconWrapper, { className: currentPage === pageCount ? 'icon-disabled' : 'icon', src: chevronRightSVG, width: "14px", onClick: () => onChangePage(currentPage + 1) })),
+            React.createElement(IconWrapper, { className: currentPage === pageCount ? 'icon-disabled' : 'icon', src: chevronRightSVG, width: "14px", onClick: () => currentPage !== pageCount && onChangePage(currentPage + 1) })),
         React.createElement("div", { className: "items-per-page-wrapper" },
             React.createElement("div", { className: "item-per-page" }, "Itens por pa\u0301gina"),
-            React.createElement("select", { value: itemsPerPageValue, onChange: e => {
-                    onChangeItemsPerPage(Number(e.target.value));
-                } }, itemPerPageOptions.map((item, index) => {
-                return (React.createElement("option", { key: index, value: item }, item));
-            })),
+            React.createElement(Select, { className: "select", dropDownTop: dropDownTop !== false, value: itemsPerPageValue.toString(), onOptionChange: option => {
+                    option && onChangeItemsPerPage(option.id);
+                }, disabled: itemPerPageOptions.length <= 1, options: itemPerPageOptionsSorted.map(count => ({
+                    id: count,
+                    text: count === null || count === void 0 ? void 0 : count.toString(),
+                })) }),
             React.createElement("div", { className: "items-per-page-selected" },
                 minItem,
                 " - ",

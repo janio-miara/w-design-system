@@ -31,11 +31,11 @@ const SidebarGroup = ({ title, icon, children, sidebarOpen, disabled, onClick, i
     }
     return (React.createElement(SidebarGroupContainer, { open: sidebarOpen, groupOpen: groupOpen },
         React.createElement(SidebarGroupHeaderContainer, { disabled: disabled, sidebarOpen: sidebarOpen, groupOpen: groupOpen, onClick: onClickHandler },
-            React.createElement(IconWrapper, { src: icon, color: color }),
+            React.createElement(IconWrapper, { src: icon, color: color, width: "20px" }),
             sidebarOpen && (React.createElement("span", { className: "title" },
                 React.createElement(Paragraph, { size: "medium", heavyBod: isCurrentGroup, color: disabled ? theme.colors.shade40 : 'white' }, title))),
             sidebarOpen &&
-                (!disabled ? (React.createElement(IconWrapper, { className: `icon ${groupOpen ? 'icon-rotate' : ''}`, src: chevronDownSVG, width: "16px", color: theme.colors.shade30 })) : (React.createElement(IconWrapper, { src: lockSVG, width: "14px", color: "white" })))),
+                (!disabled ? (React.createElement(IconWrapper, { className: `icon ${groupOpen ? 'icon-rotate' : ''}`, src: chevronDownSVG, width: "20px", color: theme.colors.shade30 })) : (React.createElement(IconWrapper, { src: lockSVG, width: "20px", color: "white" })))),
         children));
 };
 export default SidebarGroup;

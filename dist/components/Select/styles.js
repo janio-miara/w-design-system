@@ -18,7 +18,7 @@ export const Dropdown = styled.div `
 
   background-color: ${theme.colors.white};
   width: ${({ dropDownWidth }) => (dropDownWidth ? dropDownWidth : '100%')};
-  ${({ dropDownTop }) => (dropDownTop ? 'margin-botton: 4px;' : 'margin-top: 4px;')};
+  ${({ dropDownTop }) => (dropDownTop ? 'bottom: 58px;' : 'margin-top: 4px;')};
   padding: 16px;
 
   border-radius: 4px;

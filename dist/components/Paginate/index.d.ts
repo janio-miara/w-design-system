@@ -5,6 +5,8 @@ export type PaginateProps = {
     itemsPerPage?: number;
     onChangePage: (page: number) => void;
     onChangeItemsPerPage: (itemsPerPage: number) => void;
+    dropDownTop?: boolean;
+    itemPerPageOptions?: number[];
 };
-export declare const Paginate: ({ currentPage, itemCount, onChangePage, itemsPerPage, onChangeItemsPerPage, }: PaginateProps) => React.JSX.Element;
+export declare const Paginate: ({ currentPage, itemCount, onChangePage, itemsPerPage, onChangeItemsPerPage, itemPerPageOptions, dropDownTop, }: PaginateProps) => React.JSX.Element;
 //# sourceMappingURL=index.d.ts.map

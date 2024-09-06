@@ -75,7 +75,6 @@ export const StyledInputBorder = styled.div `
   inset: 0px;
   border-radius: 4px;
   border: 1px solid ${theme.colors.shade20};
-
   clip-rule: evenodd;
   clip-path: path(
     '${({ label, content }) => `M ${content.x} ${content.y} l ${content.width} 0 l 0 ${content.height} l -${content.width} 0z M ${label.x} ${label.y} l 0 ${label.height} l ${label.width} 0 l 0 -${label.height}z`}'

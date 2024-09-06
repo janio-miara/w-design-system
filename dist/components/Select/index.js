@@ -9,7 +9,7 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useMemo, useRef, useState, } from 'react';
 import { chevronDownSVG } from '../../assets/icon';
 import { IconWrapper } from '../IconWrapper';
 import { Input } from '../Input';
@@ -17,7 +17,7 @@ import { theme } from '../Themes';
 import { Dropdown, DropdownWrapper, OptionButton, OptionText, SelectWrapper } from './styles';
 const SelectFowardRef = (_a, ref) => {
     var _b;
-    var { children, label, leftIcon, onOptionChange, options, placeholder, rightIcon, selectedOption, value, dropDownWidth } = _a, props = __rest(_a, ["children", "label", "leftIcon", "onOptionChange", "options", "placeholder", "rightIcon", "selectedOption", "value", "dropDownWidth"]);
+    var { children, label, leftIcon, onOptionChange, options, placeholder, rightIcon, selectedOption, value, dropDownWidth, disabled } = _a, props = __rest(_a, ["children", "label", "leftIcon", "onOptionChange", "options", "placeholder", "rightIcon", "selectedOption", "value", "dropDownWidth", "disabled"]);
     const [open, setOpen] = useState(false);
     const wrapperRef = useRef(null);
     useImperativeHandle(ref, () => ({
@@ -53,11 +53,11 @@ const SelectFowardRef = (_a, ref) => {
             return selectedOption.text;
         }
         return '';
-    }, [value, selectedOption, options]);
+    }, [value, selectedOption]);
     return (React.createElement(SelectWrapper, Object.assign({}, props, { ref: wrapperRef }),
-        React.createElement(Input, { leftIcon: leftIcon, rightIcon: React.createElement(React.Fragment, null,
+        React.createElement(Input, { disabled: disabled, leftIcon: leftIcon, rightIcon: React.createElement(React.Fragment, null,
                 rightIcon,
-                React.createElement(IconWrapper, { className: `icon ${open ? 'icon-rotate' : ''}`, src: chevronDownSVG, width: "16px", color: theme.colors.shade30 })), placeholder: placeholder, label: label, value: valueComputed, readonly: true, onClick: () => setOpen(!open) }),
+                React.createElement(IconWrapper, { className: `icon ${open ? 'icon-rotate' : ''}`, src: chevronDownSVG, width: "16px", color: theme.colors.shade30 })), placeholder: placeholder, label: label, value: valueComputed, readonly: true, onClick: () => !disabled && setOpen(!open) }),
         open && (React.createElement(DropdownWrapper, null,
             React.createElement(Dropdown, { dropDownTop: props.dropDownTop, dropDownWidth: dropDownWidth },
                 ((_b = options === null || options === void 0 ? void 0 : options.length) !== null && _b !== void 0 ? _b : 0) > 0 && (React.createElement("div", null, options === null || options === void 0 ? void 0 : options.map(option => (React.createElement(OptionButton, { selected: (selectedOption === null || selectedOption === void 0 ? void 0 : selectedOption.id) === option.id, key: option.id, onClick: () => onOptionClick(option) },

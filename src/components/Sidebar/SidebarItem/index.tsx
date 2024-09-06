@@ -3,6 +3,7 @@ import { IconWrapper } from '../../IconWrapper'
 import { Paragraph } from '../../Paragraph'
 import { Bullet, Container } from './styles'
 import { theme } from '../../Themes'
+import { lockSVG } from '../../../assets/icon'
 
 export interface SidebarItemProps {
   disabled?: boolean
@@ -46,21 +47,24 @@ const SidebarItem = ({
       ) : (
         icon && (
           <div className="icon">
-            <IconWrapper src={icon} color={color} />
+            <IconWrapper src={icon} color={color} width='20px' />
           </div>
         )
       )}
       {sidebarOpen && (
-        <span className="title">
-          <Paragraph
-            size={!isInsideGroup ? 'medium' : 'small'}
-            /* eslint-disable-next-line no-nested-ternary */
-            color={disabled ? theme.colors.shade40 : !isInsideGroup ? 'white' : theme.colors.shade10}
-            heavyBod={isCurrentItem}
-          >
-            {title}
-          </Paragraph>
-        </span>
+        <>
+          <span className="title">
+            <Paragraph
+              size={!isInsideGroup ? 'medium' : 'small'}
+              /* eslint-disable-next-line no-nested-ternary */
+              color={disabled ? theme.colors.shade40 : !isInsideGroup ? 'white' : theme.colors.shade10}
+              heavyBod={isCurrentItem}
+            >
+              {title}
+            </Paragraph>
+          </span>
+          {disabled && <IconWrapper src={lockSVG} width="20px" color="white" />}
+        </>
       )}
     </Container>
   )
