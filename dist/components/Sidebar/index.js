@@ -4,7 +4,7 @@ import SidebarItem from './SidebarItem';
 import SidebarLogo from './SidebarLogo';
 import React from 'react';
 import { SidebarContainer, SidebarScrollContainer, SidebarScrollWrapperContainer, SidebarSpacer } from './styles';
-export const Sidebar = ({ logoUrl, layout, currentItemId, currentGroupId, setLink, items, logoOpacity, groups, }) => {
+export const Sidebar = ({ logoUrl, layout, currentItemId, currentGroupId, setLink, items, logoOpacity, groups, baseColor, }) => {
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const sidebarItemClickHandler = (itemId) => {
         const item = items[itemId];
@@ -12,8 +12,9 @@ export const Sidebar = ({ logoUrl, layout, currentItemId, currentGroupId, setLin
         if (link)
             setLink(link);
     };
-    return (React.createElement(SidebarContainer, { sidebarOpen: sidebarOpen },
-        React.createElement(SidebarLogo, { logoUrl: logoUrl, sidebarOpen: sidebarOpen, setSidebarOpen: setSidebarOpen, logoOpacity: logoOpacity }),
+    console.log(baseColor);
+    return (React.createElement(SidebarContainer, { sidebarOpen: sidebarOpen, baseColor: baseColor },
+        React.createElement(SidebarLogo, { logoUrl: logoUrl, sidebarOpen: sidebarOpen, setSidebarOpen: setSidebarOpen, logoOpacity: logoOpacity, baseColor: baseColor }),
         React.createElement(SidebarScrollWrapperContainer, null,
             React.createElement(SidebarScrollContainer, null, layout
                 .map((item, index) => (Object.assign({ id: index, disabled: undefined }, item)))

@@ -32,6 +32,7 @@ export interface SidebarProps {
     groups: Record<string, SidebarGroupData>;
     logoUrl: string;
     logoOpacity?: number;
+    baseColor?: string;
 }
-export declare const Sidebar: ({ logoUrl, layout, currentItemId, currentGroupId, setLink, items, logoOpacity, groups, }: SidebarProps) => React.JSX.Element;
+export declare const Sidebar: ({ logoUrl, layout, currentItemId, currentGroupId, setLink, items, logoOpacity, groups, baseColor, }: SidebarProps) => React.JSX.Element;
 //# sourceMappingURL=index.d.ts.map

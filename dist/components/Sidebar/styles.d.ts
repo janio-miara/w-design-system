@@ -1,5 +1,6 @@
 interface SidebarContainerProps {
     sidebarOpen: boolean;
+    baseColor?: string;
 }
 export declare const SidebarContainer: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components/dist/types").Substitute<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, SidebarContainerProps>> & string;
 export declare const SidebarScrollContainer: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>> & string;

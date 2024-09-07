@@ -44,6 +44,7 @@ export interface SidebarProps {
   groups: Record<string, SidebarGroupData>
   logoUrl: string
   logoOpacity?: number
+  baseColor?: string
 }
 
 export const Sidebar = ({
@@ -55,22 +56,23 @@ export const Sidebar = ({
   items,
   logoOpacity,
   groups,
+  baseColor,
 }: SidebarProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
-
   const sidebarItemClickHandler = (itemId: string) => {
     const item = items[itemId]
     const link = item?.link
     if (link) setLink(link)
   }
-
+  console.log(baseColor)
   return (
-    <SidebarContainer sidebarOpen={sidebarOpen}>
+    <SidebarContainer sidebarOpen={sidebarOpen} baseColor={baseColor}>
       <SidebarLogo
         logoUrl={logoUrl}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         logoOpacity={logoOpacity}
+        baseColor={baseColor}
       />
       <SidebarScrollWrapperContainer>
         <SidebarScrollContainer>

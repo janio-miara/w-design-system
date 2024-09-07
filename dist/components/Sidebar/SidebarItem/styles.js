@@ -10,9 +10,11 @@ export const Container = styled.div `
   color: ${({ disabled }) => (disabled ? 'rgba(255,255,255,0.4)' : '#fff')};
   cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
   border-radius: ${({ isInsideGroup }) => !isInsideGroup && '4px'};
+
   &:hover {
-    background-color: #192d53;
+    background-color: rgba(255, 255, 255, 0.1);
   }
+
   &:not(:last-child) {
     border-bottom: ${({ isInsideGroup }) => isInsideGroup && '1px solid rgba(255, 255, 255, 0.1)'};
   }

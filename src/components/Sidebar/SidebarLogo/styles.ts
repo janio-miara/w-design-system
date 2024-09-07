@@ -1,9 +1,11 @@
 import styled from 'styled-components'
+import { theme } from '../../Themes'
 
 interface SidebarLogoContainerProps {
   logoOpacity?: number
   sidebarOpen: boolean
   logoUrl: string
+  baseColor?: string
 }
 
 export const SidebarLogoContainer = styled.div<SidebarLogoContainerProps>`
@@ -18,7 +20,7 @@ export const SidebarLogoContainer = styled.div<SidebarLogoContainerProps>`
     height: 40px;
 
     background: url(${({ logoUrl }) => logoUrl});
-    background-size: ${({ sidebarOpen: open }) => (open ? `202px 40px` : '141px 28px')};
+    background-size: ${({ sidebarOpen }) => (sidebarOpen ? `202px 40px` : '141px 28px')};
     background-repeat: no-repeat;
     background-position: -8px 0px;
 
@@ -37,7 +39,7 @@ export const SidebarLogoContainer = styled.div<SidebarLogoContainerProps>`
     height: var(--height);
     width: var(--width);
 
-    background: #001640;
+    background: ${({ baseColor }) => baseColor || theme.colors.cyan50};
     color: #fff;
 
     border-radius: 0 var(--width) var(--width) 0;

@@ -4,7 +4,8 @@ export interface SidebarLogoProps {
     logoOpacity?: number;
     setSidebarOpen: (value: boolean) => void;
     logoUrl: string;
+    baseColor?: string;
 }
-declare const SidebarLogo: ({ sidebarOpen, setSidebarOpen, logoOpacity, logoUrl }: SidebarLogoProps) => React.JSX.Element;
+declare const SidebarLogo: ({ sidebarOpen, setSidebarOpen, logoOpacity, logoUrl, baseColor }: SidebarLogoProps) => React.JSX.Element;
 export default SidebarLogo;
 //# sourceMappingURL=index.d.ts.map

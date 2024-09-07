@@ -11,7 +11,7 @@ export const SidebarGroupContainer = styled.div `
   border-radius: 4px;
 
   &:hover {
-    background-color: #192d53;
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   .wrapperTitle {
