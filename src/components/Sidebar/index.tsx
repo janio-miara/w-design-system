@@ -2,7 +2,6 @@ import { useState } from 'react'
 import SidebarGroup from './SidebarGroup'
 import SidebarItem from './SidebarItem'
 import SidebarLogo from './SidebarLogo'
-
 import React from 'react'
 import { SidebarContainer, SidebarScrollContainer, SidebarScrollWrapperContainer, SidebarSpacer } from './styles'
 
@@ -64,7 +63,9 @@ export const Sidebar = ({
     const link = item?.link
     if (link) setLink(link)
   }
-  console.log(baseColor)
+
+  return <img src={a} alt='placeholder' />
+
   return (
     <SidebarContainer sidebarOpen={sidebarOpen} baseColor={baseColor}>
       <SidebarLogo
