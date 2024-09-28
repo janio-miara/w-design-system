@@ -88,6 +88,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
   }
 
   useEffect(() => {
+    if (usingInput) return
     if (value) {
       setComputedValue(value)
     } else if (selectedOption) {
@@ -95,8 +96,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
     } else {
       setComputedValue('')
     }
-    setUsingInput(false)
-  }, [value, selectedOption, disableSearch])
+  }, [value, selectedOption, disableSearch, open, usingInput])
 
   useEffect(() => {
     if (!open) setUsingInput(false)
@@ -106,6 +106,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
     if (disableSearch) return
     setComputedValue(event.target.value)
     setUsingInput(true)
+    onOptionChange && onOptionChange(null)
   }
 
   const filteredOptions: T[] = useMemo((): T[] => {
@@ -159,7 +160,11 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
       />
       {open && (
         <DropdownWrapper>
-          <Dropdown dropDownTop={props.dropDownTop} dropDownWidth={dropDownWidth} dropDownMaxHeight={props.dropDownMaxHeight}>
+          <Dropdown
+            dropDownTop={props.dropDownTop}
+            dropDownWidth={dropDownWidth}
+            dropDownMaxHeight={props.dropDownMaxHeight}
+          >
             {(options?.length ?? 0) > 0 && (
               <div>
                 {filteredOptions.map(option => (
