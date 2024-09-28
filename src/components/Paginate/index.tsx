@@ -94,6 +94,7 @@ export const Paginate = ({
       <div className="items-per-page-wrapper">
         <div className="item-per-page">Itens por página</div>
         <Select
+          disableSearch
           className="select"
           dropDownTop={dropDownTop !== false}
           value={itemsPerPageValue.toString()}

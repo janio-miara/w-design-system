@@ -190,6 +190,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
 
   return (
     <Select<T>
+      disableSearch
       dropDownWidth="284px"
       ref={selectRef}
       placeholder={placeholder}

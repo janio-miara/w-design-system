@@ -28,6 +28,7 @@ export interface SelectProps<
   value?: string
   dropDownTop?: boolean
   dropDownWidth?: string
+  disableSearch?: boolean
 }
 
 export interface SelectRef {
@@ -47,6 +48,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
     value,
     dropDownWidth,
     disabled,
+    disableSearch,
     ...props
   }: PropsWithChildren<SelectProps<T>>,
   ref: React.ForwardedRef<SelectRef>,
@@ -93,20 +95,21 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
       setComputedValue('')
     }
     setUsingInput(false)
-  }, [value, selectedOption])
+  }, [value, selectedOption, disableSearch])
 
   useEffect(() => {
     if (!open) setUsingInput(false)
   }, [open])
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (disableSearch) return
     setComputedValue(event.target.value)
     setUsingInput(true)
   }
 
   const filteredOptions: T[] = useMemo((): T[] => {
     if (!options) return []
-    if (!usingInput) return options
+    if (!usingInput || disableSearch) return options
 
     const normalizedValue = (computedValue || '')
       .trim()
@@ -128,8 +131,8 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
       }
     }
     return items
-  }, [options, usingInput, computedValue])
-
+  }, [options, usingInput, disableSearch, computedValue])
+  
   return (
     <SelectWrapper {...props} ref={wrapperRef}>
       <Input
