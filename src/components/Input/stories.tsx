@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Input } from './index'
-import { VARIANTS_TYPES } from '../../utils/constanst'
 import { useState } from 'react'
 import React from 'react'
 import { IconWrapper } from '../IconWrapper'

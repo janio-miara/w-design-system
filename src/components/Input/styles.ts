@@ -3,6 +3,7 @@ import { theme } from '../Themes'
 import type { Position } from '.'
 
 export const InputWrapper = styled.div`
+  position: relative;
   border-radius: 4px;
 `
 
@@ -94,6 +95,8 @@ export const StyledInputBorder = styled.div<StyledInputBorderProps>`
   clip-rule: evenodd;
   clip-path: path(
     '${({ label, content }) =>
-      `M ${content.x} ${content.y} l ${content.width} 0 l 0 ${content.height} l -${content.width} 0z M ${label.x} ${label.y} l 0 ${label.height} l ${label.width} 0 l 0 -${label.height}z`}'
+      label.height !== 0 && label.width !== 0
+        ? `M ${content.x} ${content.y} l ${content.width} 0 l 0 ${content.height} l -${content.width} 0z M ${label.x} ${label.y} l 0 ${label.height} l ${label.width} 0 l 0 -${label.height}z`
+        : ''}'
   );
 `

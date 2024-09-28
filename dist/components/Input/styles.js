@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { theme } from '../Themes';
 export const InputWrapper = styled.div `
+  position: relative;
   border-radius: 4px;
 `;
 export const StyledInput = styled.input `
@@ -77,7 +78,9 @@ export const StyledInputBorder = styled.div `
   border: 1px solid ${theme.colors.shade20};
   clip-rule: evenodd;
   clip-path: path(
-    '${({ label, content }) => `M ${content.x} ${content.y} l ${content.width} 0 l 0 ${content.height} l -${content.width} 0z M ${label.x} ${label.y} l 0 ${label.height} l ${label.width} 0 l 0 -${label.height}z`}'
+    '${({ label, content }) => label.height !== 0 && label.width !== 0
+    ? `M ${content.x} ${content.y} l ${content.width} 0 l 0 ${content.height} l -${content.width} 0z M ${label.x} ${label.y} l 0 ${label.height} l ${label.width} 0 l 0 -${label.height}z`
+    : ''}'
   );
 `;
 //# sourceMappingURL=styles.js.map

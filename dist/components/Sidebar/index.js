@@ -12,7 +12,6 @@ export const Sidebar = ({ logoUrl, layout, currentItemId, currentGroupId, setLin
         if (link)
             setLink(link);
     };
-    console.log(baseColor);
     return (React.createElement(SidebarContainer, { sidebarOpen: sidebarOpen, baseColor: baseColor },
         React.createElement(SidebarLogo, { logoUrl: logoUrl, sidebarOpen: sidebarOpen, setSidebarOpen: setSidebarOpen, logoOpacity: logoOpacity, baseColor: baseColor }),
         React.createElement(SidebarScrollWrapperContainer, null,
