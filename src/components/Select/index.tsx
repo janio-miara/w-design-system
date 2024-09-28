@@ -52,6 +52,8 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
   ref: React.ForwardedRef<SelectRef>,
 ) => {
   const [open, setOpen] = useState(false)
+  const [usingInput, setUsingInput] = useState(false)
+  const [computedValue, setComputedValue] = useState(value)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   useImperativeHandle(ref, () => ({
@@ -82,13 +84,51 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
     setOpen(false)
   }
 
-  const valueComputed = useMemo(() => {
-    if (value) return value
-    if (selectedOption) {
-      return selectedOption.text
+  useEffect(() => {
+    if (value) {
+      setComputedValue(value)
+    } else if (selectedOption) {
+      setComputedValue(selectedOption.text)
+    } else {
+      setComputedValue('')
     }
-    return ''
+    setUsingInput(false)
   }, [value, selectedOption])
+
+  useEffect(() => {
+    if (!open) setUsingInput(false)
+  }, [open])
+
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setComputedValue(event.target.value)
+    setUsingInput(true)
+  }
+
+  const filteredOptions: T[] = useMemo((): T[] => {
+    if (!options) return []
+    if (!usingInput) return options
+
+    const normalizedValue = (computedValue || '')
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+    if (!normalizedValue) return options
+
+    const items: T[] = []
+    for (const option of options) {
+      if (
+        option.text
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .includes(normalizedValue)
+      ) {
+        items.push(option)
+      }
+    }
+    return items
+  }, [options, usingInput, computedValue])
 
   return (
     <SelectWrapper {...props} ref={wrapperRef}>
@@ -108,8 +148,9 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
         }
         placeholder={placeholder}
         label={label}
-        value={valueComputed}
-        readonly
+        value={computedValue}
+        readonly={!open}
+        onChange={onInputChange}
         onClick={() => !disabled && setOpen(!open)}
       />
       {open && (
@@ -117,7 +158,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
           <Dropdown dropDownTop={props.dropDownTop} dropDownWidth={dropDownWidth}>
             {(options?.length ?? 0) > 0 && (
               <div>
-                {options?.map(option => (
+                {filteredOptions.map(option => (
                   <OptionButton
                     selected={selectedOption?.id === option.id}
                     key={option.id}
