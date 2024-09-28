@@ -29,6 +29,7 @@ export interface SelectProps<
   dropDownTop?: boolean
   dropDownWidth?: string
   disableSearch?: boolean
+  dropDownMaxHeight?: string
 }
 
 export interface SelectRef {
@@ -132,7 +133,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
     }
     return items
   }, [options, usingInput, disableSearch, computedValue])
-  
+
   return (
     <SelectWrapper {...props} ref={wrapperRef}>
       <Input
@@ -158,7 +159,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
       />
       {open && (
         <DropdownWrapper>
-          <Dropdown dropDownTop={props.dropDownTop} dropDownWidth={dropDownWidth}>
+          <Dropdown dropDownTop={props.dropDownTop} dropDownWidth={dropDownWidth} dropDownMaxHeight={props.dropDownMaxHeight}>
             {(options?.length ?? 0) > 0 && (
               <div>
                 {filteredOptions.map(option => (

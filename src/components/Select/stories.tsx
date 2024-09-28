@@ -27,20 +27,10 @@ const ComponentWrapper = ({ options, ...args }: SelectProps) => {
       selectedOption={selectedOption}
       onOptionChange={option => setSelectOption(option)}
       options={
-        options ?? [
-          {
-            text: 'Opção 1',
-            id: 1,
-          },
-          {
-            text: 'Opção 2',
-            id: 2,
-          },
-          {
-            text: 'Opção 3',
-            id: 3,
-          },
-        ]
+        options ?? (new Array(20)).fill(0).map((_, index) => ({
+          id: index,
+          text: `Opção ${index + 1}`,
+        }))
       }
       {...args}
     />

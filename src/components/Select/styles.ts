@@ -15,6 +15,7 @@ export const SelectWrapper = styled.div`
 export interface DropdownProps {
   dropDownTop?: boolean
   dropDownWidth?: string
+  dropDownMaxHeight?: string
 }
 
 export const Dropdown = styled.div<DropdownProps>`
@@ -30,6 +31,9 @@ export const Dropdown = styled.div<DropdownProps>`
   border-radius: 4px;
   border: 1px solid ${theme.colors.shade20};
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+  height: auto;
+  max-height: ${({ dropDownMaxHeight }) => (dropDownMaxHeight ? dropDownMaxHeight : '300px')};
+  overflow-y: auto;
 `
 
 export const DropdownWrapper = styled.div`
