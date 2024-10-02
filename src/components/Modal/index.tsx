@@ -10,14 +10,14 @@ const {
   colors: { cyan50, shade30 },
 } = theme
 
-export const Modal: React.FC<ModalTypes> = ({ children, onClose, footer, ...props }) => {
+export const Modal: React.FC<ModalTypes> = ({ title, children, onClose, footer, ...props }) => {
   return ReactDOM.createPortal(
     <>
       <Overlay onClick={onClose} />
       <ModalContainer {...props}>
         <div className={'modalHeader'}>
           <Title size={'medium'} bold color={cyan50}>
-            Enviar
+            {title}
           </Title>
           <IconWrapper src={closeSVG} width={'14px'} height={'14px'} color={shade30} onClick={onClose} />
         </div>

@@ -21,6 +21,26 @@ const meta: Meta<typeof Paragraph> = {
       control: 'color',
       description: 'Select the color of the text',
     },
+    textAlign: {
+      control: { type: 'select', options: ['left', 'center', 'right', 'justify'] },
+      description: 'Select the text alignment',
+    },
+    lineHeight: {
+      control: 'text',
+      description: 'Set the line height of the paragraph',
+    },
+    letterSpacing: {
+      control: 'text',
+      description: 'Set the letter spacing of the paragraph',
+    },
+    margin: {
+      control: 'text',
+      description: 'Set the margin of the paragraph',
+    },
+    padding: {
+      control: 'text',
+      description: 'Set the padding of the paragraph',
+    },
     children: {
       control: 'text',
       description: 'Content of the paragraph',

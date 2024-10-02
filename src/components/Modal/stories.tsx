@@ -24,6 +24,7 @@ export const Playground: Story = {
         <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
         {isOpen && (
           <Modal
+            title={'Modal Title'}
             onClose={() => setIsOpen(false)}
             footer={
               <>

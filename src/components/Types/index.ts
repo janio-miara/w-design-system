@@ -52,6 +52,7 @@ export interface BannerTypes extends HTMLAttributes<HTMLDivElement> {
 export interface ModalTypes extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
   onClose: () => void
+  title: string
   footer?: ReactNode | ReactNode[]
 }
 

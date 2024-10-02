@@ -6,6 +6,11 @@ interface ParagraphProps {
   as?: 'span' | 'div' | 'label' | 'p'
   color?: string
   textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase'
+  textAlign?: 'left' | 'center' | 'right' | 'justify'
+  lineHeight?: string
+  letterSpacing?: string
+  margin?: string
+  padding?: string
   children: React.ReactNode
   lightBod?: boolean
   semiBod?: boolean
@@ -35,14 +40,16 @@ const getFontWeight = (props: ParagraphProps) => {
 }
 
 const ParagraphStyled = styled.p<ParagraphProps>`
-  margin: 0;
-  padding: 0;
+  margin: ${({ margin = '0' }) => margin};
+  padding: ${({ padding = '0' }) => padding};
   font-size: ${({ size = 'small' }) => sizes[size]};
   font-weight: ${props => getFontWeight(props)};
-  line-height: 140%;
+  line-height: ${({ lineHeight = '140%' }) => lineHeight};
+  letter-spacing: ${({ letterSpacing = 'normal' }) => letterSpacing};
   font-family: 'Nunito Sans', sans-serif;
   color: ${({ color = 'inherit' }) => color};
   text-transform: ${({ textTransform = 'none' }) => textTransform};
+  text-align: ${({ textAlign = 'left' }) => textAlign};
 `
 
 export const Paragraph: React.FC<ParagraphProps> = ({
@@ -50,11 +57,27 @@ export const Paragraph: React.FC<ParagraphProps> = ({
   as = 'p',
   color = 'inherit',
   textTransform = 'none',
+  textAlign = 'left',
+  lineHeight = '140%',
+  letterSpacing = 'normal',
+  margin = '0',
+  padding = '0',
   children,
   ...props
 }) => {
   return (
-    <ParagraphStyled as={as} size={size} color={color} textTransform={textTransform} {...props}>
+    <ParagraphStyled
+      as={as}
+      size={size}
+      color={color}
+      textTransform={textTransform}
+      textAlign={textAlign}
+      lineHeight={lineHeight}
+      letterSpacing={letterSpacing}
+      margin={margin}
+      padding={padding}
+      {...props}
+    >
       {children}
     </ParagraphStyled>
   )
