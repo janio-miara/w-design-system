@@ -119,7 +119,11 @@ export const Default: Story = {
     columns: columns,
     striped: true,
     loading: false,
-    emptyStateMessage: 'No data available',
+    emptyStateMessage: {
+      title: 'Nenhum registro encontrado',
+      subTitle: 'Não há registros para exibir',
+      description: 'Não há registros para exibir',
+    },
     data: [
       {
         id: 1,

@@ -35,6 +35,7 @@ import { default as settingSVG } from './seting.svg'
 import { default as spinSVG } from './spin.svg'
 import { default as spreadsheetSVG } from './spreadsheet.svg'
 import { default as wavePulseSVG } from './wave-pulse.svg'
+import { default as logoWaveGrayPNG } from './logoWaveGray.png'
 
 export {
   alertSVG,
@@ -74,4 +75,5 @@ export {
   spinSVG,
   spreadsheetSVG,
   wavePulseSVG,
+  logoWaveGrayPNG,
 }

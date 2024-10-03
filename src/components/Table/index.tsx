@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Paragraph } from '../Paragraph'
 import { theme } from '../Themes'
 import { ContainerLoading } from '../Loading'
+import { EmptyState } from '../EmptyState'
 
 type Column = {
   header: string
@@ -14,12 +15,17 @@ type Column = {
   align?: 'left' | 'center' | 'right'
 }
 
+type emptyStateMessage = {
+  title: string
+  subTitle?: string
+  description?: string
+}
 type TableProps = {
   columns: Column[] | any
   data: any[]
   height?: string
   loading?: boolean
-  emptyStateMessage?: string
+  emptyStateMessage?: emptyStateMessage
   striped?: boolean
 }
 
@@ -105,7 +111,11 @@ export const Table: React.FC<TableProps> = ({
   data,
   height = '100%',
   loading = false,
-  emptyStateMessage = 'No data available',
+  emptyStateMessage = {
+    title: 'Nenhum registro encontrado',
+    subTitle: 'Não há registros para exibir',
+    description: 'Não há registros para exibir',
+  },
   striped = false,
 }) => {
   const [expandedRow, setExpandedRow] = useState<number | null>(null)
@@ -153,7 +163,11 @@ export const Table: React.FC<TableProps> = ({
             </LoadingWrapper>
           ) : data.length === 0 ? (
             <EmptyStateWrapper>
-              <Paragraph>{emptyStateMessage}</Paragraph>
+              <EmptyState
+                title={emptyStateMessage?.title}
+                subTitle={emptyStateMessage?.subTitle}
+                description={emptyStateMessage?.description}
+              />
             </EmptyStateWrapper>
           ) : (
             data.map((row, rowIndex) => (

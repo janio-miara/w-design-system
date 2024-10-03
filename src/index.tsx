@@ -15,6 +15,7 @@ export { Table } from './components/Table/index'
 export { Tabs } from './components/Tabs/index'
 export { theme } from './components/Themes/index'
 export { Title } from './components/Title/index'
+export { EmptyState } from './components/EmptyState/index'
 export * from './components/Types/index'
 
 export {
