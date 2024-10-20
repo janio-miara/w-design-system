@@ -1,0 +1,17 @@
+<svg width="256" height="256" version="1.1" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="a" x1="34677" x2="34677" y1="-26802" y2="-27529" gradientTransform="matrix(.028346 0 0 -.028346 -861.77 -717.37)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#0a1917" offset="0"/>
+   <stop stop-color="#114d3d" offset=".8706"/>
+   <stop stop-color="#1c8363" offset="1"/>
+  </linearGradient>
+  <linearGradient id="b" x1="34677" x2="34677" y1="-26802" y2="-27529" gradientTransform="matrix(.028346 0 0 -.028346 -861.77 -717.37)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
+  <linearGradient id="e" x1="34677" x2="34677" y1="-26802" y2="-27529" gradientTransform="matrix(.048421 0 0 -.048421 -1605.2 -1223.6)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
+  <linearGradient id="d" x1="34677" x2="34677" y1="-26802" y2="-27529" gradientTransform="matrix(-.048421 0 0 -.048421 1753 -1186.4)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
+  <linearGradient id="c" x1="34677" x2="34677" y1="-26802" y2="-27529" gradientTransform="matrix(-.048421 0 0 -.048421 1861.2 -1188.4)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
+ </defs>
+ <path d="m254 144.57h-92.016l-51.827-35.209h92.021z" style="fill-rule:evenodd;fill:url(#c);stroke-width:0px"/>
+ <path d="m145.84 146.59h-92.016l-51.827-35.209h92.021z" style="fill-rule:evenodd;fill:url(#d);stroke-width:0px"/>
+ <path d="m2.006 109.41h92.016l51.827-35.209h-92.021z" style="fill-rule:evenodd;fill:url(#e);stroke-width:0px"/>
+ <path transform="matrix(1.7082 0 0 1.7082 -24.946 74.201)" d="m79.093 62.989h53.867l30.34-20.612h-53.87z" style="fill-rule:evenodd;fill:url(#b);stroke-width:0px"/>
+</svg>

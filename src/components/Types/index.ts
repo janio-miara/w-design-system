@@ -3,6 +3,7 @@ export type { DatePickerProps } from '../DatePicker'
 export type { DateRangePickerProps } from '../DateRangePicker'
 export type { PaginateProps } from '../Paginate'
 export type { SelectProps, SelectRef } from '../Select'
+export type { PortalSelectProps, Portal } from '../PortalSelect'
 export type {
   SidebarGroupData,
   SidebarItemData,
@@ -11,7 +12,6 @@ export type {
   SidebarLayoutItemTypeSpacer,
   SidebarProps,
 } from '../Sidebar'
-
 type ColorsVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'gray' | 'warning' | 'yellow'
 type ColorsVariantBanner = 'notice' | 'success' | 'danger' | 'warning'
 
