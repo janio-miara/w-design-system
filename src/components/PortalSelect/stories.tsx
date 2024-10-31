@@ -13,6 +13,7 @@ const meta: Meta<typeof PortalSelect> = {
     selectedOption: { control: 'number' },
     onOptionChange: { action: 'selectedOptionChange' },
     dropDownTop: { control: 'boolean' },
+    allPortalsOption: { control: 'boolean' },
   },
 } satisfies Meta<typeof PortalSelect>
 
@@ -70,17 +71,18 @@ const ComponentWrapper = ({ portals, ...args }: PortalSelectProps) => {
 
   return (
     <PortalSelect
+      {...args}
       selectedOption={selectedOption}
       onOptionChange={option => setSelectOption(option)}
       portals={portals}
-      {...args}
     />
   )
 }
 
 export const Default: Story = {
-  render: () => (
+  render: args => (
     <ComponentWrapper
+      {...args}
       label="Label"
       placeholder="Placeholder"
       portals={Object.entries(portals).map(([id, name]) => ({ id: Number(id), name }))}

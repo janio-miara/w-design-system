@@ -65,6 +65,7 @@ export interface PortalSelectProps extends HTMLAttributes<HTMLDivElement> {
   dropDownWidth?: string
   disableSearch?: boolean
   dropDownMaxHeight?: string
+  allPortalsOption?: boolean
 }
 
 const portalIcons: Record<number, string> = {
@@ -113,32 +114,45 @@ const portalIcons: Record<number, string> = {
   49: portalImg49,
 }
 const PortalSelectFowardRef = (
-  { children, portals, ...props }: PropsWithChildren<PortalSelectProps>,
+  { children, portals, allPortalsOption, ...props }: PropsWithChildren<PortalSelectProps>,
   ref: React.ForwardedRef<SelectRef>,
 ) => {
+  const allPortalsValue = allPortalsOption !== false
+  const portalsValue = allPortalsValue ? [{ id: 0, name: 'Todos os portais' }, ...portals] : portals
+
   const selectProps: SelectProps<{ text: string; id: number; icon?: ReactNode; portal: Portal }> = {
     ...props,
-    leftIcon: <PortalIcon src={props.selectedOption ? portalIcons[props.selectedOption.id] : defaultIcon} />,
-    options: portals.map(portal => {
-      const imageUrl = (portalIcons[portal.id] ?? defaultIcon) as unknown as string
+    leftIcon: props.selectedOption != null && portalIcons[props.selectedOption.id] && (
+      <PortalIcon src={props.selectedOption ? portalIcons[props.selectedOption.id] : defaultIcon} />
+    ),
+    options: portalsValue.map(portal => {
+      const imageUrl = portalIcons[portal.id] as unknown as string
       return {
         id: portal.id,
         text: portal.name,
-        icon: <PortalIcon src={imageUrl} alt={portal.name} />,
+        icon: imageUrl && <PortalIcon src={imageUrl} alt={portal.name} />,
         portal,
       }
     }),
     onOptionChange: option => {
       if (props.onOptionChange) {
-        props.onOptionChange(option?.portal ?? null)
+        if (allPortalsValue && !option) {
+          props.onOptionChange({
+            id: 0,
+            name: 'Todos os portais',
+          })
+          return
+        } else {
+          props.onOptionChange(option?.portal ?? null)
+        }
       }
     },
     selectedOption: props.selectedOption
       ? {
           id: props.selectedOption.id,
           text: props.selectedOption.name,
-          icon: (
-            <PortalIcon src={portalIcons[props.selectedOption.id] ?? defaultIcon} alt={props.selectedOption.name} />
+          icon: portalIcons[props.selectedOption.id] && (
+            <PortalIcon src={portalIcons[props.selectedOption.id]} alt={props.selectedOption.name} />
           ),
           portal: props.selectedOption,
         }
