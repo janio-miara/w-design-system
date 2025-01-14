@@ -19,7 +19,7 @@ export const InputWrapper = styled.div`
     cursor: pointer;
   }
   .container-input-tag {
-    display: flex;
+    display: ruby;
     gap: 16px;
     margin-top: 8px;
 
@@ -40,8 +40,8 @@ export const InputWrapper = styled.div`
       background: ${theme.colors.cyan10};
       display: flex;
 
-      gap: 8px;
-      flex-wrap: wrap;
+      margin: 8px;
+      flex-wrap: nowrap;
       border-radius: 4px;
       padding: 4px 8px;
     }
