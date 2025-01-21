@@ -16,6 +16,8 @@ const meta: Meta<typeof DateRangePicker> = {
     endCustomDate: { control: 'date' },
     onSelectedOptionChange: { action: 'selectedOptionChange' },
     onSelectedCustomRange: { action: 'selectedCustomRange' },
+    rangeDayLimit: { control: 'number' },
+    footerMessage: { control: 'text' },
   },
 } satisfies Meta<typeof DateRangePicker>
 
@@ -64,4 +66,8 @@ export const SelecionarIntervaloDeDatas: Story = {
 
 export const SelecionarIntervaloDeDatasSimples: Story = {
   render: args => <ComponentWrapper options={[]} />,
+}
+
+export const SelecionarIntervaloDeDatasLimitado: Story = {
+  render: args => <ComponentWrapper label="Período da Disputa" placeholder="Placeholder" rangeDayLimit={15} {...args} footerMessage='O intervalo de pesquisa limita-se ao máximo de 15 dias.' />,
 }

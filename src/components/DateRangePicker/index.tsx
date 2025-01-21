@@ -10,6 +10,7 @@ import {
   CalendarGrid,
   CalendarHeader,
   CalendarWeekDayLabel,
+  Footer,
 } from './styles'
 
 type GetElementType<T> = T extends (infer U)[] ? U : never
@@ -28,6 +29,8 @@ export interface DateRangePickerProps<
   startCustomDate: Date | null
   endCustomDate: Date | null
   onSelectedCustomRange: (start: Date | null, end: Date | null) => void
+  rangeDayLimit?: number
+  footerMessage?: string
 }
 
 interface EmptyDay {
@@ -43,6 +46,7 @@ interface Day {
   date: Date
   isFirstSelected: boolean
   isLastSelected: boolean
+  isBlocked: boolean
 }
 
 const monthNames = [
@@ -73,6 +77,8 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
   startCustomDate,
   endCustomDate,
   isRange,
+  rangeDayLimit,
+  footerMessage,
   ...props
 }: DateRangePickerProps<T>) => {
   const [currentYear, setCurrentYear] = useState(0)
@@ -100,6 +106,11 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
       if (onSelectedCustomRange) onSelectedCustomRange(null, null)
       selectRef.current?.setOpen(false)
     }
+  }
+
+  const differenceInDays = (date1: Date, date2: Date) => {
+    const diffTime = Math.abs(date2.getTime() - date1.getTime())
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
   }
 
   const onDayClick = (date: Date) => {
@@ -149,6 +160,11 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
 
   while (day.getMonth() === currentMonth) {
     const isSelected = (firstDate && secondDate && day >= firstDate && day <= secondDate) ?? false
+    let isBlocked = false
+    if (rangeDayLimit !== undefined && startCustomDate && endCustomDate === null) {
+      const diff = differenceInDays(startCustomDate, day)
+      isBlocked = diff > rangeDayLimit
+    }
     days.push({
       type: 'day',
       value: day.getDate(),
@@ -157,6 +173,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
       date: new Date(day),
       isFirstSelected: (firstDate && firstDate.toDateString() === day.toDateString()) ?? false,
       isLastSelected: (secondDate && secondDate.toDateString() === day.toDateString()) ?? false,
+      isBlocked,
     })
     day.setDate(day.getDate() + 1)
   }
@@ -192,7 +209,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
     <Select<T>
       disableSearch
       dropDownWidth="284px"
-      dropDownMaxHeight='auto'
+      dropDownMaxHeight="auto"
       ref={selectRef}
       placeholder={placeholder}
       label={label}
@@ -223,11 +240,12 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
             <CalendarDay
               isFirstSelected={day.isFirstSelected}
               isLastSelected={day.isLastSelected}
+              isBlocked={day.isBlocked}
               key={day.value}
               today={day.today}
-              onClick={() => onDayClick(day.date)}
-              onMouseEnter={() => onMouseEnter(day.date)}
-              onMouseLeave={() => onMouseLeave(day.date)}
+              onClick={() => !day.isBlocked && onDayClick(day.date)}
+              onMouseEnter={() => !day.isBlocked && onMouseEnter(day.date)}
+              onMouseLeave={() => !day.isBlocked && onMouseLeave(day.date)}
             >
               <CalendarDaySelectedBackground
                 isFirstSelected={day.isFirstSelected}
@@ -240,6 +258,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
           )
         })}
       </CalendarGrid>
+      {footerMessage && <Footer>{footerMessage}</Footer>}
     </Select>
   )
 }

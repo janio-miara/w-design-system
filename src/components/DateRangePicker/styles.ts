@@ -52,6 +52,7 @@ export interface CalendarDayProps {
   today: boolean
   isFirstSelected: boolean
   isLastSelected: boolean
+  isBlocked: boolean
 }
 
 export const CalendarDay = styled.div<CalendarDayProps>`
@@ -59,8 +60,8 @@ export const CalendarDay = styled.div<CalendarDayProps>`
   cursor: pointer;
   width: 36px;
   height: 36px;
-  color: ${({ isFirstSelected, isLastSelected }) =>
-    isFirstSelected || isLastSelected ? theme.colors.white : theme.colors.shade50};
+  color: ${({ isFirstSelected, isLastSelected, isBlocked }) =>
+    isFirstSelected || isLastSelected ? theme.colors.white : isBlocked ? theme.colors.shade30 : theme.colors.shade50};
 
   &:before {
     position: absolute;
@@ -121,4 +122,15 @@ export const CalendarDayValue = styled.div`
   align-items: center;
   justify-content: center;
   pointer-events: none;
+`
+
+
+export const Footer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  font-size: ${theme.paragraph.small};
+  color: ${theme.colors.shade50};
+  font-family: 'Nunito Sans', sans-serif;
 `
