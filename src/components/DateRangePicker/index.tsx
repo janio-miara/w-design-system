@@ -163,7 +163,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
     let isBlocked = false
     if (rangeDayLimit !== undefined && startCustomDate && endCustomDate === null) {
       const diff = differenceInDays(startCustomDate, day)
-      isBlocked = diff > rangeDayLimit
+      isBlocked = diff > rangeDayLimit - 1
     }
     days.push({
       type: 'day',
