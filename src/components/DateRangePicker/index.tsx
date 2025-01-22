@@ -252,6 +252,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
                 isLastSelected={day.isLastSelected}
                 selected={day.selected}
                 today={day.today}
+                isBlocked={day.isBlocked}
               />
               <CalendarDayValue>{day.value}</CalendarDayValue>
             </CalendarDay>

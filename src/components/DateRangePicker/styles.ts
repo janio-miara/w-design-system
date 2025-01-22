@@ -80,6 +80,7 @@ export interface CalendarDaySelectedBackgroundProps {
   isFirstSelected: boolean
   isLastSelected: boolean
   selected: boolean
+  isBlocked: boolean
 }
 export const CalendarDaySelectedBackground = styled.div<CalendarDaySelectedBackgroundProps>`
   position: absolute;
@@ -103,14 +104,14 @@ export const CalendarDaySelectedBackground = styled.div<CalendarDaySelectedBackg
       if (selected) return '0'
       return '50%'
     }};
-    background-color: ${theme.colors.cyan30opacity16};
+    background-color: ${({ isBlocked }) => (isBlocked ? 'transparant' : theme.colors.cyan30opacity16)};
   }
 
   &::before {
     content: '';
     border-radius: 50%;
-    background-color: ${({ isFirstSelected, isLastSelected }) =>
-      isFirstSelected || isLastSelected ? theme.colors.cyan40 : 'transparent'};
+    background-color: ${({ isFirstSelected, isLastSelected, isBlocked }) =>
+      (isFirstSelected || isLastSelected) && !isBlocked ? theme.colors.cyan40 : 'transparent'};
     position: absolute;
     inset: 0;
   }
@@ -123,7 +124,6 @@ export const CalendarDayValue = styled.div`
   justify-content: center;
   pointer-events: none;
 `
-
 
 export const Footer = styled.div`
   display: flex;
