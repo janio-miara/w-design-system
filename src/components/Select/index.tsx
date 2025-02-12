@@ -158,7 +158,13 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
         value={computedValue}
         readonly={!open}
         onChange={onInputChange}
-        onClick={() => !disabled && setOpen(!open)}
+        onClick={() => {
+          if (!disabled) {
+            setComputedValue('')
+            setUsingInput(true)
+            setOpen(true)
+          }
+        }}
       />
       {open && (
         <DropdownWrapper>
