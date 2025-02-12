@@ -77,3 +77,21 @@ export const OptionButton = styled.button<OptionButtonProps>`
 export const OptionText = styled.div`
   flex-grow: 1;
 `
+export const OptionTextBadge = styled.div`
+  flex-grow: 1;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`
+
+export const Badge = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.3rem;
+  border-radius: 40px;
+  background-color: ${theme.colors.honey30};
+  color: ${theme.colors.white};
+  font-size: 11px;
+`

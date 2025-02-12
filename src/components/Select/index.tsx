@@ -12,7 +12,7 @@ import { chevronDownSVG } from '../../assets/icon'
 import { IconWrapper } from '../IconWrapper'
 import { Input } from '../Input'
 import { theme } from '../Themes'
-import { Dropdown, DropdownWrapper, OptionButton, OptionText, SelectWrapper } from './styles'
+import { Badge, Dropdown, DropdownWrapper, OptionButton, OptionText, OptionTextBadge, SelectWrapper } from './styles'
 
 export interface SelectProps<
   T extends { text: string; id: number; icon?: ReactNode } = { text: string; id: number; icon?: ReactNode },
@@ -36,7 +36,7 @@ export interface SelectRef {
   setOpen(open: boolean): void
 }
 
-const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode }>(
+const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode; badge?: ReactNode }>(
   {
     children,
     label,
@@ -173,8 +173,17 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode 
                     key={option.id}
                     onClick={() => onOptionClick(option)}
                   >
-                    {option.icon}
-                    <OptionText>{option.text}</OptionText>
+                    {option?.badge ? (
+                      <OptionTextBadge>
+                        <div>{option.text}</div>
+                        <Badge>{option.badge}</Badge>
+                      </OptionTextBadge>
+                    ) : (
+                      <>
+                        {option.icon}
+                        <OptionText>{option.text}</OptionText>
+                      </>
+                    )}
                   </OptionButton>
                 ))}
               </div>
