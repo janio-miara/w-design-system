@@ -11,8 +11,10 @@ import React, {
 import { chevronDownSVG } from '../../assets/icon'
 import { IconWrapper } from '../IconWrapper'
 import { Input } from '../Input'
+import { Paragraph } from '../Paragraph'
+
 import { theme } from '../Themes'
-import { Badge, Dropdown, DropdownWrapper, OptionButton, OptionText, OptionTextBadge, SelectWrapper } from './styles'
+import { Dropdown, DropdownWrapper, OptionButton, OptionText, OptionTextBadge, SelectWrapper } from './styles'
 
 export interface SelectProps<
   T extends { text: string; id: number; icon?: ReactNode } = { text: string; id: number; icon?: ReactNode },
@@ -36,7 +38,7 @@ export interface SelectRef {
   setOpen(open: boolean): void
 }
 
-const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode; badge?: ReactNode }>(
+const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode; badge?: string | number }>(
   {
     children,
     label,
@@ -176,7 +178,9 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
                     {option?.badge ? (
                       <OptionTextBadge>
                         <div>{option.text}</div>
-                        <Badge>{option.badge}</Badge>
+                        <Paragraph strongBod color={theme.colors.honey30}>
+                          {option.badge}
+                        </Paragraph>
                       </OptionTextBadge>
                     ) : (
                       <>
