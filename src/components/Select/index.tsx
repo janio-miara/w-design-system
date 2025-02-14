@@ -17,7 +17,12 @@ import { theme } from '../Themes'
 import { Dropdown, DropdownWrapper, OptionButton, OptionText, OptionTextBadge, SelectWrapper } from './styles'
 
 export interface SelectProps<
-  T extends { text: string; id: number; icon?: ReactNode } = { text: string; id: number; icon?: ReactNode },
+  T extends { text: string; id: number; icon?: ReactNode; badge?: string | number } = {
+    text: string
+    id: number
+    icon?: ReactNode
+    badge?: string | number
+  },
 > extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean
   label?: string
@@ -38,7 +43,7 @@ export interface SelectRef {
   setOpen(open: boolean): void
 }
 
-const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode; badge?: string | number }>(
+const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode; badge?: any }>(
   {
     children,
     label,
@@ -137,6 +142,58 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     return items
   }, [options, usingInput, disableSearch, computedValue])
 
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([])
+
+  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (!open) {
+      setHighlightedIndex(null)
+      return
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!filteredOptions.length) return
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault()
+        setHighlightedIndex(prevIndex => {
+          const nextIndex = prevIndex === null || prevIndex === filteredOptions.length - 1 ? 0 : prevIndex + 1
+          scrollIntoView(nextIndex)
+          return nextIndex
+        })
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault()
+        setHighlightedIndex(prevIndex => {
+          const nextIndex = prevIndex === null || prevIndex === 0 ? filteredOptions.length - 1 : prevIndex - 1
+          scrollIntoView(nextIndex)
+          return nextIndex
+        })
+      }
+
+      if (event.key === 'Enter' && highlightedIndex !== null) {
+        event.preventDefault()
+        onOptionClick(filteredOptions[highlightedIndex])
+      }
+    }
+
+    const scrollIntoView = (index: number) => {
+      const option = optionRefs.current[index]
+      if (option && dropdownRef.current) {
+        option.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open, filteredOptions, highlightedIndex])
+
   return (
     <SelectWrapper {...props} ref={wrapperRef}>
       <Input
@@ -167,7 +224,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
         }}
       />
       {open && (
-        <DropdownWrapper>
+        <DropdownWrapper ref={dropdownRef}>
           <Dropdown
             dropDownTop={props.dropDownTop}
             dropDownWidth={dropDownWidth}
@@ -175,27 +232,36 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
           >
             {(options?.length ?? 0) > 0 && (
               <div>
-                {filteredOptions.map(option => (
-                  <OptionButton
-                    selected={selectedOption?.id === option.id}
-                    key={option.id}
-                    onClick={() => onOptionClick(option)}
-                  >
-                    {option?.badge ? (
-                      <OptionTextBadge>
-                        <div>{option.text}</div>
-                        <Paragraph strongBod color={theme.colors.honey30}>
-                          {option.badge}
-                        </Paragraph>
-                      </OptionTextBadge>
-                    ) : (
-                      <>
-                        {option.icon}
-                        <OptionText>{option.text}</OptionText>
-                      </>
-                    )}
-                  </OptionButton>
-                ))}
+                {filteredOptions.map((option, index) => {
+                  const isSelected = selectedOption?.id === option.id
+                  const isHighlighted = highlightedIndex === index
+
+                  return (
+                    <OptionButton
+                      selected={isSelected}
+                      key={option.id}
+                      onClick={() => onOptionClick(option)}
+                      ref={el => (optionRefs.current[index] = el)}
+                      style={{
+                        backgroundColor: isHighlighted ? theme.colors.shade20 : 'transparent',
+                      }}
+                    >
+                      {option?.badge ? (
+                        <OptionTextBadge>
+                          <div>{option.text}</div>
+                          <Paragraph strongBod color={theme.colors.honey30}>
+                            {option.badge}
+                          </Paragraph>
+                        </OptionTextBadge>
+                      ) : (
+                        <>
+                          {option.icon}
+                          <OptionText>{option.text}</OptionText>
+                        </>
+                      )}
+                    </OptionButton>
+                  )
+                })}
               </div>
             )}
             {children}
@@ -206,6 +272,8 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
   )
 }
 
-export const Select = React.forwardRef(SelectFowardRef) as <T extends { text: string; id: number; icon?: ReactNode }>(
+export const Select = React.forwardRef(SelectFowardRef) as <
+  T extends { text: string; id: number; icon?: ReactNode; badge?: any },
+>(
   props: PropsWithChildren<SelectProps<T>> & { ref?: React.ForwardedRef<SelectRef> },
 ) => React.ReactElement
