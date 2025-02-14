@@ -32,7 +32,7 @@ export interface SidebarGroupData {
   name: string
   link?: string
   icon: string
-  itemIds: string[]
+  itemIds?: string[]
 }
 
 export interface SidebarProps {
@@ -94,8 +94,20 @@ export const Sidebar = ({
                 )
               if (item.type === 'group') {
                 const group = groups[item.id]
-                return (
-                  <SidebarGroup
+                if (group.itemIds == null || group.itemIds.length === 0) {
+                  const itemRouter = items[item.id]
+                  return <SidebarItem
+                    key={item.id}
+                    onClick={() => sidebarItemClickHandler(item.id)}
+                    sidebarOpen={sidebarOpen}
+                    isCurrentItem={currentGroupId === item.id}
+                    disabled={itemRouter.disabled}
+                    title={itemRouter.menuTitle}
+                    icon={itemRouter.icon}
+                />
+                } else {
+                  return (
+                    <SidebarGroup
                     disabled={group.itemIds.every(id => items[id]?.disabled)}
                     key={item.id}
                     title={group.name}
@@ -115,10 +127,11 @@ export const Sidebar = ({
                           isCurrentItem={currentItemId === id}
                           sidebarOpen={sidebarOpen}
                           isInsideGroup
-                        />
-                      ))}
+                          />
+                        ))}
                   </SidebarGroup>
                 )
+              }
               }
               return null
             })}

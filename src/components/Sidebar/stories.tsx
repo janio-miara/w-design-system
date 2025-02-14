@@ -82,7 +82,7 @@ export const Playground: Story = {
             type: 'item',
             id: 'DASHBOARD',
           },
-          { type: 'group', id: 'group1' },
+          { type: 'group', id: 'DASHBOARD' },
         ]}
         items={{
           DASHBOARD: {
@@ -90,16 +90,16 @@ export const Playground: Story = {
             icon: dashboardSVG,
             link: '/dashboard',
             disabled: false,
-          },
+          }
         }}
-        currentItemId={''}
-        currentGroupId={''}
+        currentItemId={args.currentItemId}
+        currentGroupId={args.currentGroupId}
         setLink={action('setLink')}
         groups={{
-          group1: {
+          DASHBOARD: {
             name: 'Group 1',
             icon: dashboardSVG,
-            itemIds: ['DASHBOARD'],
+            itemIds: [],
           },
         }}
         logoUrl={''}
