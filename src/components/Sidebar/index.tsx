@@ -94,7 +94,8 @@ export const Sidebar = ({
                 )
               if (item.type === 'group') {
                 const group = groups[item.id]
-                if (group.itemIds == null || group.itemIds.length === 0) {
+                const itemShowInMenu = group.itemIds?.some(id => items[id]?.showInMenu !== false)
+                if (group.itemIds == null || group.itemIds.length === 0 || !itemShowInMenu) {
                   const itemRouter = items[item.id]
                   return <SidebarItem
                     key={item.id}

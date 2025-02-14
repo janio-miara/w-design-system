@@ -90,6 +90,7 @@ export const Playground: Story = {
             icon: dashboardSVG,
             link: '/dashboard',
             disabled: false,
+            showInMenu: false
           }
         }}
         currentItemId={args.currentItemId}
@@ -99,7 +100,7 @@ export const Playground: Story = {
           DASHBOARD: {
             name: 'Group 1',
             icon: dashboardSVG,
-            itemIds: [],
+            itemIds: ['DASHBOARD'],
           },
         }}
         logoUrl={''}
