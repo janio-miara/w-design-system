@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import { theme } from '../../Themes'
 
 interface SidebarGroupContainerProps {
-  open: boolean
-  groupOpen: boolean
+  $open: boolean
+  $groupOpen: boolean
 }
 
 export const SidebarGroupContainer = styled.div<SidebarGroupContainerProps>`
@@ -11,8 +11,8 @@ export const SidebarGroupContainer = styled.div<SidebarGroupContainerProps>`
   flex-direction: column;
   cursor: pointer;
 
-  height: ${({ groupOpen, open }) => (groupOpen && open ? 'auto' : '40px')};
-  background-color: ${({ groupOpen, open }) => (groupOpen && open ? 'rgba(255, 255, 255, 0.1)' : 'inherit')};
+  height: ${({ $groupOpen: groupOpen, $open: open }) => (groupOpen && open ? 'auto' : '40px')};
+  background-color: ${({ $groupOpen: groupOpen, $open: open }) => (groupOpen && open ? 'rgba(255, 255, 255, 0.1)' : 'inherit')};
   overflow: hidden;
   border-radius: 4px;
 
@@ -22,7 +22,7 @@ export const SidebarGroupContainer = styled.div<SidebarGroupContainerProps>`
 
   .wrapperTitle {
     cursor: pointer;
-    min-height: ${({ groupOpen, open }) => (groupOpen && open ? '40px' : '54px')};
+    min-height: ${({ $groupOpen: groupOpen, $open: open }) => (groupOpen && open ? '40px' : '54px')};
     padding: 0 14px;
     display: flex;
     align-items: center;
@@ -40,17 +40,17 @@ export const SidebarGroupContainer = styled.div<SidebarGroupContainerProps>`
 `
 
 interface SidebarGroupContainerHeaderProps {
-  sidebarOpen: boolean
-  groupOpen: boolean
-  disabled?: boolean
+  $sidebarOpen: boolean
+  $groupOpen: boolean
+  $disabled?: boolean
 }
 
 export const SidebarGroupHeaderContainer = styled.div<SidebarGroupContainerHeaderProps>`
   display: flex;
   align-items: center;
-  min-height: ${({ groupOpen, sidebarOpen }) => (groupOpen && sidebarOpen ? '40px' : '40px')};
-  ${({ groupOpen, sidebarOpen }) => groupOpen && sidebarOpen && 'border-bottom: 1px solid rgba(255, 255, 255, 0.1)'};
-  justify-content: ${({ sidebarOpen }) => (sidebarOpen ? 'space-between' : 'center')};
+  min-height: ${({ $groupOpen: groupOpen, $sidebarOpen: sidebarOpen }) => (groupOpen && sidebarOpen ? '40px' : '40px')};
+  ${({ $groupOpen: groupOpen, $sidebarOpen: sidebarOpen }) => groupOpen && sidebarOpen && 'border-bottom: 1px solid rgba(255, 255, 255, 0.1)'};
+  justify-content: ${({ $sidebarOpen: sidebarOpen }) => (sidebarOpen ? 'space-between' : 'center')};
   text-wrap: nowrap;
 
   padding: 8px 8px;
@@ -58,7 +58,7 @@ export const SidebarGroupHeaderContainer = styled.div<SidebarGroupContainerHeade
   height: 100%;
   gap: 24px;
 
-  color: ${({ disabled }) => (disabled ? 'rgba(255, 255, 255, 0.3)' : '#fff')};
+  color: ${({ $disabled: disabled }) => (disabled ? 'rgba(255, 255, 255, 0.3)' : '#fff')};
 
   .title {
     width: 100%;

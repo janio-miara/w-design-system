@@ -69,9 +69,6 @@ export const OptionButton = styled.button<OptionButtonProps>`
     border-bottom: 1px solid ${theme.colors.shade10};
   }
 
-  &:hover {
-    color: ${theme.colors.cyan30};
-  }
 `
 
 export const OptionText = styled.div`
@@ -82,4 +79,37 @@ export const OptionTextBadge = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+`
+
+export const OptionsWrapper = styled.div`
+  position: relative;
+  overflow-y: auto;
+`
+
+export interface OptionBackgroundProps {
+  $opacity: number
+  $width: string
+  $height: string
+  $top: string
+  $left: string
+}
+
+export const OptionBackground = styled.div<OptionBackgroundProps>`
+  position: absolute;
+  z-index: -1;
+  background-color: ${theme.colors.shade10};
+  opacity: ${({ $opacity }) => $opacity};
+  width: ${({ $width }) => $width};
+  height: ${({ $height }) => $height};
+  top: ${({ $top }) => $top};
+  left: ${({ $left }) => $left};
+  transition: all 0.15s;
+`
+
+export const NoResults = styled.div`
+  color: ${theme.colors.shade40};
+  font-size: ${theme.paragraph.medium};
+  font-family: 'Nunito Sans', sans-serif;
+  padding: 16px;
+  text-align: center;
 `

@@ -2,20 +2,39 @@ import React, {
   HTMLAttributes,
   PropsWithChildren,
   ReactNode,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
   useState,
+  PointerEvent,
 } from 'react'
 import { chevronDownSVG } from '../../assets/icon'
 import { IconWrapper } from '../IconWrapper'
 import { Input } from '../Input'
 import { theme } from '../Themes'
-import { Dropdown, DropdownWrapper, OptionButton, OptionText, MultiSelectWrapper } from './styles'
+import {
+  Dropdown,
+  DropdownWrapper,
+  OptionButton,
+  OptionText,
+  SelectWrapper,
+  OptionBackground,
+  OptionBackgroundProps,
+  OptionsWrapper,
+  OptionTextBadge,
+  NoResults,
+} from '../Select/styles'
+import { Paragraph } from '../Paragraph'
 
 export interface MultiSelectProps<
-  T extends { text: string; id: number; icon?: ReactNode } = { text: string; id: number; icon?: ReactNode },
+  T extends { text: string; id: number; icon?: ReactNode; badge?: string | number } = {
+    text: string
+    id: number
+    icon?: ReactNode
+    badge?: string | number
+  },
 > extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean
   label?: string
@@ -32,11 +51,11 @@ export interface MultiSelectProps<
   dropDownMaxHeight?: string
 }
 
-export interface SelectRef {
+export interface MultiSelectRef {
   setOpen(open: boolean): void
 }
 
-const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode }>(
+const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode; badge?: string | number }>(
   {
     children,
     label,
@@ -52,7 +71,7 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
     disableSearch,
     ...props
   }: PropsWithChildren<MultiSelectProps<T>>,
-  ref: React.ForwardedRef<SelectRef>,
+  ref: React.ForwardedRef<MultiSelectRef>,
 ) => {
   const [open, setOpen] = useState(false)
   const [usingInput, setUsingInput] = useState(false)
@@ -82,14 +101,17 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
     }
   }, [open])
 
-  const onOptionClick = (option: T) => {
-    const isActive = selectedOptions?.findIndex(item => item.id === option.id) !== -1
-    if (isActive) {
-      onOptionChange && onOptionChange(selectedOptions?.filter(item => item.id !== option.id) ?? [])
-    } else {
-      onOptionChange && onOptionChange([...(selectedOptions ?? []), option])
-    }
-  }
+  const onOptionClick = useCallback(
+    (option: T) => {
+      const isActive = selectedOptions?.findIndex(item => item.id === option.id) !== -1
+      if (isActive) {
+        onOptionChange && onOptionChange(selectedOptions?.filter(item => item.id !== option.id) ?? [])
+      } else {
+        onOptionChange && onOptionChange([...(selectedOptions ?? []), option])
+      }
+    },
+    [onOptionChange, selectedOptions],
+  )
 
   useEffect(() => {
     if (usingInput) return
@@ -99,7 +121,12 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
       if (selectedOptions?.length === options?.length) {
         setComputedValue('Todos')
       } else {
-        setComputedValue(selectedOptions.map(option => option.text).sort().join(', '))
+        setComputedValue(
+          selectedOptions
+            .map(option => option.text)
+            .sort()
+            .join(', '),
+        )
       }
     } else {
       setComputedValue('')
@@ -142,8 +169,166 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
     return items
   }, [options, usingInput, disableSearch, computedValue])
 
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const optionsWrapperRef = useRef<HTMLDivElement | null>(null)
+  const [backgroundStyle, setBackgroundStyle] = useState<OptionBackgroundProps>({
+    $opacity: 0,
+    $width: '100%',
+    $height: '0px',
+    $top: '0px',
+    $left: '0px',
+  })
+
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const lastItemIdRef = useRef<number | undefined>()
+  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null)
+
+  const updateBackground = useCallback((index: number) => {
+    if (index === lastItemIdRef.current) return
+    const target = optionRefs.current[index]
+    if (!target) return
+    if (!optionsWrapperRef.current) return
+
+    const { left, top, height } = target.getBoundingClientRect()
+    const { left: contentLeft, top: contentTop } = optionsWrapperRef.current.getBoundingClientRect()
+    const padding = 16
+    setBackgroundStyle({
+      $opacity: 1,
+      $width: `100%`,
+      $height: `${height}px`,
+      $top: `${padding + top - contentTop}px`,
+      $left: `${left - contentLeft}px`,
+    })
+
+    lastItemIdRef.current = index
+  }, [])
+
+  /**
+   * When the user has the mouse over the dropdown and presses an up or down arrow key, the dropdown should
+   * ignore the hover change, as the user is navigating with the keyboard
+   */
+  const [disableHoverChange, setDisableHoverChange] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const scrollIntoView = (index: number) => {
+    const option = optionRefs.current[index]
+    if (option && dropdownRef.current) {
+      option.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      const intersectionObserver = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          setDisableHoverChange(true)
+          timeoutRef.current = setTimeout(() => {
+            timeoutRef.current = null
+            setDisableHoverChange(false)
+          }, 200)
+        }
+        setTimeout(() => {
+          intersectionObserver.disconnect()
+        }, 100)
+      })
+      if (dropdownRef.current) intersectionObserver.observe(dropdownRef.current)
+    }
+  }
+
+  useEffect(() => {
+    if (!open) {
+      setHighlightedIndex(null)
+      setBackgroundStyle(backgroundStyle => ({ ...backgroundStyle, $opacity: 0 }))
+      return
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!filteredOptions.length) return
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault()
+        setHighlightedIndex(prevIndex => {
+          const nextIndex = prevIndex === null || prevIndex === filteredOptions.length - 1 ? 0 : prevIndex + 1
+          scrollIntoView(nextIndex)
+          updateBackground(nextIndex)
+          const element = optionRefs.current[nextIndex]
+          if (element) {
+            const checkbox = element.querySelector('input')
+            if (checkbox) {
+              checkbox.focus()
+            }
+          }
+          return nextIndex
+        })
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault()
+        setHighlightedIndex(prevIndex => {
+          const nextIndex = prevIndex === null || prevIndex === 0 ? filteredOptions.length - 1 : prevIndex - 1
+          scrollIntoView(nextIndex)
+          updateBackground(nextIndex)
+          const element = optionRefs.current[nextIndex]
+          if (element) {
+            const checkbox = element.querySelector('input')
+            if (checkbox) {
+              checkbox.focus()
+            }
+          }
+          return nextIndex
+        })
+      }
+
+      if (event.key === 'Enter' && highlightedIndex !== null) {
+        event.preventDefault()
+        onOptionClick(filteredOptions[highlightedIndex])
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open, filteredOptions, highlightedIndex, updateBackground, onOptionClick])
+
+  useEffect(() => {
+    if (disableHoverChange && dropdownRef.current) {
+      const element = dropdownRef.current
+      const handler = () => {
+        setDisableHoverChange(false)
+      }
+      element.addEventListener('scrollend', handler)
+
+      return () => {
+        element.removeEventListener('scrollend', handler)
+      }
+    }
+  }, [disableHoverChange])
+  /**
+   * Used to handle the pointer enter event, it's used to highlight the option that the mouse is over
+   */
+  const onPointerEnter = useCallback(
+    (event: PointerEvent<Element>, index: number) => {
+      if (disableHoverChange) return
+      updateBackground(index)
+      setHighlightedIndex(index)
+    },
+    [disableHoverChange, updateBackground, setHighlightedIndex],
+  )
+
+  /**
+   * Used to handle the pointer leave event, it's used to remove the highlight from the option that the mouse is over
+   */
+  const onPointerLeave = useCallback(
+    (event: PointerEvent<Element>, index: number) => {
+      if (disableHoverChange) return
+      if (index === lastItemIdRef.current) {
+        setBackgroundStyle(currentStyle => ({ ...currentStyle, $opacity: 0 }))
+        lastItemIdRef.current = undefined
+      }
+    },
+    [disableHoverChange],
+  )
+
   return (
-    <MultiSelectWrapper {...props} ref={wrapperRef}>
+    <SelectWrapper {...props} ref={wrapperRef}>
       <Input
         disabled={disabled}
         leftIcon={leftIcon}
@@ -163,44 +348,75 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
         value={computedValue}
         readonly={!open}
         onChange={onInputChange}
-        onClick={() => !disabled && setOpen(!open)}
+        onClick={() => {
+          if (!disabled) {
+            setComputedValue('')
+            setUsingInput(true)
+            setOpen(true)
+          }
+        }}
       />
       {open && (
         <DropdownWrapper>
           <Dropdown
+            ref={dropdownRef}
             dropDownTop={props.dropDownTop}
             dropDownWidth={dropDownWidth}
             dropDownMaxHeight={props.dropDownMaxHeight}
           >
             {(options?.length ?? 0) > 0 && (
-              <div>
-                {filteredOptions.map(option => (
-                  <OptionButton
-                    selected={selectedOptions?.some(selectedOption => option.id === selectedOption.id) ?? false}
-                    key={option.id}
-                    onClick={() => onOptionClick(option)}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={selectedOptions?.some(selectedOption => option.id === selectedOption.id) ?? false}
-                      onChange={() => onOptionClick(option)}
-                    />
-                    {option.icon}
-                    <OptionText>{option.text}</OptionText>
-                  </OptionButton>
-                ))}
-              </div>
+              <>
+                <OptionsWrapper ref={optionsWrapperRef}>
+                  {filteredOptions.map((option, index) => (
+                    <OptionButton
+                      selected={selectedOptions?.some(selectedOption => option.id === selectedOption.id) ?? false}
+                      key={option.id}
+                      onClick={() => onOptionClick(option)}
+                      ref={ref => (optionRefs.current[index] = ref)}
+                      onPointerEnter={event => onPointerEnter(event, index)}
+                      onPointerLeave={event => onPointerLeave(event, index)}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedOptions?.some(selectedOption => option.id === selectedOption.id) ?? false}
+                        onChange={() => onOptionClick(option)}
+                      />
+                      {option?.badge ? (
+                        <OptionTextBadge>
+                          <div>{option.text}</div>
+                          <Paragraph strongBod color={theme.colors.honey30}>
+                            {option.badge}
+                          </Paragraph>
+                        </OptionTextBadge>
+                      ) : (
+                        <>
+                          {option.icon}
+                          <OptionText>{option.text}</OptionText>
+                        </>
+                      )}
+                    </OptionButton>
+                  ))}
+                </OptionsWrapper>
+                <OptionBackground
+                  $opacity={backgroundStyle.$opacity}
+                  $width={backgroundStyle.$width}
+                  $height={backgroundStyle.$height}
+                  $top={backgroundStyle.$top}
+                  $left={backgroundStyle.$left}
+                />
+                {filteredOptions.length === 0 && options?.length && <NoResults>Sem resultados</NoResults>}
+              </>
             )}
             {children}
           </Dropdown>
         </DropdownWrapper>
       )}
-    </MultiSelectWrapper>
+    </SelectWrapper>
   )
 }
 
 export const MultiSelect = React.forwardRef(MultiSelectFowardRef) as <
   T extends { text: string; id: number; icon?: ReactNode },
 >(
-  props: PropsWithChildren<MultiSelectProps<T>> & { ref?: React.ForwardedRef<SelectRef> },
+  props: PropsWithChildren<MultiSelectProps<T>> & { ref?: React.ForwardedRef<MultiSelectRef> },
 ) => React.ReactElement

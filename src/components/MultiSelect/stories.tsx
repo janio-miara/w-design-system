@@ -27,7 +27,7 @@ const ComponentWrapper = ({ options, ...args }: MultiSelectProps) => {
       selectedOption={selectedOption}
       onOptionChange={option => setSelectOption(option)}
       options={
-        options ?? (new Array(20)).fill(0).map((_, index) => ({
+        options ?? (new Array(5)).fill(0).map((_, index) => ({
           id: index,
           text: `Opção ${index + 1}`,
         }))

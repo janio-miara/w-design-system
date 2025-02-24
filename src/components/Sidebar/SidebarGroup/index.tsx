@@ -55,11 +55,11 @@ const SidebarGroup = ({
   }
 
   return (
-    <SidebarGroupContainer open={sidebarOpen} groupOpen={groupOpen}>
+    <SidebarGroupContainer $open={sidebarOpen} $groupOpen={groupOpen}>
       <SidebarGroupHeaderContainer
-        disabled={disabled}
-        sidebarOpen={sidebarOpen}
-        groupOpen={groupOpen}
+        $disabled={disabled}
+        $sidebarOpen={sidebarOpen}
+        $groupOpen={groupOpen}
         onClick={onClickHandler}
       >
         <IconWrapper src={icon} color={color} width="20px" />

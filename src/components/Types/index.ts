@@ -3,6 +3,7 @@ export type { DatePickerProps } from '../DatePicker'
 export type { DateRangePickerProps } from '../DateRangePicker'
 export type { PaginateProps } from '../Paginate'
 export type { SelectProps, SelectRef } from '../Select'
+export type { MultiSelectProps, MultiSelectRef } from '../MultiSelect'
 export type { PortalSelectProps, Portal } from '../PortalSelect'
 export type {
   SidebarGroupData,
