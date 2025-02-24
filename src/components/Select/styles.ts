@@ -13,9 +13,9 @@ export const SelectWrapper = styled.div`
   }
 `
 export interface DropdownProps {
-  dropDownTop?: boolean
-  dropDownWidth?: string
-  dropDownMaxHeight?: string
+  $dropDownTop?: boolean
+  $dropDownWidth?: string
+  $dropDownMaxHeight?: string
 }
 
 export const Dropdown = styled.div<DropdownProps>`
@@ -24,15 +24,15 @@ export const Dropdown = styled.div<DropdownProps>`
   z-index: ${theme.zIndex.z9};
 
   background-color: ${theme.colors.white};
-  width: ${({ dropDownWidth }) => (dropDownWidth ? dropDownWidth : '100%')};
-  ${({ dropDownTop }) => (dropDownTop ? 'bottom: 58px;' : 'margin-top: 4px;')};
+  width: ${({ $dropDownWidth }) => ($dropDownWidth ? $dropDownWidth : '100%')};
+  ${({ $dropDownTop }) => ($dropDownTop ? 'bottom: 58px;' : 'margin-top: 4px;')};
   padding: 16px;
 
   border-radius: 4px;
   border: 1px solid ${theme.colors.shade20};
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
   height: auto;
-  max-height: ${({ dropDownMaxHeight }) => (dropDownMaxHeight ? dropDownMaxHeight : '300px')};
+  max-height: ${({ $dropDownMaxHeight }) => ($dropDownMaxHeight ? $dropDownMaxHeight : '300px')};
   overflow-y: auto;
 `
 
@@ -68,7 +68,6 @@ export const OptionButton = styled.button<OptionButtonProps>`
   &:not(:last-child) {
     border-bottom: 1px solid ${theme.colors.shade10};
   }
-
 `
 
 export const OptionText = styled.div`

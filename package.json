@@ -1,6 +1,6 @@
 {
   "name": "w-design-system",
-  "version": "0.0.61",
+  "version": "0.0.63",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {

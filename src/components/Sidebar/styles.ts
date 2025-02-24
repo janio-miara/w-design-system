@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import { theme } from '../Themes'
 
 interface SidebarContainerProps {
-  sidebarOpen: boolean
-  baseColor?: string
+  $sidebarOpen: boolean
+  $baseColor?: string
 }
 
 export const SidebarContainer = styled.div<SidebarContainerProps>`
@@ -17,8 +17,8 @@ export const SidebarContainer = styled.div<SidebarContainerProps>`
   height: 100dvh;
   padding: 16px 16px 0 16px;
   width: min-content;
-  border-radius: ${({ sidebarOpen }) => sidebarOpen && '0 60px 0px 0;'};
-  background: ${({ baseColor }) => baseColor || theme.colors.cyan50};
+  border-radius: ${({ $sidebarOpen: sidebarOpen }) => sidebarOpen && '0 60px 0px 0;'};
+  background: ${({ $baseColor: baseColor }) => baseColor || theme.colors.cyan50};
   /* Mantenha o estilo do container ao passar o mouse */
   &:hover {
     &::-webkit-scrollbar {

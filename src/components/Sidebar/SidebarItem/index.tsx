@@ -36,10 +36,10 @@ const SidebarItem = ({
 
   return (
     <Container
-      isCurrentItem={isCurrentItem}
-      disabled={disabled ?? false}
-      sidebarOpen={sidebarOpen}
-      isInsideGroup={isInsideGroup}
+      $isCurrentItem={isCurrentItem}
+      $disabled={disabled ?? false}
+      $sidebarOpen={sidebarOpen}
+      $isInsideGroup={isInsideGroup}
       onClick={() => !disabled && onClick()}
     >
       {isInsideGroup ? (

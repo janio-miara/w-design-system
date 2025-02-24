@@ -49,10 +49,10 @@ export const CalendarHeader = styled.div`
   }
 `
 export interface CalendarDayProps {
-  today: boolean
-  isFirstSelected: boolean
-  isLastSelected: boolean
-  isBlocked: boolean
+  $today: boolean
+  $isFirstSelected: boolean
+  $isLastSelected: boolean
+  $isBlocked: boolean
 }
 
 export const CalendarDay = styled.div<CalendarDayProps>`
@@ -60,7 +60,7 @@ export const CalendarDay = styled.div<CalendarDayProps>`
   cursor: pointer;
   width: 36px;
   height: 36px;
-  color: ${({ isFirstSelected, isLastSelected, isBlocked }) =>
+  color: ${({ $isFirstSelected: isFirstSelected, $isLastSelected: isLastSelected, $isBlocked: isBlocked }) =>
     isFirstSelected || isLastSelected ? theme.colors.white : isBlocked ? theme.colors.shade30 : theme.colors.shade50};
 
   &:before {
@@ -70,26 +70,26 @@ export const CalendarDay = styled.div<CalendarDayProps>`
     border-radius: 50%;
     pointer-events: none;
 
-    ${({ today, isFirstSelected, isLastSelected }) =>
+    ${({ $today: today, $isFirstSelected: isFirstSelected, $isLastSelected: isLastSelected }) =>
       today && !(isFirstSelected || isLastSelected) ? `border: 1px solid ${theme.colors.cyan40}` : ''};
   }
 `
 
 export interface CalendarDaySelectedBackgroundProps {
-  today: boolean
-  isFirstSelected: boolean
-  isLastSelected: boolean
-  selected: boolean
-  isBlocked: boolean
+  $today: boolean
+  $isFirstSelected: boolean
+  $isLastSelected: boolean
+  $selected: boolean
+  $isBlocked: boolean
 }
 export const CalendarDaySelectedBackground = styled.div<CalendarDaySelectedBackgroundProps>`
   position: absolute;
-  background-color: ${({ selected }) => selected && theme.colors.cyan30opacity16};
+  background-color: ${({ $selected: selected }) => selected && theme.colors.cyan30opacity16};
   width: 100%;
   height: 100%;
   inset: 0;
 
-  border-radius: ${({ isFirstSelected, isLastSelected }) => {
+  border-radius: ${({ $isFirstSelected: isFirstSelected, $isLastSelected: isLastSelected }) => {
     if (isFirstSelected && isLastSelected) return '50%'
     if (isFirstSelected) return '50% 0 0 50%'
     if (isLastSelected) return '0 50% 50% 0'
@@ -97,20 +97,20 @@ export const CalendarDaySelectedBackground = styled.div<CalendarDaySelectedBackg
   }};
 
   &:hover {
-    border-radius: ${({ isFirstSelected, isLastSelected, selected }) => {
+    border-radius: ${({ $isFirstSelected: isFirstSelected, $isLastSelected: isLastSelected, $selected: selected }) => {
       if (isFirstSelected && isLastSelected) return '50%'
       if (isFirstSelected) return '50% 0 0 50%'
       if (isLastSelected) return '0 50% 50% 0'
       if (selected) return '0'
       return '50%'
     }};
-    background-color: ${({ isBlocked }) => (isBlocked ? 'transparant' : theme.colors.cyan30opacity16)};
+    background-color: ${({ $isBlocked: isBlocked }) => (isBlocked ? 'transparant' : theme.colors.cyan30opacity16)};
   }
 
   &::before {
     content: '';
     border-radius: 50%;
-    background-color: ${({ isFirstSelected, isLastSelected, isBlocked }) =>
+    background-color: ${({ $isFirstSelected: isFirstSelected, $isLastSelected: isLastSelected, $isBlocked: isBlocked }) =>
       (isFirstSelected || isLastSelected) && !isBlocked ? theme.colors.cyan40 : 'transparent'};
     position: absolute;
     inset: 0;

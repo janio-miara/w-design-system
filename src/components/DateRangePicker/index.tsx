@@ -238,21 +238,21 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
           }
           return (
             <CalendarDay
-              isFirstSelected={day.isFirstSelected}
-              isLastSelected={day.isLastSelected}
-              isBlocked={day.isBlocked}
+              $isFirstSelected={day.isFirstSelected}
+              $isLastSelected={day.isLastSelected}
+              $isBlocked={day.isBlocked}
               key={day.value}
-              today={day.today}
+              $today={day.today}
               onClick={() => !day.isBlocked && onDayClick(day.date)}
               onMouseEnter={() => !day.isBlocked && onMouseEnter(day.date)}
               onMouseLeave={() => !day.isBlocked && onMouseLeave(day.date)}
             >
               <CalendarDaySelectedBackground
-                isFirstSelected={day.isFirstSelected}
-                isLastSelected={day.isLastSelected}
-                selected={day.selected}
-                today={day.today}
-                isBlocked={day.isBlocked}
+                $isFirstSelected={day.isFirstSelected}
+                $isLastSelected={day.isLastSelected}
+                $selected={day.selected}
+                $today={day.today}
+                $isBlocked={day.isBlocked}
               />
               <CalendarDayValue>{day.value}</CalendarDayValue>
             </CalendarDay>

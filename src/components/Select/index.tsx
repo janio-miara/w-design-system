@@ -336,9 +336,9 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
         <DropdownWrapper>
           <Dropdown
             ref={dropdownRef}
-            dropDownTop={props.dropDownTop}
-            dropDownWidth={dropDownWidth}
-            dropDownMaxHeight={props.dropDownMaxHeight}
+            $dropDownTop={props.dropDownTop}
+            $dropDownWidth={dropDownWidth}
+            $dropDownMaxHeight={props.dropDownMaxHeight}
           >
             {(options?.length ?? 0) > 0 && (
               <>

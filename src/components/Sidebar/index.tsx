@@ -66,7 +66,7 @@ export const Sidebar = ({
   }
 
   return (
-    <SidebarContainer sidebarOpen={sidebarOpen} baseColor={baseColor}>
+    <SidebarContainer $sidebarOpen={sidebarOpen} $baseColor={baseColor}>
       <SidebarLogo
         logoUrl={logoUrl}
         sidebarOpen={sidebarOpen}

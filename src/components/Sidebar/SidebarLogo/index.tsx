@@ -13,7 +13,7 @@ export interface SidebarLogoProps {
 
 const SidebarLogo = ({ sidebarOpen, setSidebarOpen, logoOpacity, logoUrl, baseColor }: SidebarLogoProps) => {
   return (
-    <SidebarLogoContainer logoUrl={logoUrl} logoOpacity={logoOpacity} sidebarOpen={sidebarOpen} baseColor={baseColor}>
+    <SidebarLogoContainer $logoUrl={logoUrl} $logoOpacity={logoOpacity} $sidebarOpen={sidebarOpen} $baseColor={baseColor}>
       <button type="button" onClick={() => setSidebarOpen(!sidebarOpen)} className="close" aria-label="Fechar menu">
         <IconWrapper src={sidebarOpen ? chevronRightSVG : chevronLeftSVG} color="#fff" width="12px" height="12px" />
       </button>
