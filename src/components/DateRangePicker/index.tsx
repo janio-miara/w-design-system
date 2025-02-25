@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
+import React, { HTMLAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { calendarSVG, chevronLeftSVG, chevronRightSVG } from '../../assets/icon'
 import { IconWrapper } from '../IconWrapper'
 import { Select, SelectProps, SelectRef } from '../Select'
@@ -92,6 +92,11 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
     setCurrentMonth(date.getMonth())
   }, [])
 
+  const resetTime = useCallback((date: Date | null): Date | null => {
+    if (!date) return null
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
+  }, [])
+
   const days: DayType[] = []
 
   const changeMonth = (delta: number) => {
@@ -117,7 +122,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
     if (onSelectedOptionChange) onSelectedOptionChange(null)
     if (!startCustomDate) {
       onSelectedCustomRange && onSelectedCustomRange(date, null)
-      currentMouseHoverDate && setCurrentMouseHoverDate(date)
+      currentMouseHoverDate && setCurrentMouseHoverDate(resetTime(date))
       if (isRange === false) selectRef.current?.setOpen(false)
     } else if (!endCustomDate) {
       let firstDate = startCustomDate
@@ -132,13 +137,13 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
     } else {
       if (isRange === false) selectRef.current?.setOpen(false)
       onSelectedCustomRange && onSelectedCustomRange(date, null)
-      setCurrentMouseHoverDate(date)
+      setCurrentMouseHoverDate(resetTime(date))
     }
   }
 
   const onMouseEnter = (date: Date) => {
     if (startCustomDate && !endCustomDate) {
-      setCurrentMouseHoverDate(date)
+      setCurrentMouseHoverDate(resetTime(date))
     }
   }
   const onMouseLeave = (date: Date) => {}
@@ -150,8 +155,8 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
   }
 
   const todayString = new Date().toDateString()
-  let firstDate = startCustomDate
-  let secondDate = endCustomDate ?? currentMouseHoverDate
+  let firstDate = resetTime(startCustomDate)
+  let secondDate = resetTime(endCustomDate) ?? currentMouseHoverDate
   if (firstDate && secondDate && firstDate > secondDate) {
     const temp = firstDate
     firstDate = secondDate
