@@ -316,12 +316,11 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
           <>
             {rightIcon}
             {badge && (
-              <OptionTextBadge>
-                <div></div>
+              <div>
                 <Paragraph strongBod color={theme.colors.honey30}>
                   {badge}
                 </Paragraph>
-              </OptionTextBadge>
+              </div>
             )}
             <IconWrapper
               className={`icon ${open ? 'icon-rotate' : ''}`}
