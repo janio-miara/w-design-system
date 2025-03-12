@@ -24,6 +24,7 @@ const ComponentWrapper = ({ options, ...args }: SelectProps) => {
 
   return (
     <Select
+      badge={30}
       selectedOption={selectedOption}
       onOptionChange={option => setSelectOption(option)}
       options={

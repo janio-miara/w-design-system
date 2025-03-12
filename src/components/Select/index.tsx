@@ -50,6 +50,7 @@ export interface SelectProps<
   dropDownWidth?: string
   disableSearch?: boolean
   dropDownMaxHeight?: string
+  badge?: string | number
 }
 
 export interface SelectRef {
@@ -70,6 +71,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     dropDownWidth,
     disabled,
     disableSearch,
+    badge,
     ...props
   }: PropsWithChildren<SelectProps<T>>,
   ref: React.ForwardedRef<SelectRef>,
@@ -133,10 +135,13 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     }
   }, [open])
 
-  const onOptionClick = useCallback((option: T) => {
-    onOptionChange && onOptionChange(option)
-    setOpen(false)
-  }, [onOptionChange])
+  const onOptionClick = useCallback(
+    (option: T) => {
+      onOptionChange && onOptionChange(option)
+      setOpen(false)
+    },
+    [onOptionChange],
+  )
 
   useEffect(() => {
     if (usingInput) return
@@ -310,6 +315,14 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
         rightIcon={
           <>
             {rightIcon}
+            {badge && (
+              <OptionTextBadge>
+                <div></div>
+                <Paragraph strongBod color={theme.colors.honey30}>
+                  {badge}
+                </Paragraph>
+              </OptionTextBadge>
+            )}
             <IconWrapper
               className={`icon ${open ? 'icon-rotate' : ''}`}
               src={chevronDownSVG}
