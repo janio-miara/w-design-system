@@ -177,7 +177,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
       value: day.getDate(),
       today: day.toDateString() === todayString,
       selected: isSelected,
-      date: resetTime(new Date(day)),
+      date: resetTime(new Date(day)) as Date,
       isFirstSelected: (firstDate && firstDate.toDateString() === day.toDateString()) ?? false,
       isLastSelected: (secondDate && secondDate.toDateString() === day.toDateString()) ?? false,
       isBlocked,
