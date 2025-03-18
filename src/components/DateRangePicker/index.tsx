@@ -92,7 +92,9 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
     setCurrentMonth(date.getMonth())
   }, [])
 
-  const resetTime = useCallback((date: Date | null): Date | null => {
+  
+  const resetTime = useCallback(
+    (date: Date | null): Date | null => {
     if (!date) return null
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
   }, [])
@@ -175,7 +177,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
       value: day.getDate(),
       today: day.toDateString() === todayString,
       selected: isSelected,
-      date: new Date(day),
+      date: resetTime(new Date(day)),
       isFirstSelected: (firstDate && firstDate.toDateString() === day.toDateString()) ?? false,
       isLastSelected: (secondDate && secondDate.toDateString() === day.toDateString()) ?? false,
       isBlocked,
