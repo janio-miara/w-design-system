@@ -1,46 +1,97 @@
-# Getting Started with Create React App
+# Design System Interno - Guia de Uso e Manutenção
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este documento descreve como instalar, desenvolver, testar e publicar atualizações para o nosso Design System interno.
 
-## Available Scripts
+## Pré-requisitos
 
-In the project directory, you can run:
+Antes de começar, certifique-se de ter o seguinte instalado:
+* Node.js (versão recomendada: v23.9.0 ou superior)
+* Yarn (gerenciador de pacotes)
+* Acesso de escrita ao repositório do Design System (para atualizações)
+* Acesso para publicar no registro NPM (ou registro interno, se aplicável)
 
-### `npm start`
+## Instalação para Desenvolvimento
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para configurar o ambiente local e trabalhar nos componentes do Design System:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1.  **Clone o repositório** (se ainda não o fez):
+    ```bash
+    git clone https://github.com/janio-miara/w-design-system
+    cd w-design-system
+    ```
 
-### `npm test`
+2.  **Instale as dependências** necessárias com Yarn:
+    ```bash
+    yarn
+    ```
+    Este comando irá baixar e instalar todos os pacotes listados no `package.json` e `yarn.lock`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Desenvolvimento e Visualização dos Componentes
 
-### `npm run build`
+Utilizamos o [Storybook](https://storybook.js.org/) para visualizar e testar os componentes de forma isolada.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1.  **Inicie o Storybook**:
+    ```bash
+    yarn run storybook
+    ```
+2.  Após a execução, o Storybook estará disponível no seu navegador, geralmente em `http://localhost:6006`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Atualizando e Publicando o Design System (Deploy)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Quando você fizer alterações ou adicionar novos componentes e precisar disponibilizar uma nova versão para outros projetos, siga estes passos:
 
-### `npm run eject`
+1.  **Certifique-se que todas as alterações foram testadas.**
+2.  **Compile os componentes** para distribuição:
+    ```bash
+    yarn run build
+    ```
+    Este comando geralmente cria uma pasta `dist` com os arquivos prontos para serem publicados.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3.  **Atualize a versão do pacote**:
+    * Abra o arquivo `package.json`.
+    * Incremente a versão seguindo o versionamento semântico ([SemVer](https://semver.org/lang/pt-BR/)):
+        * `MAJOR` (ex: 1.x.x -> 2.0.0) para mudanças incompatíveis (breaking changes).
+        * `MINOR` (ex: x.1.x -> x.2.0) para adicionar funcionalidades de forma compatível.
+        * `PATCH` (ex: x.x.1 -> x.x.2) para correções de bugs compatíveis.
+    * *Alternativa:* Você pode usar o comando `npm version <patch|minor|major>` que atualiza o `package.json` e cria um commit/tag Git automaticamente.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4.  **Faça o commit das suas alterações**, incluindo a atualização do `package.json` e os arquivos compilados (se aplicável).
+    ```bash
+    git add .
+    git commit -m "feat: Adiciona novo componente Button (ou chore: Atualiza versão para vX.Y.Z)"
+    git push
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+5.  **Publique o pacote** no registro NPM (ou registro interno):
+    ```bash
+    npm publish
+    ```
+    *Nota:* Pode ser necessário fazer login no NPM via `npm login` antes de publicar pela primeira vez.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Usando o Design System em Outros Projetos
 
-## Learn More
+Para utilizar a versão mais recente do Design System em um projeto diferente:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1.  **Instale o pacote**:
+    Use o gerenciador de pacotes do seu projeto (Yarn ou NPM) para adicionar o `w-design-system`:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    Com Yarn:
+    ```bash
+    yarn add w-design-system@latest
+    ```
+
+    Com NPM:
+    ```bash
+    npm install w-design-system@latest
+    ```
+
+2.  **Importe e utilize os componentes** conforme necessário no seu código. Exemplo:
+    ```javascript
+    import { Button } from 'w-design-system';
+
+    function MeuComponente() {
+      return <Button label="Clique Aqui" />;
+    }
+    ```
+
+---
