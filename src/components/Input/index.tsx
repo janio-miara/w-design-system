@@ -62,10 +62,10 @@ export const Input: React.FC<InputProps> = ({
       height: (contentRef.current?.offsetHeight ?? 0) + margin * 2,
     })
     setLabelPosition({
-      x: labelRef.current?.offsetLeft ?? 0,
-      y: labelRef.current?.offsetTop ?? 0,
-      width: labelRef.current?.offsetWidth ?? 0,
-      height: labelRef.current?.offsetHeight ?? 0,
+      x: labelRef.current?.offsetLeft ?? 0 - 3,
+      y: labelRef.current?.offsetTop ?? 0 - 3,
+      width: labelRef.current?.offsetWidth ?? 0 + 6,
+      height: labelRef.current?.offsetHeight ?? 0 + 6,
     })
   }, [])
 
