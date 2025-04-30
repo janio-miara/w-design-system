@@ -51,6 +51,7 @@ export interface SelectProps<
   disableSearch?: boolean
   dropDownMaxHeight?: string
   badge?: string | number
+  onOpenChange?: (open: boolean) => void
 }
 
 export interface SelectRef {
@@ -72,6 +73,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     disabled,
     disableSearch,
     badge,
+    onOpenChange,
     ...props
   }: PropsWithChildren<SelectProps<T>>,
   ref: React.ForwardedRef<SelectRef>,
