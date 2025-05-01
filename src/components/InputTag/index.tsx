@@ -54,6 +54,7 @@ export const InputTag: React.FC<InputProps> = ({
 
   const updatePositions = useCallback(() => {
     const margin = 30
+    const marginLabel = 4
     if (contentRef.current) {
       setContentPosition({
         x: contentRef.current.offsetLeft - margin,
@@ -64,10 +65,10 @@ export const InputTag: React.FC<InputProps> = ({
     }
     if (labelRef.current) {
       setLabelPosition({
-        x: labelRef.current.offsetLeft,
-        y: labelRef.current.offsetTop,
-        width: labelRef.current.offsetWidth,
-        height: labelRef.current.offsetHeight,
+        x: labelRef.current.offsetLeft - marginLabel,
+        y: labelRef.current.offsetTop - marginLabel,
+        width: labelRef.current.offsetWidth + marginLabel * 2,
+        height: labelRef.current.offsetHeight + marginLabel * 2,
       })
     }
   }, [])
