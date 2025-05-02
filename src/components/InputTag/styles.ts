@@ -37,6 +37,7 @@ export const InputWrapper = styled.div`
     display: flex;
     gap: 8px;
     margin-top: 8px;
+    flex-wrap: wrap;
 
     button {
       background: none;
