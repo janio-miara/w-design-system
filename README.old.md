@@ -1,1 +1,0 @@
-# w-design-system
