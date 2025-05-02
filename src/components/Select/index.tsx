@@ -317,7 +317,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
         rightIcon={
           <>
             {rightIcon}
-            {badge ?? (
+            {badge != null && (
               <div>
                 <Paragraph strongBod color={theme.colors.honey30}>
                   {badge}
