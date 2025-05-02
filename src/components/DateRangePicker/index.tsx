@@ -31,6 +31,7 @@ export interface DateRangePickerProps<
   onSelectedCustomRange: (start: Date | null, end: Date | null) => void
   rangeDayLimit?: number
   footerMessage?: string
+  onOpenChange?: (open: boolean) => void
 }
 
 interface EmptyDay {
@@ -79,6 +80,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
   isRange,
   rangeDayLimit,
   footerMessage,
+  onOpenChange,
   ...props
 }: DateRangePickerProps<T>) => {
   const [currentYear, setCurrentYear] = useState(0)
@@ -92,9 +94,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
     setCurrentMonth(date.getMonth())
   }, [])
 
-  
-  const resetTime = useCallback(
-    (date: Date | null): Date | null => {
+  const resetTime = useCallback((date: Date | null): Date | null => {
     if (!date) return null
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
   }, [])
@@ -141,6 +141,15 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
       onSelectedCustomRange && onSelectedCustomRange(date, null)
       setCurrentMouseHoverDate(resetTime(date))
     }
+  }
+
+  const onOpenChangeHandler = (open: boolean) => {
+    if (!open && startCustomDate && !endCustomDate) {
+      let firstDate = startCustomDate
+      let secondDate = startCustomDate
+      onSelectedCustomRange && onSelectedCustomRange(firstDate, secondDate)
+    }
+    onOpenChange && onOpenChange(open)
   }
 
   const onMouseEnter = (date: Date) => {
@@ -227,6 +236,7 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
       options={optionComputed}
       selectedOption={selectedOption ?? (firstDate ? customOption : null)}
       onOptionChange={onSelectedOptionChangeHandler}
+      onOpenChange={onOpenChangeHandler}
       {...props}
     >
       <CalendarHeader>
