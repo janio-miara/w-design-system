@@ -128,6 +128,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
       }
       if (element === document.body.parentElement) {
         setOpen(false)
+        onOpenChange && onOpenChange(false)
       }
     }
     document.addEventListener('click', handler)
@@ -135,7 +136,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     return () => {
       document.removeEventListener('click', handler)
     }
-  }, [open])
+  }, [open, onOpenChange])
 
   const onOptionClick = useCallback(
     (option: T) => {
@@ -342,6 +343,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
             setComputedValue('')
             setUsingInput(true)
             setOpen(true)
+            onOpenChange && onOpenChange(true)
             setBackgroundStyle({ $opacity: 0, $width: '100%', $height: '0px', $top: '0px', $left: '0px' })
           }
         }}
