@@ -3,6 +3,7 @@ const cyan = {
   cyan40: '#1A3D7F',
   cyan30: '#025FDE',
   cyan20: '#217EFD',
+  cyan15: '#bad8ff',
   cyan10: '#EEF5FF',
 }
 

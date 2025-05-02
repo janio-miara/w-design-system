@@ -6,18 +6,36 @@ export const InputWrapper = styled.div`
   position: relative;
   border-radius: 4px;
   .button-action {
-    position: absolute;
-    right: 0;
-    top: 1px;
     display: flex;
     align-items: center;
-    padding: 18px;
-    height: 52px;
-    border-radius: 4px;
-    background: ${theme.colors.shade10};
+    justify-content: center;
+    height: 36px;
+    width: 36px;
+    min-width: 36px;
+    border-radius: 100%;
     border: none;
     cursor: pointer;
+    background-color: ${theme.colors.cyan10};
+    opacity: 0.8;
+    cursor: pointer;
   }
+  
+    .button-action svg path {
+    fill: ${theme.colors.cyan20};
+  }
+
+  .button-action:hover {
+    background: ${theme.colors.cyan15};
+  }
+  
+  .button-action:hover svg path {
+    fill: ${theme.colors.cyan20};
+  }
+  
+  .button-action:active {
+    background: ${theme.colors.cyan15};
+  }
+  
   .container-input-tag {
     display: ruby;
     gap: 16px;

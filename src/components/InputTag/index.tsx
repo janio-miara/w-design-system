@@ -2,6 +2,8 @@ import React, { HTMLAttributes, ReactNode, useCallback, useEffect, useId, useRef
 import { InputWrapper, StyledInput, StyledInputBorder, StyledInputContent, StyledLabel } from './styles'
 import { Paragraph } from '../Paragraph'
 import { theme } from '../Themes'
+import { IconWrapper } from '../IconWrapper'
+import { addSVG } from '../../assets/icon'
 
 export interface InputProps extends HTMLAttributes<HTMLDivElement> {
   placeholder?: string
@@ -74,6 +76,31 @@ export const InputTag: React.FC<InputProps> = ({
   }, [])
 
   useEffect(() => {
+    const handler = () => updatePositions()
+
+    let resizeObserver: ResizeObserver | null = null
+    if (ResizeObserver) {
+      resizeObserver = new ResizeObserver(handler)
+      if (contentRef.current) {
+        resizeObserver.observe(contentRef.current)
+      }
+      if (labelRef.current) {
+        resizeObserver.observe(labelRef.current)
+      }
+    } else {
+      window.addEventListener('resize', handler)
+    }
+
+    return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect()
+      } else {
+        window.removeEventListener('resize', handler)
+      }
+    }
+  }, [updatePositions])
+
+  useEffect(() => {
     updatePositions()
   }, [label, updatePositions])
 
@@ -123,12 +150,16 @@ export const InputTag: React.FC<InputProps> = ({
             }}
             readOnly={readonly}
           />
-
-          {rightIcon}
+          {
+            <>
+              {rightIcon}
+              <button className={'button-action'} onClick={e => addTag(e)}>
+                <IconWrapper src={addSVG} width="24px" height="24px" color={theme.colors.shade30} />
+              </button>
+            </>
+          }
         </StyledInputContent>
-        <button className={'button-action'} onClick={e => addTag(e)}>
-          <Paragraph color={theme.colors.cyan30}>add</Paragraph>
-        </button>
+
         <div className={'container-input-tag'}>
           {tags.map((tag, index) => (
             <button className={'wrapper-tag'} key={index}>
