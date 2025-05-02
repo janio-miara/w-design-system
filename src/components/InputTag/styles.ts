@@ -15,30 +15,27 @@ export const InputWrapper = styled.div`
     border-radius: 100%;
     border: none;
     cursor: pointer;
-    background-color: ${theme.colors.cyan10};
     opacity: 0.8;
     cursor: pointer;
+    margin-right: -8px;
+    background-color: transparent;
   }
-  
-    .button-action svg path {
+
+
+  .button-action:hover svg path {
     fill: ${theme.colors.cyan20};
   }
 
   .button-action:hover {
-    background: ${theme.colors.cyan15};
+    background: ${theme.colors.cyan10};
   }
-  
-  .button-action:hover svg path {
-    fill: ${theme.colors.cyan20};
-  }
-  
   .button-action:active {
     background: ${theme.colors.cyan15};
   }
-  
+
   .container-input-tag {
-    display: ruby;
-    gap: 16px;
+    display: flex;
+    gap: 8px;
     margin-top: 8px;
 
     button {
@@ -57,8 +54,6 @@ export const InputWrapper = styled.div`
     .wrapper-tag {
       background: ${theme.colors.cyan10};
       display: flex;
-
-      margin: 8px;
       flex-wrap: nowrap;
       border-radius: 4px;
       padding: 4px 8px;
