@@ -17,6 +17,7 @@ export const SidebarContainer = styled.div<SidebarContainerProps>`
   height: 100dvh;
   padding: 16px 16px 0 16px;
   width: min-content;
+  min-width: ${({ $sidebarOpen: sidebarOpen }) => sidebarOpen && '215px'};
   border-radius: ${({ $sidebarOpen: sidebarOpen }) => sidebarOpen && '0 60px 0px 0;'};
   background: ${({ $baseColor: baseColor }) => baseColor || theme.colors.cyan50};
   /* Mantenha o estilo do container ao passar o mouse */
