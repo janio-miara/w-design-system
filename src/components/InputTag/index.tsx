@@ -162,12 +162,12 @@ export const InputTag: React.FC<InputProps> = ({
 
         <div className={'container-input-tag'}>
           {tags.map((tag, index) => (
-            <button className={'wrapper-tag'} key={index}>
+            <div className={'wrapper-tag'} key={index}>
               <Paragraph color={theme.colors.cyan30}>{tag}</Paragraph>
-              <button onClick={() => removeTag(tag)}>
-                <Paragraph color={theme.colors.shade40}>x</Paragraph>
+              <button className="wrapper-tag-button" onClick={() => removeTag(tag)}>
+                x
               </button>
-            </button>
+            </div>
           ))}
         </div>
       </InputWrapper>

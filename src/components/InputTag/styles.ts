@@ -55,9 +55,14 @@ export const InputWrapper = styled.div`
     .wrapper-tag {
       background: ${theme.colors.cyan10};
       display: flex;
+      align-items: center;
       flex-wrap: nowrap;
       border-radius: 4px;
-      padding: 4px 8px;
+      padding: 0 0 0 8px;
+    }
+    .wrapper-tag-button {
+      padding: 8px 10px;
+      color: ${theme.colors.shade40};
     }
   }
 `
