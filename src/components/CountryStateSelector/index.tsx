@@ -13,7 +13,10 @@ export interface CountryStateSelectProps extends HTMLAttributes<HTMLDivElement> 
   label?: string
   leftIcon?: ReactNode
   onOptionChange?: (option: CountryState | null) => void
+  /** selected option */
   selectedOption?: CountryState | null
+  /** You can use this option to set the selected state through the abbreviation, in this case you should not use selectedOption */
+  selectedOptionAbbreviation?: string | null
   placeholder?: string
   rightIcon?: ReactNode
   value?: string
@@ -27,13 +30,20 @@ export interface CountryStateSelectProps extends HTMLAttributes<HTMLDivElement> 
 }
 
 const CountryStateSelectFowardRef = (
-  { children, allStatesOption, validStates, ...props }: PropsWithChildren<CountryStateSelectProps>,
+  {
+    children,
+    allStatesOption,
+    selectedOption,
+    selectedOptionAbbreviation,
+    validStates,
+    ...props
+  }: PropsWithChildren<CountryStateSelectProps>,
   ref: React.ForwardedRef<SelectRef>,
 ) => {
   const allStatesOptionValue = allStatesOption !== false
 
-  const countryStates = useMemo(() => {
-    const base = [
+  const allCountryStates = useMemo(
+    () => [
       { id: 1, name: 'Acre', abbreviation: 'AC' },
       { id: 2, name: 'Alagoas', abbreviation: 'AL' },
       { id: 3, name: 'Amapá', abbreviation: 'AP' },
@@ -61,14 +71,45 @@ const CountryStateSelectFowardRef = (
       { id: 25, name: 'Sergipe', abbreviation: 'SE' },
       { id: 26, name: 'Tocantins', abbreviation: 'TO' },
       { id: 27, name: 'Distrito Federal', abbreviation: 'DF' },
-    ]
-    if (!validStates) return base
-    return base.filter(state => validStates.includes(state.abbreviation))
-  }, [validStates])
+    ],
+    [],
+  )
 
-  const countrysStateOptions = allStatesOptionValue
-    ? [{ id: 0, name: 'Todos os estados', abbreviation: 'BR' }, ...countryStates]
-    : countryStates
+  const countryStates = useMemo(() => {
+    if (!validStates) return allCountryStates
+    return allCountryStates.filter(state => validStates.includes(state.abbreviation))
+  }, [validStates, allCountryStates])
+
+  const countrysStateOptions = useMemo(() => {
+    return allStatesOptionValue
+      ? [{ id: 0, name: 'Todos os estados', abbreviation: 'BR' }, ...countryStates]
+      : countryStates
+  }, [allStatesOptionValue, countryStates])
+
+  const selectedOptionAbbreviationMap = useMemo(() => {
+    return new Map(countrysStateOptions.map((option: CountryState) => [option.abbreviation, option]))
+  }, [countrysStateOptions])
+
+  const selectedOptionValue = useMemo(() => {
+    if (selectedOption) {
+      return {
+        id: selectedOption.id,
+        text: selectedOption.name,
+        countryState: selectedOption,
+      }
+    }
+    if (selectedOptionAbbreviation) {
+      const selectedOptionMap = selectedOptionAbbreviationMap.get(selectedOptionAbbreviation)
+      if (selectedOptionMap) {
+        return {
+          id: selectedOptionMap.id,
+          text: selectedOptionMap.name,
+          countryState: selectedOptionMap,
+        }
+      }
+    }
+    return null
+  }, [selectedOption, selectedOptionAbbreviation, selectedOptionAbbreviationMap])
 
   const selectProps: SelectProps<{ text: string; id: number; countryState: CountryState }> = {
     ...props,
@@ -94,13 +135,7 @@ const CountryStateSelectFowardRef = (
         }
       }
     },
-    selectedOption: props.selectedOption
-      ? {
-          id: props.selectedOption.id,
-          text: props.selectedOption.name,
-          countryState: props.selectedOption,
-        }
-      : null,
+    selectedOption: selectedOptionValue,
   }
 
   return (
