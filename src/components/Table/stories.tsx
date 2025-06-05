@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
 import { ButtonRound } from '../ButtonRound'
 import { dumpSVG, editSVG } from '../../assets/icon'
-import { Table } from './index'
+import { Table } from './index' // importe também o tipo Column
 import CardStories from '../CardStories'
 import { Paragraph } from '../Paragraph'
 
@@ -44,7 +44,17 @@ const meta: Meta<typeof Table> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const columns = [
+type Column<T> = {
+  header: string
+  accessor?: keyof T
+  width?: string
+  sortable?: boolean
+  onClick?: (row: T) => void
+  Cell?: (row: T, handleExpandClick: (id: number) => void) => React.ReactNode
+  align?: 'left' | 'center' | 'right'
+}
+// Aqui anotamos explicitamente o tipo das colunas para evitar inferência incorreta de "string":
+const columns: Column<any>[] = [
   { header: 'id', accessor: 'id', width: 'auto' },
   { header: 'item', accessor: 'item', width: 'auto', sortable: true },
   { header: 'unidades', accessor: 'unidades', width: 'auto', sortable: true },
@@ -54,7 +64,10 @@ const columns = [
     width: 'auto',
     Cell: (row: any) => (
       <div
-        onClick={() => alert('Marca clicada')}
+        onClick={e => {
+          e.stopPropagation()
+          alert('Marca clicada')
+        }}
         style={{
           background: 'red',
           color: 'white',
@@ -92,7 +105,7 @@ const columns = [
     header: 'Actions',
     accessor: 'valor_estimado_total',
     width: '100px',
-    align: 'center',
+    align: 'center', // agora já é inferido corretamente como 'center'
     Cell: (row: any, handleExpandClick: (id: number) => void) => (
       <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
         <ButtonRound
@@ -102,10 +115,14 @@ const columns = [
             handleExpandClick(row.id)
           }}
         />
-        <ButtonRound icon={dumpSVG} onClick={e => {
-          e.stopPropagation()
-          alert(`Delete ID: ${row.id}`)
-        }} variant={'danger'} />
+        <ButtonRound
+          icon={dumpSVG}
+          onClick={e => {
+            e.stopPropagation()
+            alert(`Delete ID: ${row.id}`)
+          }}
+          variant={'danger'}
+        />
       </div>
     ),
   },
@@ -117,8 +134,6 @@ export const Default: Story = {
     columns: columns,
     striped: true,
     loading: false,
-
-    // <--- Aqui você inclui rowClickable e onRowClick:
     rowClickable: true,
     onRowClick: (row: any) => alert(`Você clicou na linha ID: ${row.id}`),
 
@@ -186,6 +201,7 @@ export const Default: Story = {
   },
 }
 
+// @ts-ignore
 export const LoadingState: Story = {
   render: () => (
     <CardStories title={'Tabela'} subTitle={'tabela-loading'}>
