@@ -206,7 +206,16 @@ export const LoadingState: Story = {
   render: () => (
     <CardStories title={'Tabela'} subTitle={'tabela-loading'}>
       <div style={{ width: '900px', height: '800px' }}>
-        <Table columns={columns} loading={true} height={'100%'} data={[]} />
+        <Table
+          columns={columns}
+          loading={true}
+          height={'100%'}
+          data={[]}
+          onRowClick={student => {
+            console.log('Linha selecionada:', student)
+            // aqui você pode abrir um modal, preencher formulário, etc.
+          }}
+        />
       </div>
     </CardStories>
   ),

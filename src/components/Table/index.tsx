@@ -118,7 +118,12 @@ export const Table = <T extends { id: number }>({
   onRowClick,
 }: TableProps<T>) => {
   const [expandedRows, setExpandedRows] = useState<number[]>([])
+  const [selectedRowId, setSelectedRowId] = useState<number | null>(null)
 
+  const handleRowClick = (row: T) => {
+    setSelectedRowId(row.id)
+    onRowClick?.(row) // dispara a função recebida por props
+  }
   const handleExpandClick = (id: number) => {
     setExpandedRows(prev => (prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]))
   }
@@ -159,7 +164,11 @@ export const Table = <T extends { id: number }>({
                   <Tr
                     striped={striped}
                     clickable={rowClickable && !!onRowClick}
-                    onClick={() => rowClickable && onRowClick && onRowClick(row)}
+                    onClick={() => rowClickable && onRowClick && handleRowClick(row)}
+                    style={{
+                      border: `1px solid ${selectedRowId === row.id ? theme.colors.cyan30 : 'transparent'}`,
+                      background: selectedRowId === row.id ? theme.colors.cyan10 : 'transparent',
+                    }}
                   >
                     {columns.map((col, colIndex) => (
                       <Td key={colIndex} width={col.width} align={col.align || 'left'}>
