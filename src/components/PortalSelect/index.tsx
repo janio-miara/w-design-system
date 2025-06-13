@@ -44,6 +44,7 @@ import portalImg46 from '../../assets/icon/portals/46.svg'
 import portalImg47 from '../../assets/icon/portals/47.svg'
 import portalImg48 from '../../assets/icon/portals/48.svg'
 import portalImg49 from '../../assets/icon/portals/49.png'
+import portalImg54 from '../../assets/icon/portals/54.png'
 import { PortalIcon } from './styles'
 
 export interface Portal {
@@ -112,6 +113,7 @@ const portalIcons: Record<number, string> = {
   47: portalImg47,
   48: portalImg48,
   49: portalImg49,
+  54: portalImg54, 
 }
 const PortalSelectFowardRef = (
   { children, portals, allPortalsOption, ...props }: PropsWithChildren<PortalSelectProps>,
