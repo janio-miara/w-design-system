@@ -1,6 +1,6 @@
 {
   "name": "w-design-system",
-  "version": "0.0.93",
+  "version": "0.0.95",
   "main": "dist/w-design-system.umd.js",
   "module": "dist/w-design-system.es.js",
   "types": "dist/index.d.ts",

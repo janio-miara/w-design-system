@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
 import { ButtonRound } from '../ButtonRound'
 import { dumpSVG, editSVG } from '../../assets/icon'
-import { Table } from './index' // importe também o tipo Column
+import { Table } from './index'
 import CardStories from '../CardStories'
 import { Paragraph } from '../Paragraph'
 
@@ -105,7 +105,7 @@ const columns: Column<any>[] = [
     header: 'Actions',
     accessor: 'valor_estimado_total',
     width: '100px',
-    align: 'center', // agora já é inferido corretamente como 'center'
+    align: 'center',
     Cell: (row: any, handleExpandClick: (id: number) => void) => (
       <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
         <ButtonRound
@@ -213,7 +213,6 @@ export const LoadingState: Story = {
           data={[]}
           onRowClick={student => {
             console.log('Linha selecionada:', student)
-            // aqui você pode abrir um modal, preencher formulário, etc.
           }}
         />
       </div>

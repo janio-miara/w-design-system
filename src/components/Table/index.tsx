@@ -46,39 +46,42 @@ const StyledTable = styled.table`
 `
 
 const Thead = styled.thead`
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid ${theme.colors.shade10};
 `
 
 const TbodyContainer = styled.div<{ height?: string }>`
   overflow-y: auto;
-  height: ${props => props.height || '100%'};
+  height: ${({ height }) => height || '100%'};
 `
 
 const Tbody = styled.tbody``
 
-const Tr = styled.tr<{ striped?: boolean; clickable?: boolean }>`
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-  background-color: ${props => (props.striped ? '#f9f9f9' : 'transparent')};
-  cursor: ${props => (props.clickable ? 'pointer' : 'default')};
+const Tr = styled.tr<{ striped?: boolean; clickable?: boolean; selected?: boolean }>`
+  background-color: ${({ selected, striped }) =>
+    selected ? theme.colors.cyan10 : striped ? theme.colors.shade05 : 'transparent'};
+  cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
 
-  &:nth-child(odd) {
-    background-color: ${props => (props.striped ? '#fff' : 'transparent')};
+  &:nth-child(even) {
+    background-color: ${({ selected, striped }) =>
+      selected ? theme.colors.cyan10 : striped ? theme.colors.shade10 : 'transparent'};
+  }
+
+  &:hover {
+    background-color: ${({ clickable, selected }) => (clickable && !selected ? theme.colors.cyan10 : '')};
   }
 `
 
 const Th = styled.th<{ width?: string; align?: 'left' | 'center' | 'right' }>`
   padding: 10px;
-  text-align: ${props => props.align || 'left'};
-  width: ${props => props.width || 'auto'};
+  text-align: ${({ align }) => align || 'left'};
+  width: ${({ width }) => width || 'auto'};
   vertical-align: middle;
 `
 
 const Td = styled.td<{ width?: string; align?: 'left' | 'center' | 'right' }>`
   padding: 12px;
-  width: ${props => props?.width || 'auto'};
-  text-align: ${props => props?.align || 'left'};
+  width: ${({ width }) => width || 'auto'};
+  text-align: ${({ align }) => align || 'left'};
 `
 
 const ExpandableRow = styled.div`
@@ -122,8 +125,9 @@ export const Table = <T extends { id: number }>({
 
   const handleRowClick = (row: T) => {
     setSelectedRowId(row.id)
-    onRowClick?.(row) // dispara a função recebida por props
+    onRowClick?.(row)
   }
+
   const handleExpandClick = (id: number) => {
     setExpandedRows(prev => (prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]))
   }
@@ -132,10 +136,10 @@ export const Table = <T extends { id: number }>({
     <TableContainer>
       <StyledTable>
         <Thead>
-          <Tr striped={striped}>
+          <Tr>
             {columns.map((col, index) => (
               <Th key={index} width={col.width} align={col.align}>
-                <Paragraph color={theme.colors.shade30} textTransform={'uppercase'} strongBod>
+                <Paragraph color={theme.colors.shade30} textTransform="uppercase" strongBod>
                   {col.header}
                 </Paragraph>
               </Th>
@@ -143,19 +147,20 @@ export const Table = <T extends { id: number }>({
           </Tr>
         </Thead>
       </StyledTable>
+
       <TbodyContainer height={height}>
         <StyledTable>
           <Tbody>
             {loading ? (
               <LoadingWrapper>
-                <ContainerLoading size={'small'} />
+                <ContainerLoading size="small" />
               </LoadingWrapper>
             ) : data.length === 0 ? (
               <EmptyStateWrapper>
                 <EmptyState
-                  title={emptyStateMessage?.title}
-                  subTitle={emptyStateMessage?.subTitle}
-                  description={emptyStateMessage?.description}
+                  title={emptyStateMessage.title}
+                  subTitle={emptyStateMessage.subTitle}
+                  description={emptyStateMessage.description}
                 />
               </EmptyStateWrapper>
             ) : (
@@ -164,24 +169,20 @@ export const Table = <T extends { id: number }>({
                   <Tr
                     striped={striped}
                     clickable={rowClickable && !!onRowClick}
+                    selected={selectedRowId === row.id}
                     onClick={() => rowClickable && onRowClick && handleRowClick(row)}
-                    style={{
-                      border: `1px solid ${selectedRowId === row.id ? theme.colors.cyan30 : 'transparent'}`,
-                      background: selectedRowId === row.id ? theme.colors.cyan10 : 'transparent',
-                    }}
                   >
                     {columns.map((col, colIndex) => (
-                      <Td key={colIndex} width={col.width} align={col.align || 'left'}>
-                        {col.Cell ? (
-                          // Exemplo de uso de stopPropagation():
-                          // Se o Cell renderiza um botão, no onClick do botão faça event.stopPropagation()
-                          col.Cell(row, handleExpandClick)
-                        ) : col.accessor ? (
-                          <Paragraph color={theme.colors.shade40}>{String(row[col.accessor])}</Paragraph>
-                        ) : null}
+                      <Td key={colIndex} width={col.width} align={col.align}>
+                        {col.Cell
+                          ? col.Cell(row, handleExpandClick)
+                          : col.accessor && (
+                              <Paragraph color={theme.colors.shade40}>{String(row[col.accessor])}</Paragraph>
+                            )}
                       </Td>
                     ))}
                   </Tr>
+
                   {expandedRows.includes(row.id) &&
                     'containerColapsed' in row &&
                     typeof (row as any).containerColapsed === 'function' && (
