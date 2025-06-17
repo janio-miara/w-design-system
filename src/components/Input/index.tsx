@@ -1,5 +1,14 @@
 import React, { HTMLAttributes, ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react'
-import { InputWrapper, StyledInput, StyledInputBorder, StyledInputContent, StyledLabel } from './styles'
+import {
+  InputWrapper,
+  StyledInput,
+  StyledInputBorder,
+  StyledInputContent,
+  StyledLabel,
+  StyledErrorMessage,
+} from './styles'
+import { Paragraph } from '../Paragraph'
+import { theme } from '../Themes'
 
 export interface InputProps extends HTMLAttributes<HTMLDivElement> {
   type?: React.HTMLInputTypeAttribute
@@ -10,6 +19,7 @@ export interface InputProps extends HTMLAttributes<HTMLDivElement> {
   value?: string
   readonly?: boolean
   disabled?: boolean
+  error?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onInput?: (e: React.FormEvent<HTMLInputElement>) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
@@ -35,6 +45,7 @@ export const Input: React.FC<InputProps> = ({
   leftIcon,
   rightIcon,
   type = 'text',
+  error,
   ...props
 }) => {
   const id = useId()
@@ -84,8 +95,8 @@ export const Input: React.FC<InputProps> = ({
 
   return (
     <InputWrapper {...props}>
-      <StyledInputContent disabled={disabled} ref={contentRef} onClick={handleClick}>
-        <StyledInputBorder content={contentPosition} label={labelPosition} />
+      <StyledInputContent disabled={disabled} ref={contentRef} onClick={handleClick} hasError={!!error}>
+        <StyledInputBorder content={contentPosition} label={labelPosition} hasError={!!error} />
         <StyledLabel htmlFor={id} ref={labelRef}>
           {label}
         </StyledLabel>
@@ -105,6 +116,11 @@ export const Input: React.FC<InputProps> = ({
         />
         {rightIcon}
       </StyledInputContent>
+      {error && (
+        <StyledErrorMessage>
+          <Paragraph color={theme.colors.red40}>{error}</Paragraph>
+        </StyledErrorMessage>
+      )}
     </InputWrapper>
   )
 }

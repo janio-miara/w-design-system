@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { theme } from '../Themes'
 import { Position } from '../InputTag'
 
@@ -9,7 +9,6 @@ export const InputWrapper = styled.div`
 
 export const StyledInput = styled.input`
   width: 100%;
-
   background-color: transparent;
   border: none;
   outline: none;
@@ -49,11 +48,12 @@ export const StyledLabel = styled.label`
   font-family: 'Nunito Sans', sans-serif;
   font-size: ${theme.paragraph.small};
   font-weight: 600;
-  text-wrap: nowrap;
+  white-space: nowrap;
 `
 
 export interface StyledInputContentProps {
   disabled?: boolean
+  hasError?: boolean
 }
 
 export const StyledInputContent = styled.div<StyledInputContentProps>`
@@ -69,29 +69,25 @@ export const StyledInputContent = styled.div<StyledInputContentProps>`
   gap: 8px;
   border-radius: 4px;
 
-  background-color: ${({ disabled }: StyledInputContentProps) =>
-    disabled ? theme.colors.shade10 : theme.colors.white};
+  background-color: ${({ disabled }) => (disabled ? theme.colors.shade10 : theme.colors.white)};
 
-  cursor: ${({ disabled }: StyledInputContentProps) => (disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `
 
 export interface StyledInputBorderProps {
   label: Position
   content: Position
+  hasError?: boolean
 }
 
-/**
- * O clip-path faz com que o elemento fique transparente na região do label
- * @see https://stackoverflow.com/questions/3742479/how-to-cut-a-hole-in-an-svg-rectangle
- * @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d
- */
 export const StyledInputBorder = styled.div<StyledInputBorderProps>`
   position: absolute;
-
   box-sizing: content-box;
   inset: 0px;
   border-radius: 4px;
-  border: 1px solid ${theme.colors.shade20};
+
+  border: 1px solid ${({ hasError }) => (hasError ? theme.colors.red40 : theme.colors.shade20)};
+
   clip-rule: evenodd;
   clip-path: path(
     '${({ label, content }) =>
@@ -99,4 +95,19 @@ export const StyledInputBorder = styled.div<StyledInputBorderProps>`
         ? `M ${content.x} ${content.y} l ${content.width} 0 l 0 ${content.height} l -${content.width} 0z M ${label.x} ${label.y} l 0 ${label.height} l ${label.width} 0 l 0 -${label.height}z`
         : ''}'
   );
+
+  ${({ hasError }) =>
+    hasError &&
+    css`
+      border-color: ${theme.colors.red30};
+      box-shadow: 0 0 0 2px ${theme.colors.red10};
+    `}
+`
+
+export const StyledErrorMessage = styled.span`
+  display: block;
+  color: ${theme.colors.red30};
+  font-size: 16px;
+  margin-top: 4px;
+  margin-left: 4px;
 `
