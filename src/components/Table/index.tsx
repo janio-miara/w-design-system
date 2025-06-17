@@ -57,13 +57,12 @@ const TbodyContainer = styled.div<{ height?: string }>`
 const Tbody = styled.tbody``
 
 const Tr = styled.tr<{ striped?: boolean; clickable?: boolean; selected?: boolean }>`
-  background-color: ${({ selected, striped }) =>
-    selected ? theme.colors.cyan10 : striped ? theme.colors.shade05 : 'transparent'};
+  background-color: ${({ selected, striped }) => (selected ? theme.colors.cyan10 : striped ? 'white' : 'transparent')};
   cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
 
   &:nth-child(even) {
     background-color: ${({ selected, striped }) =>
-      selected ? theme.colors.cyan10 : striped ? theme.colors.shade10 : 'transparent'};
+      selected ? theme.colors.cyan10 : striped ? theme.colors.shade05 : 'transparent'};
   }
 
   &:hover {
