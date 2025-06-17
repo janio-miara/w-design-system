@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { theme } from '../Themes'
-import type { Position } from '.'
+import { Position } from '../InputTag'
 
 export const InputWrapper = styled.div`
   position: relative;

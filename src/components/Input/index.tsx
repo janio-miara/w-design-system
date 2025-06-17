@@ -1,7 +1,8 @@
-import React, { HTMLAttributes, ReactNode, useCallback, useEffect, useId, useRef } from 'react'
+import React, { HTMLAttributes, ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react'
 import { InputWrapper, StyledInput, StyledInputBorder, StyledInputContent, StyledLabel } from './styles'
 
 export interface InputProps extends HTMLAttributes<HTMLDivElement> {
+  type?: React.HTMLInputTypeAttribute
   placeholder?: string
   rightIcon?: ReactNode
   leftIcon?: ReactNode
@@ -15,7 +16,7 @@ export interface InputProps extends HTMLAttributes<HTMLDivElement> {
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
-export interface Position {
+interface Position {
   x: number
   y: number
   width: number
@@ -29,25 +30,17 @@ export const Input: React.FC<InputProps> = ({
   onInput,
   value,
   onKeyDown,
-  disabled,
   onKeyUp,
+  disabled,
   leftIcon,
   rightIcon,
+  type = 'text',
   ...props
 }) => {
   const id = useId()
-  const [labelPosition, setLabelPosition] = React.useState<Position>({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  })
-  const [contentPosition, setContentPosition] = React.useState<Position>({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  })
+
+  const [labelPosition, setLabelPosition] = useState<Position>({ x: 0, y: 0, width: 0, height: 0 })
+  const [contentPosition, setContentPosition] = useState<Position>({ x: 0, y: 0, width: 0, height: 0 })
 
   const contentRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLLabelElement>(null)
@@ -56,12 +49,14 @@ export const Input: React.FC<InputProps> = ({
   const updatePositions = useCallback(() => {
     const margin = 30
     const marginLabel = 4
+
     setContentPosition({
       x: (contentRef.current?.offsetLeft ?? 0) - margin,
       y: (contentRef.current?.offsetTop ?? 0) - margin,
       width: (contentRef.current?.offsetWidth ?? 0) + margin * 2,
       height: (contentRef.current?.offsetHeight ?? 0) + margin * 2,
     })
+
     setLabelPosition({
       x: (labelRef.current?.offsetLeft ?? 0) - marginLabel,
       y: (labelRef.current?.offsetTop ?? 0) - marginLabel,
@@ -70,42 +65,26 @@ export const Input: React.FC<InputProps> = ({
     })
   }, [])
 
-  const onClickHandler = () => {
+  const handleClick = () => {
     inputRef.current?.focus()
   }
 
   useEffect(() => {
+    updatePositions()
+
     const handler = () => updatePositions()
 
-    let resizeObserver: ResizeObserver | null = null
-    if (ResizeObserver) {
-      resizeObserver = new ResizeObserver(handler)
-      if (contentRef.current) {
-        resizeObserver.observe(contentRef.current)
-      }
-      if (labelRef.current) {
-        resizeObserver.observe(labelRef.current)
-      }
-    } else {
-      window.addEventListener('resize', handler)
-    }
+    const resizeObserver = new ResizeObserver(handler)
 
-    return () => {
-      if (resizeObserver) {
-        resizeObserver.disconnect()
-      } else {
-        window.removeEventListener('resize', handler)
-      }
-    }
+    if (contentRef.current) resizeObserver.observe(contentRef.current)
+    if (labelRef.current) resizeObserver.observe(labelRef.current)
+
+    return () => resizeObserver.disconnect()
   }, [updatePositions])
-
-  useEffect(() => {
-    updatePositions()
-  }, [label, updatePositions])
 
   return (
     <InputWrapper {...props}>
-      <StyledInputContent disabled={disabled} ref={contentRef} onClick={onClickHandler}>
+      <StyledInputContent disabled={disabled} ref={contentRef} onClick={handleClick}>
         <StyledInputBorder content={contentPosition} label={labelPosition} />
         <StyledLabel htmlFor={id} ref={labelRef}>
           {label}
@@ -113,15 +92,16 @@ export const Input: React.FC<InputProps> = ({
         {leftIcon}
         <StyledInput
           id={id}
+          ref={inputRef}
+          type={type}
           disabled={disabled}
+          readOnly={readonly}
           value={value}
           placeholder={props.placeholder}
-          ref={inputRef}
           onChange={onChange}
           onInput={onInput}
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
-          readOnly={readonly}
         />
         {rightIcon}
       </StyledInputContent>
