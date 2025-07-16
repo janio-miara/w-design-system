@@ -1,3 +1,4 @@
+import { default as addSVG } from './add.svg'
 import { default as alertSVG } from './alert.svg'
 import { default as appsSVG } from './apps.svg'
 import { default as bellSVG } from './bel.svg'
@@ -14,11 +15,11 @@ import { default as commentSVG } from './comment.svg'
 import { default as dashboardSVG } from './dashboard.svg'
 import { default as docCheckSVG } from './doc-check.svg'
 import { default as docDownloadSVG } from './doc-download.svg'
-import { default as docUploadSVG } from './doc-upload.svg'
 import { default as docSVG } from './doc.svg'
+import { default as docUploadSVG } from './doc-upload.svg'
 import { default as dumpSVG } from './dump.svg'
-import { default as editSVG } from './edit.svg'
 import { default as editalSVG } from './edital.svg'
+import { default as editSVG } from './edit.svg'
 import { default as eyesSVG } from './eyes.svg'
 import { default as fileSVG } from './file.svg'
 import { default as financeSVG } from './finance.svg'
@@ -27,6 +28,7 @@ import { default as gearSVG } from './gear.svg'
 import { default as grid2PlusSVG } from './grid-2-plus.svg'
 import { default as imageSVG } from './image.svg'
 import { default as lockSVG } from './lock.svg'
+import { default as logoWaveGrayPNG } from './logoWaveGray.png'
 import { default as moneySVG } from './money.svg'
 import { default as monitoringSVG } from './monitoring.svg'
 import { default as orderSVG } from './order.svg'
@@ -34,10 +36,11 @@ import { default as portalSVG } from './portal.svg'
 import { default as settingSVG } from './seting.svg'
 import { default as spinSVG } from './spin.svg'
 import { default as spreadsheetSVG } from './spreadsheet.svg'
+import { default as warningSVG } from './warning.svg'
 import { default as wavePulseSVG } from './wave-pulse.svg'
-import { default as logoWaveGrayPNG } from './logoWaveGray.png'
-import { default as addSVG } from './add.svg'
+
 export {
+  addSVG,
   alertSVG,
   appsSVG,
   bellSVG,
@@ -67,6 +70,7 @@ export {
   grid2PlusSVG,
   imageSVG,
   lockSVG,
+  logoWaveGrayPNG,
   moneySVG,
   monitoringSVG,
   orderSVG,
@@ -74,7 +78,6 @@ export {
   settingSVG,
   spinSVG,
   spreadsheetSVG,
+  warningSVG,
   wavePulseSVG,
-  logoWaveGrayPNG,
-  addSVG
 }

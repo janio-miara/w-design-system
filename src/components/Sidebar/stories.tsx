@@ -53,7 +53,8 @@ const meta: Meta<typeof Sidebar> = {
         menuTitle: 'Dashboard',
         icon: dashboardSVG,
         link: '/dashboard',
-        disabled: true,
+        disabled: false,
+        warning: 'This is a warning',
       },
     },
     groups: {
@@ -90,8 +91,9 @@ export const Playground: Story = {
             icon: dashboardSVG,
             link: '/dashboard',
             disabled: false,
-            showInMenu: false
-          }
+            warning: 'This is a warning',
+            showInMenu: true,
+          },
         }}
         currentItemId={args.currentItemId}
         currentGroupId={args.currentGroupId}
@@ -100,6 +102,7 @@ export const Playground: Story = {
           DASHBOARD: {
             name: 'Group 1',
             icon: dashboardSVG,
+            warning: 'This is a warning',
             itemIds: ['DASHBOARD'],
           },
         }}

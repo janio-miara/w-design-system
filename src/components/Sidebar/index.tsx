@@ -25,6 +25,7 @@ export interface SidebarItemData {
   menuTitle: string
   icon: string
   disabled: boolean
+  warning?: string
   link?: string
 }
 
@@ -32,6 +33,7 @@ export interface SidebarGroupData {
   name: string
   link?: string
   icon: string
+  warning?: string
   itemIds?: string[]
 }
 
@@ -80,59 +82,67 @@ export const Sidebar = ({
             .map((item, index) => ({ id: index, disabled: undefined, ...item }))
             .map(item => {
               if (item.type === 'spacer') return <SidebarSpacer key={item.id} />
-              if (item.type === 'item')
+              if (item.type === 'item') {
+                const itemRouter = items[item.id]
                 return (
                   <SidebarItem
                     key={item.id}
-                    title={items[item.id]?.menuTitle}
-                    icon={items[item.id]?.icon}
-                    disabled={items[item.id]?.disabled}
+                    title={itemRouter?.menuTitle}
+                    icon={itemRouter?.icon}
+                    disabled={itemRouter?.disabled}
+                    warning={itemRouter?.warning}
                     onClick={() => sidebarItemClickHandler(item.id)}
                     sidebarOpen={sidebarOpen}
                     isCurrentItem={currentItemId === item.id}
                   />
                 )
+              }
               if (item.type === 'group') {
                 const group = groups[item.id]
                 const itemShowInMenu = group.itemIds?.some(id => items[id]?.showInMenu !== false)
                 if (group.itemIds == null || group.itemIds.length === 0 || !itemShowInMenu) {
                   const itemRouter = items[item.id]
-                  return <SidebarItem
-                    key={item.id}
-                    onClick={() => sidebarItemClickHandler(item.id)}
-                    sidebarOpen={sidebarOpen}
-                    isCurrentItem={currentGroupId === item.id}
-                    disabled={itemRouter.disabled}
-                    title={itemRouter.menuTitle}
-                    icon={itemRouter.icon}
-                />
+                  return (
+                    <SidebarItem
+                      key={item.id}
+                      onClick={() => sidebarItemClickHandler(item.id)}
+                      sidebarOpen={sidebarOpen}
+                      isCurrentItem={currentGroupId === item.id}
+                      warning={itemRouter?.warning}
+                      disabled={itemRouter.disabled}
+                      title={itemRouter.menuTitle}
+                      icon={itemRouter.icon}
+                    />
+                  )
                 } else {
                   return (
                     <SidebarGroup
-                    disabled={group.itemIds.every(id => items[id]?.disabled)}
-                    key={item.id}
-                    title={group.name}
-                    icon={group.icon}
-                    sidebarOpen={sidebarOpen}
-                    onClick={() => group.link && setLink(group.link)}
-                    isCurrentGroup={currentGroupId === item.id}
-                  >
-                    {group.itemIds
-                      .filter(id => items[id]?.showInMenu !== false)
-                      .map(id => (
-                        <SidebarItem
-                          key={id}
-                          title={items[id]?.menuTitle}
-                          disabled={items[id]?.disabled}
-                          onClick={() => sidebarItemClickHandler(id)}
-                          isCurrentItem={currentItemId === id}
-                          sidebarOpen={sidebarOpen}
-                          isInsideGroup
+                      disabled={group.itemIds.every(id => items[id]?.disabled)}
+                      key={item.id}
+                      title={group.name}
+                      icon={group.icon}
+                      warning={group.warning}
+                      sidebarOpen={sidebarOpen}
+                      onClick={() => group.link && setLink(group.link)}
+                      isCurrentGroup={currentGroupId === item.id}
+                    >
+                      {group.itemIds
+                        .filter(id => items[id]?.showInMenu !== false)
+                        .map(id => (
+                          <SidebarItem
+                            key={id}
+                            title={items[id]?.menuTitle}
+                            disabled={items[id]?.disabled}
+                            warning={items[id]?.warning}
+                            onClick={() => sidebarItemClickHandler(id)}
+                            isCurrentItem={currentItemId === id}
+                            sidebarOpen={sidebarOpen}
+                            isInsideGroup
                           />
                         ))}
-                  </SidebarGroup>
-                )
-              }
+                    </SidebarGroup>
+                  )
+                }
               }
               return null
             })}

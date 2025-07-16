@@ -23,6 +23,7 @@ export { InputTag } from './components/InputTag/index'
 export * from './components/Types/index'
 
 export {
+  addSVG,
   alertSVG,
   appsSVG,
   bellSVG,
@@ -51,6 +52,8 @@ export {
   gearSVG,
   grid2PlusSVG,
   imageSVG,
+  lockSVG,
+  logoWaveGrayPNG,
   moneySVG,
   monitoringSVG,
   orderSVG,
@@ -58,5 +61,6 @@ export {
   settingSVG,
   spinSVG,
   spreadsheetSVG,
+  warningSVG,
   wavePulseSVG,
 } from './assets/icon/index'
