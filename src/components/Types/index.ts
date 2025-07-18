@@ -7,6 +7,9 @@ export type { PaginateProps } from '../Paginate'
 export type { Portal, PortalSelectProps } from '../PortalSelect'
 export type { SelectProps, SelectRef } from '../Select'
 export type { DocumentNumberInputProps } from '../DocumentNumberInput'
+export type { CPFInputProps } from '../CPFInput'
+export type { CNPJInputProps } from '../CNPJInput'
+
 export type {
   SidebarGroupData,
   SidebarItemData,

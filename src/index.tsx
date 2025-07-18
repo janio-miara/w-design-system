@@ -2,27 +2,29 @@ export { Banner } from './components/Banner/index'
 export { Button } from './components/Button/index'
 export { ButtonRadiusIcon } from './components/ButtonRadiusIcon/index'
 export { ButtonRound } from './components/ButtonRound/index'
+export { CNPJInput } from './components/CNPJInput/index'
+export { CountryStateSelect } from './components/CountryStateSelector/index'
+export { CPFInput } from './components/CPFInput/index'
 export { DatePicker } from './components/DatePicker/index'
 export { DateRangePicker } from './components/DateRangePicker/index'
+export { DocumentNumberInput } from './components/DocumentNumberInput/index'
+export { EmptyState } from './components/EmptyState/index'
 export { IconWrapper } from './components/IconWrapper/index'
 export { Input } from './components/Input/index'
+export { InputTag } from './components/InputTag/index'
+export { LegacyTheme } from './components/LegacyTheme/index'
 export { Modal } from './components/Modal/index'
+export { MultiSelect } from './components/MultiSelect/index'
 export { Paginate } from './components/Paginate/index'
 export { Paragraph } from './components/Paragraph/index'
-export { Select } from './components/Select/index'
-export { MultiSelect } from './components/MultiSelect/index'
 export { PortalSelect } from './components/PortalSelect/index'
-export { CountryStateSelect } from './components/CountryStateSelector/index'
+export { Select } from './components/Select/index'
 export { Sidebar } from './components/Sidebar/index'
 export { Table } from './components/Table/index'
 export { Tabs } from './components/Tabs/index'
 export { theme } from './components/Themes/index'
-export { LegacyTheme } from './components/LegacyTheme/index'
 export { Title } from './components/Title/index'
-export { EmptyState } from './components/EmptyState/index'
-export { InputTag } from './components/InputTag/index'
 export * from './components/Types/index'
-export { DocumentNumberInput } from './components/DocumentNumberInput/index'
 
 export {
   addSVG,
@@ -64,5 +66,6 @@ export {
   spinSVG,
   spreadsheetSVG,
   warningSVG,
-  wavePulseSVG,
+  wavePulseSVG
 } from './assets/icon/index'
+
