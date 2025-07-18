@@ -1,4 +1,14 @@
-import React, { HTMLAttributes, ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react'
+import React, {
+  HTMLAttributes,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  MouseEvent,
+  useImperativeHandle,
+} from 'react'
 import {
   InputWrapper,
   StyledInput,
@@ -11,6 +21,7 @@ import { Paragraph } from '../Paragraph'
 import { theme } from '../Themes'
 
 export interface InputProps extends HTMLAttributes<HTMLDivElement> {
+  autoComplete?: string
   type?: React.HTMLInputTypeAttribute
   placeholder?: string
   rightIcon?: ReactNode
@@ -21,7 +32,9 @@ export interface InputProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean
   error?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onInput?: (e: React.FormEvent<HTMLInputElement>) => void
+  onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeValue?: (value: string) => void
+  onInputValue?: (value: string) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
@@ -33,29 +46,73 @@ interface Position {
   height: number
 }
 
-export const Input: React.FC<InputProps> = ({
-  label,
-  readonly,
-  onChange,
-  onInput,
-  value,
-  onKeyDown,
-  onKeyUp,
-  disabled,
-  leftIcon,
-  rightIcon,
-  type = 'text',
-  error,
-  ...props
-}) => {
-  const id = useId()
+export interface InputRef {
+  focus: () => void
+  getInputRef: () => HTMLInputElement | null
+}
 
+const InputRender = (
+  {
+    autoComplete,
+    label,
+    readonly,
+    onChangeValue,
+    onChange,
+    onInputValue,
+    onInput,
+    value,
+    onKeyDown,
+    onKeyUp,
+    disabled,
+    leftIcon,
+    rightIcon,
+    type = 'text',
+    error,
+    ...props
+  }: InputProps,
+  ref: React.ForwardedRef<InputRef>,
+) => {
+  const id = useId()
   const [labelPosition, setLabelPosition] = useState<Position>({ x: 0, y: 0, width: 0, height: 0 })
   const [contentPosition, setContentPosition] = useState<Position>({ x: 0, y: 0, width: 0, height: 0 })
 
   const contentRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLLabelElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+
+  useImperativeHandle(ref, () => ({
+    focus: () => inputRef.current?.focus(),
+    getInputRef: () => inputRef.current,
+  }))
+
+  const onChangeHandler = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (onChange) {
+        onChange(event)
+      }
+
+      if (onChangeValue) {
+        onChangeValue(event.currentTarget.value)
+      }
+    },
+    [onChange, onChangeValue],
+  )
+
+
+  const onInputHandler = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (onInput) {
+        onInput(event)
+      }
+
+      if (onInputValue) {
+        onInputValue(event.currentTarget.value)
+      }
+    },
+    [onInput, onInputValue],
+  )
+
 
   const updatePositions = useCallback(() => {
     const margin = 30
@@ -76,8 +133,10 @@ export const Input: React.FC<InputProps> = ({
     })
   }, [])
 
-  const handleClick = () => {
-    inputRef.current?.focus()
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (document.activeElement !== inputRef.current) {
+      inputRef.current?.focus()
+    }
   }
 
   useEffect(() => {
@@ -94,7 +153,7 @@ export const Input: React.FC<InputProps> = ({
   }, [updatePositions])
 
   return (
-    <InputWrapper {...props}>
+    <InputWrapper {...props} ref={wrapperRef}>
       <StyledInputContent disabled={disabled} ref={contentRef} onClick={handleClick} hasError={!!error}>
         <StyledInputBorder content={contentPosition} label={labelPosition} hasError={!!error} />
         <StyledLabel htmlFor={id} ref={labelRef}>
@@ -102,6 +161,7 @@ export const Input: React.FC<InputProps> = ({
         </StyledLabel>
         {leftIcon}
         <StyledInput
+          autoComplete={autoComplete}
           id={id}
           ref={inputRef}
           type={type}
@@ -109,8 +169,8 @@ export const Input: React.FC<InputProps> = ({
           readOnly={readonly}
           value={value}
           placeholder={props.placeholder}
-          onChange={onChange}
-          onInput={onInput}
+          onChange={onChangeHandler}
+          onInput={onInputHandler}
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
         />
@@ -124,3 +184,5 @@ export const Input: React.FC<InputProps> = ({
     </InputWrapper>
   )
 }
+
+export const Input = React.forwardRef<InputRef, InputProps>(InputRender)

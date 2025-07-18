@@ -8,6 +8,7 @@ export const InputWrapper = styled.div`
 `
 
 export const StyledInput = styled.input`
+  position: relative;
   width: 100%;
   background-color: transparent;
   border: none;

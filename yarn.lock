@@ -499,6 +499,16 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@maskito/core@^3.10.1":
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/@maskito/core/-/core-3.10.1.tgz#45a2735d5dad8d31a526a164722c0cea4af0bb76"
+  integrity sha512-rpC/1u8yFA+NzIQf66PMgv2vd7IhnRzd5mBfw0m6u3wDDfFk/OCLpPJpChkeN1ec09VZqIaG5MaU7N8fUDdcvQ==
+
+"@maskito/react@^3.10.1":
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/@maskito/react/-/react-3.10.1.tgz#78e93b383a76c037ed84a098cc82a089e23802aa"
+  integrity sha512-E74IUmvFk3pkRkh048TJ+B7l/fu2Xk0ciVhUOfIqRbu+hvk4T4iXGCvUKTD/SW0K6/ifko/0iwiYRm5pRw6YyQ==
+
 "@mdx-js/react@^3.0.0":
   version "3.0.1"
   resolved "https://registry.npmjs.org/@mdx-js/react/-/react-3.0.1.tgz"

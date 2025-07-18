@@ -6,6 +6,7 @@ export type { MultiSelectProps, MultiSelectRef } from '../MultiSelect'
 export type { PaginateProps } from '../Paginate'
 export type { Portal, PortalSelectProps } from '../PortalSelect'
 export type { SelectProps, SelectRef } from '../Select'
+export type { DocumentNumberInputProps } from '../DocumentNumberInput'
 export type {
   SidebarGroupData,
   SidebarItemData,

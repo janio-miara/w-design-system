@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import exampleIcon from '../../assets/icon/image.svg'
 import { Button } from './index'
-import { VARIANTS_TYPES } from '../../utils/constanst'
+import { VARIANTS_TYPES } from '../../utils/constants'
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',

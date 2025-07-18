@@ -22,6 +22,7 @@ export { Title } from './components/Title/index'
 export { EmptyState } from './components/EmptyState/index'
 export { InputTag } from './components/InputTag/index'
 export * from './components/Types/index'
+export { DocumentNumberInput } from './components/DocumentNumberInput/index'
 
 export {
   addSVG,
