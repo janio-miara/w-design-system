@@ -10,7 +10,7 @@ const meta: Meta<typeof MultiSelect> = {
     placeholder: { control: 'text' },
     label: { control: 'text' },
     disabled: { control: 'boolean' },
-    selectedOption: { control: 'number' },
+    selectedOptions: { control: 'number' },
     onOptionChange: { action: 'selectedOptionChange' },
     dropDownTop: { control: 'boolean' },
   },
@@ -20,11 +20,11 @@ export default meta
 type Story = StoryObj<typeof MultiSelect>
 
 const ComponentWrapper = ({ options, ...args }: MultiSelectProps) => {
-  const [selectedOption, setSelectOption] = React.useState<MultiSelectProps['selectedOption']>([])
+  const [selectedOption, setSelectOption] = React.useState<MultiSelectProps['selectedOptions']>([])
 
   return (
     <MultiSelect
-      selectedOption={selectedOption}
+      selectedOptions={selectedOption}
       onOptionChange={option => setSelectOption(option)}
       options={
         options ?? (new Array(5)).fill(0).map((_, index) => ({

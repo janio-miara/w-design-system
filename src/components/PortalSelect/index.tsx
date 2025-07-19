@@ -67,6 +67,7 @@ export interface PortalSelectProps extends HTMLAttributes<HTMLDivElement> {
   disableSearch?: boolean
   dropDownMaxHeight?: string
   allPortalsOption?: boolean
+  error?: string
 }
 
 const portalIcons: Record<number, string> = {

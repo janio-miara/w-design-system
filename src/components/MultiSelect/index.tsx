@@ -43,12 +43,13 @@ export interface MultiSelectProps<
   options?: T[]
   placeholder?: string
   rightIcon?: ReactNode
-  selectedOption?: T[]
+  selectedOptions?: T[]
   value?: string
   dropDownTop?: boolean
   dropDownWidth?: string
   disableSearch?: boolean
   dropDownMaxHeight?: string
+  error?: string
 }
 
 export interface MultiSelectRef {
@@ -64,11 +65,12 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
     options,
     placeholder,
     rightIcon,
-    selectedOption: selectedOptions,
+    selectedOptions,
     value,
     dropDownWidth,
     disabled,
     disableSearch,
+    error,
     ...props
   }: PropsWithChildren<MultiSelectProps<T>>,
   ref: React.ForwardedRef<MultiSelectRef>,
@@ -355,6 +357,7 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
             setOpen(true)
           }
         }}
+        error={error}
       />
       {open && (
         <DropdownWrapper>

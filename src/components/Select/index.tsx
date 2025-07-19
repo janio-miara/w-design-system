@@ -52,6 +52,7 @@ export interface SelectProps<
   dropDownMaxHeight?: string
   badge?: string | number
   onOpenChange?: (open: boolean) => void
+  error?: string
 }
 
 export interface SelectRef {
@@ -74,6 +75,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     disableSearch,
     badge,
     onOpenChange,
+    error,
     ...props
   }: PropsWithChildren<SelectProps<T>>,
   ref: React.ForwardedRef<SelectRef>,
@@ -347,6 +349,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
             setBackgroundStyle({ $opacity: 0, $width: '100%', $height: '0px', $top: '0px', $left: '0px' })
           }
         }}
+        error={error}
       />
       {open && (
         <DropdownWrapper>

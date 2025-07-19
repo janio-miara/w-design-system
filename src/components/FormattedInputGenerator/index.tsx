@@ -21,11 +21,6 @@ export const FormattedInputGenerator = (
   function FormattedInput(
     {
       children,
-      disabled,
-      id,
-      onBlur,
-      onFocus,
-      placeholder,
       value,
       onInputValue,
       onChangeValue,
