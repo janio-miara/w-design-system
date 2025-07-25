@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react'
+import { HTMLAttributes } from 'react'
 import { DateRangePicker, DateRangePickerProps } from '../DateRangePicker'
 
 type GetElementType<T> = T extends (infer U)[] ? U : never

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Container } from './styles'
 import { IconWrapper } from '../IconWrapper'
 import { chevronLeftSVG, chevronRightSVG } from '../../assets/icon'
@@ -23,7 +22,7 @@ export const Paginate = ({
   dropDownTop,
 }: PaginateProps) => {
   // Se itemsPerPage for undefined, o valor default e 20
-  let itemsPerPageValue = itemsPerPage || 20
+  const itemsPerPageValue = itemsPerPage || 20
 
   const pageCount = Math.ceil(itemCount / itemsPerPageValue)
 
@@ -99,7 +98,9 @@ export const Paginate = ({
           dropDownTop={dropDownTop !== false}
           value={itemsPerPageValue.toString()}
           onOptionChange={option => {
-            option && onChangeItemsPerPage(option.id)
+            if (option) {
+              onChangeItemsPerPage(option.id)
+            }
           }}
           disabled={itemPerPageOptions.length <= 1}
           options={itemPerPageOptionsSorted.map(count => ({

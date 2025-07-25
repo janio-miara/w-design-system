@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import exampleIcon from '../../assets/icon/image.svg'
 
-import { VARIANTS_TYPES } from '../../utils/constants'
+import { VARIANTS_TYPES } from '#utils/constants'
 import { ButtonRound } from './index'
 
 const meta: Meta<typeof ButtonRound> = {

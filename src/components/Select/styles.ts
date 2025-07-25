@@ -42,7 +42,7 @@ export const DropdownWrapper = styled.div`
 `
 
 export interface OptionButtonProps {
-  selected: boolean
+  $selected: boolean
 }
 
 export const OptionButton = styled.button<OptionButtonProps>`
@@ -51,7 +51,7 @@ export const OptionButton = styled.button<OptionButtonProps>`
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  color: ${({ selected }) => (selected ? theme.colors.cyan30 : theme.colors.shade40)};
+  color: ${({ $selected }) => ($selected ? theme.colors.cyan30 : theme.colors.shade40)};
   background-color: transparent;
   border: none;
 
@@ -71,8 +71,12 @@ export const OptionButton = styled.button<OptionButtonProps>`
 `
 
 export const OptionText = styled.div`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   flex-grow: 1;
 `
+
 export const OptionTextBadge = styled.div`
   flex-grow: 1;
   display: flex;

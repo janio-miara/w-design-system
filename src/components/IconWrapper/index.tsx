@@ -13,11 +13,11 @@ interface IconWrapperProps {
 }
 
 interface StyledIconWrapperProps {
-  color?: string
-  width?: string
-  height?: string
-  clickable?: boolean
-  loading?: boolean
+  $color?: string
+  $width?: string
+  $height?: string
+  $clickable?: boolean
+  $loading?: boolean
 }
 
 const spinAnimation = keyframes`
@@ -31,14 +31,14 @@ const StyledIconWrapper = styled.div<StyledIconWrapperProps>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
+  cursor: ${({ $clickable: clickable }) => (clickable ? 'pointer' : 'default')};
 
   svg {
-    width: ${({ width }) => width || '24px'};
-    height: ${({ height }) => height || '24px'};
-    fill: ${({ color }) => color || 'black'};
+    width: ${({ $width: width }) => width || '24px'};
+    height: ${({ $height: height }) => height || '24px'};
+    fill: ${({ $color: color }) => color || 'black'};
 
-    ${({ loading }) =>
+    ${({ $loading: loading }) =>
       loading &&
       css`
         animation: ${css`
@@ -46,19 +46,19 @@ const StyledIconWrapper = styled.div<StyledIconWrapperProps>`
       `}
 
     path {
-      fill: ${({ color }) => color || 'black'};
+      fill: ${({ $color: color }) => color || 'black'};
     }
   }
 `
 
 export const IconWrapper: React.FC<IconWrapperProps> = ({ src, color, width, height, className, onClick, loading }) => (
   <StyledIconWrapper
-    color={color}
-    width={width}
-    height={height}
+    $color={color}
+    $width={width}
+    $height={height}
     className={className}
-    clickable={!!onClick}
-    loading={loading}
+    $clickable={!!onClick}
+    $loading={loading}
     onClick={onClick}
   >
     <ReactSVG src={src} />

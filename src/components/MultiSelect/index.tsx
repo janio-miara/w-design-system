@@ -50,6 +50,7 @@ export interface MultiSelectProps<
   disableSearch?: boolean
   dropDownMaxHeight?: string
   error?: string
+  border?: boolean
 }
 
 export interface MultiSelectRef {
@@ -71,6 +72,7 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
     disabled,
     disableSearch,
     error,
+    border,
     ...props
   }: PropsWithChildren<MultiSelectProps<T>>,
   ref: React.ForwardedRef<MultiSelectRef>,
@@ -107,9 +109,9 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
     (option: T) => {
       const isActive = selectedOptions?.findIndex(item => item.id === option.id) !== -1
       if (isActive) {
-        onOptionChange && onOptionChange(selectedOptions?.filter(item => item.id !== option.id) ?? [])
+        if (onOptionChange) onOptionChange(selectedOptions?.filter(item => item.id !== option.id) ?? [])
       } else {
-        onOptionChange && onOptionChange([...(selectedOptions ?? []), option])
+        if (onOptionChange) onOptionChange([...(selectedOptions ?? []), option])
       }
     },
     [onOptionChange, selectedOptions],
@@ -182,7 +184,7 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
   })
 
   const optionRefs = useRef<(HTMLButtonElement | null)[]>([])
-  const lastItemIdRef = useRef<number | undefined>()
+  const lastItemIdRef = useRef<number | undefined>(null)
   const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null)
 
   const updateBackground = useCallback((index: number) => {
@@ -358,6 +360,7 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
           }
         }}
         error={error}
+        border={border}
       />
       {open && (
         <DropdownWrapper>
@@ -372,10 +375,12 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
                 <OptionsWrapper ref={optionsWrapperRef}>
                   {filteredOptions.map((option, index) => (
                     <OptionButton
-                      selected={selectedOptions?.some(selectedOption => option.id === selectedOption.id) ?? false}
+                      $selected={selectedOptions?.some(selectedOption => option.id === selectedOption.id) ?? false}
                       key={option.id}
                       onClick={() => onOptionClick(option)}
-                      ref={ref => (optionRefs.current[index] = ref)}
+                      ref={ref => {
+                        optionRefs.current[index] = ref
+                      }}
                       onPointerEnter={event => onPointerEnter(event, index)}
                       onPointerLeave={event => onPointerLeave(event, index)}
                     >
@@ -394,7 +399,7 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
                       ) : (
                         <>
                           {option.icon}
-                          <OptionText>{option.text}</OptionText>
+                            <OptionText title={option.text}>{option.text}</OptionText>
                         </>
                       )}
                     </OptionButton>

@@ -114,7 +114,7 @@ export const ButtonStyled = styled.button<ButtonRoundTypes>`
   gap: ${({ size }) => (size === 'small' ? '8' : '12px')};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
-  ${({ variant = 'primary', outline }) => colorScheme[variant]};
+  ${({ variant = 'primary' }) => colorScheme[variant]};
 
   .buttonRadiusWrapperIcon {
     margin-top: 4px;

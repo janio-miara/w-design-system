@@ -20,10 +20,8 @@ export const FormattedInputGenerator = (
 ) => {
   function FormattedInput(
     {
-      children,
       value,
       onInputValue,
-      onChangeValue,
       ...props
     }: PropsWithChildren<FormattedInputProps>,
     ref: ForwardedRef<TheFormattedTextFieldForwardedRef>,
@@ -61,7 +59,7 @@ export const FormattedInputGenerator = (
       (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.currentTarget.value
         setMaskitoValue(value)
-        onInputValue && onInputValue(applyMask(removeMask(value)))
+        if (onInputValue) onInputValue(applyMask(removeMask(value)))
       },
       [onInputValue],
     )

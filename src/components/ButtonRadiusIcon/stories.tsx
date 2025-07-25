@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import exampleIcon from '../../assets/icon/image.svg'
 import { ButtonRadiusIcon } from './index'
-import { VARIANTS_TYPES } from '../../utils/constants' // Update this path to your actual icon
+import { VARIANTS_TYPES } from '#utils/constants' // Update this path to your actual icon
 
 const meta: Meta<typeof ButtonRadiusIcon> = {
   title: 'Components/ButtonRadiusIcon',

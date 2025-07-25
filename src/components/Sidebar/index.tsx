@@ -3,7 +3,6 @@ import SidebarGroup from './SidebarGroup'
 import SidebarItem from './SidebarItem'
 import SidebarLogo from './SidebarLogo'
 
-import React from 'react'
 import { SidebarContainer, SidebarScrollContainer, SidebarScrollWrapperContainer, SidebarSpacer } from './styles'
 
 export interface SidebarLayoutItemTypeItem {

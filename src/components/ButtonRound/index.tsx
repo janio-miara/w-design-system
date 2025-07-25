@@ -5,7 +5,6 @@ import { ButtonRoundTypes } from '../Types'
 
 export const ButtonRound: React.FC<ButtonRoundTypes> = ({
   variant = 'primary',
-  children,
   disabled = false,
   icon,
   outline,

@@ -1,7 +1,5 @@
-import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import { Sidebar } from './index'
-import { action } from '@storybook/addon-actions'
 import { dashboardSVG } from '../../assets/icon'
 
 const meta: Meta<typeof Sidebar> = {
@@ -97,7 +95,7 @@ export const Playground: Story = {
         }}
         currentItemId={args.currentItemId}
         currentGroupId={args.currentGroupId}
-        setLink={action('setLink')}
+        setLink={ args.setLink}
         groups={{
           DASHBOARD: {
             name: 'Group 1',

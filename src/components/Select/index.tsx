@@ -30,7 +30,7 @@ import {
 } from './styles'
 
 export interface SelectProps<
-  T extends { text: string; id: number; icon?: ReactNode; badge?: string | number } = {
+  T extends { text: string; id: number; icon?: ReactNode; badge?: ReactNode } = {
     text: string
     id: number
     icon?: ReactNode
@@ -53,13 +53,14 @@ export interface SelectProps<
   badge?: string | number
   onOpenChange?: (open: boolean) => void
   error?: string
+  border?: boolean
 }
 
 export interface SelectRef {
   setOpen(open: boolean): void
 }
 
-const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode; badge?: any }>(
+const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode; badge?: ReactNode }>(
   {
     children,
     label,
@@ -76,6 +77,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     badge,
     onOpenChange,
     error,
+    border,
     ...props
   }: PropsWithChildren<SelectProps<T>>,
   ref: React.ForwardedRef<SelectRef>,
@@ -89,7 +91,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     setOpen,
   }))
 
-  const lastItemIdRef = useRef<number | undefined>()
+  const lastItemIdRef = useRef<number | undefined>(undefined)
   const optionsWrapperRef = useRef<HTMLDivElement | null>(null)
 
   const [backgroundStyle, setBackgroundStyle] = useState<OptionBackgroundProps>({
@@ -130,7 +132,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
       }
       if (element === document.body.parentElement) {
         setOpen(false)
-        onOpenChange && onOpenChange(false)
+        if (onOpenChange) onOpenChange(false)
       }
     }
     document.addEventListener('click', handler)
@@ -142,7 +144,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
 
   const onOptionClick = useCallback(
     (option: T) => {
-      onOptionChange && onOptionChange(option)
+      if (onOptionChange) onOptionChange(option)
       setOpen(false)
     },
     [onOptionChange],
@@ -167,7 +169,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     if (disableSearch) return
     setComputedValue(event.target.value)
     setUsingInput(true)
-    onOptionChange && onOptionChange(null)
+    if (onOptionChange) onOptionChange(null)
   }
 
   const filteredOptions: T[] = useMemo((): T[] => {
@@ -317,6 +319,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
       <Input
         disabled={disabled}
         leftIcon={leftIcon}
+        border={border}
         rightIcon={
           <>
             {rightIcon}
@@ -345,7 +348,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
             setComputedValue('')
             setUsingInput(true)
             setOpen(true)
-            onOpenChange && onOpenChange(true)
+            if (onOpenChange) onOpenChange(true)
             setBackgroundStyle({ $opacity: 0, $width: '100%', $height: '0px', $top: '0px', $left: '0px' })
           }
         }}
@@ -366,10 +369,12 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
                     const isSelected = selectedOption?.id === option.id
                     return (
                       <OptionButton
-                        selected={isSelected}
+                        $selected={isSelected}
                         key={option.id}
                         onClick={() => onOptionClick(option)}
-                        ref={el => (optionRefs.current[index] = el)}
+                        ref={el => {
+                          optionRefs.current[index] = el
+                        }}
                         onPointerEnter={event => onPointerEnter(event, index)}
                         onPointerLeave={event => onPointerLeave(event, index)}
                       >
@@ -383,7 +388,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
                         ) : (
                           <>
                             {option.icon}
-                            <OptionText>{option.text}</OptionText>
+                            <OptionText title={option.text}>{option.text}</OptionText>
                           </>
                         )}
                       </OptionButton>
@@ -409,7 +414,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
 }
 
 export const Select = React.forwardRef(SelectFowardRef) as <
-  T extends { text: string; id: number; icon?: ReactNode; badge?: any },
+  T extends { text: string; id: number; icon?: ReactNode; badge?: ReactNode },
 >(
   props: PropsWithChildren<SelectProps<T>> & { ref?: React.ForwardedRef<SelectRef> },
 ) => React.ReactElement

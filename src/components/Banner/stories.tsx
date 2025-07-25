@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { VARIANTS_TYPES_BANNER } from '../../utils/constants'
+import { VARIANTS_TYPES_BANNER } from '#utils/constants'
 
 import { Banner } from './index'
 

@@ -53,8 +53,8 @@ export const StyledLabel = styled.label`
 `
 
 export interface StyledInputContentProps {
-  disabled?: boolean
-  hasError?: boolean
+  $disabled?: boolean
+  $hasError?: boolean
 }
 
 export const StyledInputContent = styled.div<StyledInputContentProps>`
@@ -70,15 +70,15 @@ export const StyledInputContent = styled.div<StyledInputContentProps>`
   gap: 8px;
   border-radius: 4px;
 
-  background-color: ${({ disabled }) => (disabled ? theme.colors.shade10 : theme.colors.white)};
+  background-color: ${({ $disabled }) => ($disabled ? theme.colors.shade10 : theme.colors.white)};
 
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
 `
 
 export interface StyledInputBorderProps {
-  label: Position
-  content: Position
-  hasError?: boolean
+  $label: Position
+  $content: Position
+  $hasError?: boolean
 }
 
 export const StyledInputBorder = styled.div<StyledInputBorderProps>`
@@ -87,18 +87,18 @@ export const StyledInputBorder = styled.div<StyledInputBorderProps>`
   inset: 0px;
   border-radius: 4px;
 
-  border: 1px solid ${({ hasError }) => (hasError ? theme.colors.red40 : theme.colors.shade20)};
+  border: 1px solid ${({ $hasError }) => ($hasError ? theme.colors.red40 : theme.colors.shade20)};
 
   clip-rule: evenodd;
   clip-path: path(
-    '${({ label, content }) =>
-      label.height !== 0 && label.width !== 0
-        ? `M ${content.x} ${content.y} l ${content.width} 0 l 0 ${content.height} l -${content.width} 0z M ${label.x} ${label.y} l 0 ${label.height} l ${label.width} 0 l 0 -${label.height}z`
+    '${({ $label, $content }) =>
+      $label.height !== 0 && $label.width !== 0
+        ? `M ${$content.x} ${$content.y} l ${$content.width} 0 l 0 ${$content.height} l -${$content.width} 0z M ${$label.x} ${$label.y} l 0 ${$label.height} l ${$label.width} 0 l 0 -${$label.height}z`
         : ''}'
   );
 
-  ${({ hasError }) =>
-    hasError &&
+  ${({ $hasError }) =>
+    $hasError &&
     css`
       border-color: ${theme.colors.red30};
       box-shadow: 0 0 0 2px ${theme.colors.red10};

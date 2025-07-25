@@ -1,4 +1,3 @@
-import React from 'react'
 import { chevronLeftSVG, chevronRightSVG } from '../../../assets/icon'
 import { IconWrapper } from '../../IconWrapper'
 import { SidebarLogoContainer } from './styles'

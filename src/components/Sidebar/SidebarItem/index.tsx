@@ -1,4 +1,3 @@
-import React from 'react'
 import { IconWrapper } from '../../IconWrapper'
 import { Paragraph } from '../../Paragraph'
 import { Bullet, Container } from './styles'

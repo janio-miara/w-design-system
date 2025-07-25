@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { HTMLAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { calendarSVG, chevronLeftSVG, chevronRightSVG } from '../../assets/icon'
 import { IconWrapper } from '../IconWrapper'
 import { Select, SelectProps, SelectRef } from '../Select'
@@ -123,8 +123,8 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
   const onDayClick = (date: Date) => {
     if (onSelectedOptionChange) onSelectedOptionChange(null)
     if (!startCustomDate) {
-      onSelectedCustomRange && onSelectedCustomRange(date, null)
-      currentMouseHoverDate && setCurrentMouseHoverDate(resetTime(date))
+      if (onSelectedCustomRange) onSelectedCustomRange(date, null)
+      if (currentMouseHoverDate) setCurrentMouseHoverDate(resetTime(date))
       if (isRange === false) selectRef.current?.setOpen(false)
     } else if (!endCustomDate) {
       let firstDate = startCustomDate
@@ -134,22 +134,22 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
         firstDate = secondDate
         secondDate = temp
       }
-      onSelectedCustomRange && onSelectedCustomRange(firstDate, secondDate)
+      if (onSelectedCustomRange) onSelectedCustomRange(firstDate, secondDate)
       selectRef.current?.setOpen(false)
     } else {
       if (isRange === false) selectRef.current?.setOpen(false)
-      onSelectedCustomRange && onSelectedCustomRange(date, null)
+      if (onSelectedCustomRange) onSelectedCustomRange(date, null)
       setCurrentMouseHoverDate(resetTime(date))
     }
   }
 
   const onOpenChangeHandler = (open: boolean) => {
     if (!open && startCustomDate && !endCustomDate) {
-      let firstDate = startCustomDate
-      let secondDate = startCustomDate
-      onSelectedCustomRange && onSelectedCustomRange(firstDate, secondDate)
+      const firstDate = startCustomDate
+      const secondDate = startCustomDate
+      if (onSelectedCustomRange) onSelectedCustomRange(firstDate, secondDate)
     }
-    onOpenChange && onOpenChange(open)
+    if (onOpenChange) onOpenChange(open)
   }
 
   const onMouseEnter = (date: Date) => {
@@ -157,7 +157,6 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
       setCurrentMouseHoverDate(resetTime(date))
     }
   }
-  const onMouseLeave = (date: Date) => {}
 
   const day = new Date(currentYear, currentMonth, 1)
 
@@ -262,7 +261,6 @@ export const DateRangePicker = <T extends GetElementType<SelectProps['options']>
               $today={day.today}
               onClick={() => !day.isBlocked && onDayClick(day.date)}
               onMouseEnter={() => !day.isBlocked && onMouseEnter(day.date)}
-              onMouseLeave={() => !day.isBlocked && onMouseLeave(day.date)}
             >
               <CalendarDaySelectedBackground
                 $isFirstSelected={day.isFirstSelected}

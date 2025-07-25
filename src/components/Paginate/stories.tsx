@@ -1,8 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-import { action } from '@storybook/addon-actions'
-import { fn } from '@storybook/test'
 import { Paginate, PaginateProps } from '.'
 
 const meta: Meta<PaginateProps> = {
@@ -13,8 +11,13 @@ const meta: Meta<PaginateProps> = {
     currentPage: 1,
     itemCount: 100,
     itemsPerPage: 10,
-    onChangePage: fn(),
-    onChangeItemsPerPage: fn(),
+    onChangePage:  (page => {
+      console.log(`Page changed to: ${page}`)
+    }),
+    onChangeItemsPerPage: (itemsPerPage => {
+      console.log(`Items per page changed to: ${itemsPerPage}`)
+    }),
+    itemPerPageOptions: [10, 20, 50, 100],
     dropDownTop: true,
   },
 } satisfies Meta<PaginateProps>
@@ -27,12 +30,10 @@ const NewPaginate = (args: PaginateProps) => {
 
   const handleChangePage = (page: number) => {
     setCurrentPage(page)
-    action('changePage')(page)
   }
 
   const handleChangeItemsPerPage = (items: number) => {
     setItemsPerPage(items)
-    action('changeItemsPerPage')(items)
   }
   return (
     <>

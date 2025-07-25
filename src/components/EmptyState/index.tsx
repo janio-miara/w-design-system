@@ -1,4 +1,3 @@
-import React from 'react'
 import { ContainerEmptyState } from './styles'
 import { Paragraph } from '../Paragraph'
 import { theme } from '../Themes'

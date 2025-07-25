@@ -6,7 +6,7 @@ import { Table } from './index'
 import CardStories from '../CardStories'
 import { Paragraph } from '../Paragraph'
 
-const meta: Meta<typeof Table> = {
+const meta: Meta<typeof Table<{ id: number; item: string; unidades: string; marca_fabricante: string; modelo: string; quantidade_solitada: string; valor_estimado_unitario: string; valor_estimado_total: string; containerColapsed: (row: any) => React.ReactNode }>> = {
   title: 'Components/Table',
   component: Table,
   parameters: {
@@ -54,7 +54,7 @@ type Column<T> = {
   align?: 'left' | 'center' | 'right'
 }
 // Aqui anotamos explicitamente o tipo das colunas para evitar inferência incorreta de "string":
-const columns: Column<any>[] = [
+const columns: Column<{ id: number; item: string; unidades: string; marca_fabricante: string; modelo: string; quantidade_solitada: string; valor_estimado_unitario: string; valor_estimado_total: string }>[] = [
   { header: 'id', accessor: 'id', width: 'auto' },
   { header: 'item', accessor: 'item', width: 'auto', sortable: true },
   { header: 'unidades', accessor: 'unidades', width: 'auto', sortable: true },
@@ -152,7 +152,7 @@ export const Default: Story = {
         quantidade_solitada: '10000',
         valor_estimado_unitario: '1000',
         valor_estimado_total: '10000000',
-        containerColapsed: ({ item }: any) => (
+        containerColapsed: ({ item }) => (
           <div>
             <Paragraph size={'large'} heavyBod>
               {item}
@@ -201,7 +201,6 @@ export const Default: Story = {
   },
 }
 
-// @ts-ignore
 export const LoadingState: Story = {
   render: () => (
     <CardStories title={'Tabela'} subTitle={'tabela-loading'}>

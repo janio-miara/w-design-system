@@ -1,6 +1,5 @@
 import { MouseEvent, PropsWithChildren, useCallback, useEffect, useState } from 'react'
 import { SidebarGroupContainer, SidebarGroupHeaderContainer } from './styles'
-import React from 'react'
 import { IconWrapper } from '../../IconWrapper'
 import { Paragraph } from '../../Paragraph'
 import { theme } from '../../Themes'

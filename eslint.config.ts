@@ -1,9 +1,8 @@
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
 import storybook from 'eslint-plugin-storybook'
 import prettierConfig from 'eslint-config-prettier'
-
+import reactCompilerConfig from 'eslint-plugin-react-compiler'
 // @ts-check
 
 import eslint from '@eslint/js'
@@ -14,8 +13,8 @@ export default tseslint.config(
   tseslint.configs.recommended,
   reactPlugin.configs.flat.recommended,
   reactPlugin.configs.flat['jsx-runtime'],
+  reactCompilerConfig.configs['recommended'],
   reactHooks.configs['recommended-latest'],
-  jsxA11y.configs.recommended,
   storybook.configs['flat/recommended'],
   prettierConfig
 )

@@ -1,11 +1,11 @@
-module.exports = {
-  trailingComma: 'es5',
+export default {
+  trailingComma: 'none',
   tabWidth: 2,
-  semi: false,
+  semi: true,
   singleQuote: true,
   arrowParens: 'avoid',
   printWidth: 120,
   jsxSingleQuote: false,
   jsxBracketSameLine: false,
-  bracketSpacing: true,
-}
+  bracketSpacing: true
+};

@@ -1,23 +1,44 @@
-// vite.config.ts
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
+import eslint from 'vite-plugin-eslint'
 import dts from 'vite-plugin-dts'
+import typescript from '@rollup/plugin-typescript'
+import json from '@rollup/plugin-json'
+import css from 'rollup-plugin-import-css'
+import image from '@rollup/plugin-image'
+import terser from '@rollup/plugin-terser'
+import path from 'path'
+import babel from 'vite-plugin-babel'
 
 export default defineConfig({
   plugins: [
-    react(),
-    dts({
-      include: ['src', 'src/index.tsx'],
-      insertTypesEntry: true,
-      outDir: 'dist',
+    react({
+      babel: {
+        plugins: [
+          ['babel-plugin-styled-components', { displayName: true, fileName: false }],
+          ['babel-plugin-react-compiler'],
+        ],
+      },
     }),
+    eslint({
+      exclude: ['/virtual:/**', 'node_modules/**'],
+    }),
+    babel({
+        babelConfig: {
+        plugins: [
+          ['babel-plugin-styled-components', { displayName: true, fileName: false }],
+          ['babel-plugin-react-compiler'],
+        ],
+      },
+    }),
+    dts({ include: ['src', 'src/index.tsx'], insertTypesEntry: true, outDir: 'dist' }),
   ],
   build: {
+    sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.tsx'),
-      name: 'WDesignSystem',
-      fileName: format => `w-design-system.${format}.js`,
+      formats: ['es'],
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'styled-components'],
@@ -28,12 +49,17 @@ export default defineConfig({
           'styled-components': 'styled',
         },
       },
+      plugins: [image(), css(), json(), typescript(), terser()],
     },
-    outDir: 'dist',
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '#utils': path.resolve(__dirname, 'src', 'utils'),
     },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.ts',
   },
 })

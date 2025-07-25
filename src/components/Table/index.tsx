@@ -105,7 +105,7 @@ const EmptyStateWrapper = styled.div`
   padding: 20px;
 `
 
-export const Table = <T extends { id: number }>({
+export const Table = <T extends { id: number; containerColapsed?: (row: T) => React.ReactNode }>({
   columns,
   data,
   height = '100%',
@@ -184,8 +184,8 @@ export const Table = <T extends { id: number }>({
 
                   {expandedRows.includes(row.id) &&
                     'containerColapsed' in row &&
-                    typeof (row as any).containerColapsed === 'function' && (
-                      <ExpandableRow>{(row as any).containerColapsed(row)}</ExpandableRow>
+                    typeof row.containerColapsed === 'function' && (
+                      <ExpandableRow>{row.containerColapsed(row)}</ExpandableRow>
                     )}
                 </React.Fragment>
               ))

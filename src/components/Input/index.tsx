@@ -1,4 +1,4 @@
-import React, {
+import {
   HTMLAttributes,
   ReactNode,
   useCallback,
@@ -6,8 +6,8 @@ import React, {
   useId,
   useRef,
   useState,
-  MouseEvent,
   useImperativeHandle,
+  forwardRef,
 } from 'react'
 import {
   InputWrapper,
@@ -37,6 +37,7 @@ export interface InputProps extends HTMLAttributes<HTMLDivElement> {
   onInputValue?: (value: string) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  border?: boolean
 }
 
 interface Position {
@@ -68,6 +69,7 @@ const InputRender = (
     rightIcon,
     type = 'text',
     error,
+    border,
     ...props
   }: InputProps,
   ref: React.ForwardedRef<InputRef>,
@@ -99,7 +101,6 @@ const InputRender = (
     [onChange, onChangeValue],
   )
 
-
   const onInputHandler = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       if (onInput) {
@@ -112,7 +113,6 @@ const InputRender = (
     },
     [onInput, onInputValue],
   )
-
 
   const updatePositions = useCallback(() => {
     const margin = 30
@@ -133,13 +133,15 @@ const InputRender = (
     })
   }, [])
 
-  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+  const handleClick = () => {
     if (document.activeElement !== inputRef.current) {
       inputRef.current?.focus()
     }
   }
 
   useEffect(() => {
+    if (border === false) return
+
     updatePositions()
 
     const handler = () => updatePositions()
@@ -150,12 +152,12 @@ const InputRender = (
     if (labelRef.current) resizeObserver.observe(labelRef.current)
 
     return () => resizeObserver.disconnect()
-  }, [updatePositions])
+  }, [updatePositions, border])
 
   return (
     <InputWrapper {...props} ref={wrapperRef}>
-      <StyledInputContent disabled={disabled} ref={contentRef} onClick={handleClick} hasError={!!error}>
-        <StyledInputBorder content={contentPosition} label={labelPosition} hasError={!!error} />
+      <StyledInputContent $disabled={disabled} ref={contentRef} onClick={handleClick} $hasError={!!error}>
+        {border !== false && <StyledInputBorder $content={contentPosition} $label={labelPosition} $hasError={!!error} />}
         <StyledLabel htmlFor={id} ref={labelRef}>
           {label}
         </StyledLabel>
@@ -185,4 +187,4 @@ const InputRender = (
   )
 }
 
-export const Input = React.forwardRef<InputRef, InputProps>(InputRender)
+export const Input = forwardRef<InputRef, InputProps>(InputRender)

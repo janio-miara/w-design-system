@@ -1,4 +1,3 @@
-import React from 'react'
 import { IconWrapper } from '../IconWrapper'
 import { ButtonStyled } from './styles'
 import { ButtonTypes } from '../Types'
@@ -6,7 +5,12 @@ import { spinSVG } from '../../assets/icon'
 import { theme } from '../Themes'
 const { colors } = theme
 
-const handleColorLoading = ({ variant, outline }: any) => {
+interface ColorLoadingProps {
+  variant: ButtonTypes['variant']
+  outline?: boolean
+}
+
+const handleColorLoading = ({ variant, outline }: ColorLoadingProps) => {
   if (outline) {
     if (variant === 'primary') {
       return colors.cyan50
@@ -33,9 +37,6 @@ const handleColorLoading = ({ variant, outline }: any) => {
   if (variant === 'primary') {
     return 'white'
   }
-  if (variant === 'primary') {
-    return colors.cyan50
-  }
   if (variant === 'warning') {
     return colors.honey30
   }
@@ -49,7 +50,7 @@ const handleColorLoading = ({ variant, outline }: any) => {
   return 'white'
 }
 
-export const Button: React.FC<ButtonTypes> = ({
+export const Button = ({
   variant = 'primary',
   children,
   disabled = false,
@@ -62,7 +63,7 @@ export const Button: React.FC<ButtonTypes> = ({
   size,
   loading,
   ...props
-}) => (
+}: ButtonTypes) => (
   <ButtonStyled
     variant={variant}
     disabled={disabled}
