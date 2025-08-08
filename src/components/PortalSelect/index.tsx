@@ -1,6 +1,5 @@
+import { PortalIcon } from '../PortalIcon'
 import React, { HTMLAttributes, PropsWithChildren, ReactNode } from 'react'
-import { Select, SelectProps, SelectRef } from '../Select'
-import defaultIcon from '../../assets/icon/portals/default.svg'
 import portalImg01 from '../../assets/icon/portals/01.png'
 import portalImg07 from '../../assets/icon/portals/07.svg'
 import portalImg08 from '../../assets/icon/portals/08.svg'
@@ -45,7 +44,7 @@ import portalImg47 from '../../assets/icon/portals/47.svg'
 import portalImg48 from '../../assets/icon/portals/48.svg'
 import portalImg49 from '../../assets/icon/portals/49.png'
 import portalImg54 from '../../assets/icon/portals/54.png'
-import { PortalIcon } from './styles'
+import { Select, SelectProps, SelectRef } from '../Select'
 
 export interface Portal {
   id: number
@@ -125,15 +124,15 @@ const PortalSelectFowardRef = (
 
   const selectProps: SelectProps<{ text: string; id: number; icon?: ReactNode; portal: Portal }> = {
     ...props,
-    leftIcon: props.selectedOption != null && portalIcons[props.selectedOption.id] && (
-      <PortalIcon src={props.selectedOption ? portalIcons[props.selectedOption.id] : defaultIcon} />
+    leftIcon: props.selectedOption != null && (
+      <PortalIcon portalId={props.selectedOption.id} portalName={props.selectedOption.name} />
     ),
     options: portalsValue.map(portal => {
       const imageUrl = portalIcons[portal.id] as unknown as string
       return {
         id: portal.id,
         text: portal.name,
-        icon: imageUrl && <PortalIcon src={imageUrl} alt={portal.name} />,
+        icon: imageUrl && <PortalIcon portalId={portal.id} portalName={portal.name} />,
         portal,
       }
     }),
@@ -155,7 +154,7 @@ const PortalSelectFowardRef = (
           id: props.selectedOption.id,
           text: props.selectedOption.name,
           icon: portalIcons[props.selectedOption.id] && (
-            <PortalIcon src={portalIcons[props.selectedOption.id]} alt={props.selectedOption.name} />
+            <PortalIcon portalId={props.selectedOption.id} portalName={props.selectedOption.name} />
           ),
           portal: props.selectedOption,
         }

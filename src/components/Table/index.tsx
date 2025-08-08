@@ -176,7 +176,7 @@ export const Table = <T extends { id: number; containerColapsed?: (row: T) => Re
                         {col.Cell
                           ? col.Cell(row, handleExpandClick)
                           : col.accessor && (
-                              <Paragraph color={theme.colors.shade40}>{String(row[col.accessor])}</Paragraph>
+                              <Paragraph color={theme.colors.shade50}>{String(row[col.accessor])}</Paragraph>
                             )}
                       </Td>
                     ))}

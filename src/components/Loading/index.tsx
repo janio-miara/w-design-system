@@ -53,7 +53,7 @@ export const FullScreenLoading: React.FC<LoadingProps> = ({ size = 'medium' }) =
   <FullScreenWrapper>
     <ContainerWrapperStyles>
       <LoadingImage src={spinSVG} alt="loading" size={size} />
-      <Paragraph color={theme.colors.shade40} size="x-small">
+      <Paragraph color={theme.colors.shade50} size="x-small">
         CARREGANDO
       </Paragraph>
     </ContainerWrapperStyles>

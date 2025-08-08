@@ -1,7 +1,5 @@
-// src/components/Loading/stories.tsx
 import type { Meta, StoryObj } from '@storybook/react'
 import { FullScreenLoading, ContainerLoading } from './index'
-import React from 'react'
 import CardStories from '../CardStories'
 
 const meta: Meta<typeof FullScreenLoading> = {

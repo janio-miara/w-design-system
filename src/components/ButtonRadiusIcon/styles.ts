@@ -143,7 +143,7 @@ export const ButtonStyled = styled.button<ButtonRadiusIconTypes>`
     height: 100%;
   }
   .buttonRadiusIconTitle {
-    color: ${colors.shade40};
+    color: ${colors.shade50};
     font-weight: 400;
   }
 

@@ -28,7 +28,7 @@ export const Container = styled.div`
     gap: 1rem;
     font-family: 'Nunito Sans', sans-serif;
     font-size: 1rem;
-    color: ${theme.colors.shade40};
+    color: ${theme.colors.shade50};
     li {
       list-style: none;
     }
@@ -54,7 +54,7 @@ export const Container = styled.div`
     text-wrap: nowrap;
     gap: 1rem;
     font-family: 'Nunito Sans', sans-serif;
-    color: ${theme.colors.shade40};
+    color: ${theme.colors.shade50};
   }
 
   .select {

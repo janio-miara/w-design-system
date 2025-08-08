@@ -1,60 +1,83 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import React from 'react'
-import { ButtonRound } from '../ButtonRound'
-import { dumpSVG, editSVG } from '../../assets/icon'
-import { Table } from './index'
-import CardStories from '../CardStories'
-import { Paragraph } from '../Paragraph'
+import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+import { ButtonRound } from '../ButtonRound';
+import { dumpSVG, editSVG } from '../../assets/icon';
+import { Table } from './index';
+import CardStories from '../CardStories';
+import { Paragraph } from '../Paragraph';
 
-const meta: Meta<typeof Table<{ id: number; item: string; unidades: string; marca_fabricante: string; modelo: string; quantidade_solitada: string; valor_estimado_unitario: string; valor_estimado_total: string; containerColapsed: (row: any) => React.ReactNode }>> = {
+export interface TableData {
+  id: number;
+  item: string;
+  unidades: string;
+  marca_fabricante: string;
+  modelo: string;
+  quantidade_solitada: string;
+  valor_estimado_unitario: string;
+  valor_estimado_total: string;
+  containerColapsed?: (row: TableData) => React.ReactNode;
+}
+
+const meta: Meta<
+  typeof Table<TableData>
+> = {
   title: 'Components/Table',
   component: Table,
   parameters: {
-    layout: 'centered',
+    layout: 'centered'
   },
   tags: ['autodocs'],
   argTypes: {
     columns: {
       control: 'object',
-      description: 'Array of column definitions',
+      description: 'Array of column definitions'
     },
     data: {
       control: 'object',
-      description: 'Array of data objects',
+      description: 'Array of data objects'
     },
     loading: {
       control: 'boolean',
-      description: 'Loading state of the table',
+      description: 'Loading state of the table'
     },
     emptyStateMessage: {
       control: 'object',
-      description: 'Message to display when there is no data',
+      description: 'Message to display when there is no data'
     },
     rowClickable: {
       control: 'boolean',
-      description: 'Permite clicar em qualquer parte da linha',
+      description: 'Permite clicar em qualquer parte da linha'
     },
     onRowClick: {
       control: false,
-      description: 'Função chamada ao clicar em uma linha',
-    },
-  },
-} satisfies Meta<typeof Table>
+      description: 'Função chamada ao clicar em uma linha'
+    }
+  }
+} satisfies Meta<typeof Table>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 type Column<T> = {
-  header: string
-  accessor?: keyof T
-  width?: string
-  sortable?: boolean
-  onClick?: (row: T) => void
-  Cell?: (row: T, handleExpandClick: (id: number) => void) => React.ReactNode
-  align?: 'left' | 'center' | 'right'
-}
+  header: string;
+  accessor?: keyof T;
+  width?: string;
+  sortable?: boolean;
+  onClick?: (row: T) => void;
+  Cell?: (row: T, handleExpandClick: (id: number) => void) => React.ReactNode;
+  align?: 'left' | 'center' | 'right';
+};
 // Aqui anotamos explicitamente o tipo das colunas para evitar inferência incorreta de "string":
-const columns: Column<{ id: number; item: string; unidades: string; marca_fabricante: string; modelo: string; quantidade_solitada: string; valor_estimado_unitario: string; valor_estimado_total: string }>[] = [
+const columns: Column<{
+  id: number;
+  item: string;
+  unidades: string;
+  marca_fabricante: string;
+  modelo: string;
+  quantidade_solitada: string;
+  valor_estimado_unitario: string;
+  valor_estimado_total: string;
+}>[] = [
   { header: 'id', accessor: 'id', width: 'auto' },
   { header: 'item', accessor: 'item', width: 'auto', sortable: true },
   { header: 'unidades', accessor: 'unidades', width: 'auto', sortable: true },
@@ -62,11 +85,11 @@ const columns: Column<{ id: number; item: string; unidades: string; marca_fabric
     header: 'marca/ fabricante',
     accessor: 'marca_fabricante',
     width: 'auto',
-    Cell: (row: any) => (
+    Cell: row => (
       <div
         onClick={e => {
-          e.stopPropagation()
-          alert('Marca clicada')
+          e.stopPropagation();
+          alert('Marca clicada');
         }}
         style={{
           background: 'red',
@@ -75,58 +98,58 @@ const columns: Column<{ id: number; item: string; unidades: string; marca_fabric
           borderRadius: '8px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}
       >
         {row.marca_fabricante}
       </div>
-    ),
+    )
   },
   { header: 'modelo', accessor: 'modelo', width: 'auto', sortable: true },
   {
     header: 'quantidade solicitada',
     accessor: 'quantidade_solitada',
     width: 'auto',
-    sortable: true,
+    sortable: true
   },
   {
     header: 'valor unitário',
     accessor: 'valor_estimado_unitario',
     width: 'auto',
-    sortable: true,
+    sortable: true
   },
   {
     header: 'valor total',
     accessor: 'valor_estimado_total',
     width: 'auto',
-    sortable: true,
+    sortable: true
   },
   {
     header: 'Actions',
     accessor: 'valor_estimado_total',
     width: '100px',
     align: 'center',
-    Cell: (row: any, handleExpandClick: (id: number) => void) => (
+    Cell: (row, handleExpandClick: (id: number) => void) => (
       <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
         <ButtonRound
           icon={editSVG}
           onClick={e => {
-            e.stopPropagation()
-            handleExpandClick(row.id)
+            e.stopPropagation();
+            handleExpandClick(row.id);
           }}
         />
         <ButtonRound
           icon={dumpSVG}
           onClick={e => {
-            e.stopPropagation()
-            alert(`Delete ID: ${row.id}`)
+            e.stopPropagation();
+            alert(`Delete ID: ${row.id}`);
           }}
           variant={'danger'}
         />
       </div>
-    ),
-  },
-]
+    )
+  }
+];
 
 export const Default: Story = {
   args: {
@@ -135,12 +158,12 @@ export const Default: Story = {
     striped: true,
     loading: false,
     rowClickable: true,
-    onRowClick: (row: any) => alert(`Você clicou na linha ID: ${row.id}`),
+    onRowClick: row => alert(`Você clicou na linha ID: ${row.id}`),
 
     emptyStateMessage: {
       title: 'Nenhum registro encontrado',
       subTitle: 'Não há registros para exibir',
-      description: 'Não há registros para exibir',
+      description: 'Não há registros para exibir'
     },
     data: [
       {
@@ -159,7 +182,7 @@ export const Default: Story = {
             </Paragraph>
             <Paragraph>Esta é uma informação adicional sobre {item}.</Paragraph>
           </div>
-        ),
+        )
       },
       {
         id: 2,
@@ -170,14 +193,14 @@ export const Default: Story = {
         quantidade_solitada: '20000',
         valor_estimado_unitario: '2000',
         valor_estimado_total: '40000000',
-        containerColapsed: ({ item }: any) => (
+        containerColapsed: ({ item }) => (
           <div>
             <Paragraph size={'large'} heavyBod>
               {item}
             </Paragraph>
             <Paragraph>Detalhes adicionais sobre {item}.</Paragraph>
           </div>
-        ),
+        )
       },
       {
         id: 3,
@@ -188,18 +211,18 @@ export const Default: Story = {
         quantidade_solitada: '15000',
         valor_estimado_unitario: '1500',
         valor_estimado_total: '22500000',
-        containerColapsed: ({ item }: any) => (
+        containerColapsed: ({ item }) => (
           <div>
             <Paragraph size={'large'} heavyBod>
               {item}
             </Paragraph>
             <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
           </div>
-        ),
-      },
-    ],
-  },
-}
+        )
+      }
+    ]
+  }
+};
 
 export const LoadingState: Story = {
   render: () => (
@@ -211,17 +234,17 @@ export const LoadingState: Story = {
           height={'100%'}
           data={[]}
           onRowClick={student => {
-            console.log('Linha selecionada:', student)
+            console.log('Linha selecionada:', student);
           }}
         />
       </div>
     </CardStories>
-  ),
-}
+  )
+};
 
 export const EmptyState: Story = {
   args: {
     ...Default.args,
-    data: [],
-  },
-}
+    data: []
+  }
+};

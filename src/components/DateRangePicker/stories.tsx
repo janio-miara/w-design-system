@@ -61,11 +61,11 @@ const ComponentWrapper = ({ options, ...args }: Partial<DateRangePickerProps>) =
 }
 
 export const SelecionarIntervaloDeDatas: Story = {
-  render: args => <ComponentWrapper label="Período da Disputa" placeholder="Placeholder" />,
+  render: () => <ComponentWrapper label="Período da Disputa" placeholder="Placeholder" />,
 }
 
 export const SelecionarIntervaloDeDatasSimples: Story = {
-  render: args => <ComponentWrapper options={[]} />,
+  render: () => <ComponentWrapper options={[]} />,
 }
 
 export const SelecionarIntervaloDeDatasLimitado: Story = {

@@ -62,7 +62,7 @@ export const InputWrapper = styled.div`
     }
     .wrapper-tag-button {
       padding: 8px 10px;
-      color: ${theme.colors.shade40};
+      color: ${theme.colors.shade50};
     }
   }
 `

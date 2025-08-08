@@ -15,7 +15,7 @@ export const EmptyState = ({ title, subTitle, description }: ICardEmptyState) =>
       <Paragraph strongBod color={theme.colors.cyan50} size={'large'}>
         {title}
       </Paragraph>
-      <Paragraph color={theme.colors.shade40} size={'medium'}>
+      <Paragraph color={theme.colors.shade50} size={'medium'}>
         {subTitle}
       </Paragraph>
       <Paragraph color={theme.colors.cyan40} size={'medium'}>

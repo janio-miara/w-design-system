@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { DocumentNumberInput } from './index'
 import { useState } from 'react'
-import React from 'react'
 import { IconWrapper } from '../IconWrapper'
 import { editSVG } from '../../assets/icon'
 import { theme } from '../Themes'
@@ -30,7 +29,7 @@ export const Playground: Story = {
     placeholder: 'placeholder',
   },
 }
-const ComponentWrapper = ({ ...args }: any) => {
+const ComponentWrapper = ({ ...args }) => {
   const [value, setValue] = useState<string>('')
   return <DocumentNumberInput {...args} value={value} onInputValue={value => setValue(value)} />
 }

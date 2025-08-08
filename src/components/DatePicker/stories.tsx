@@ -17,7 +17,11 @@ const meta: Meta<typeof DatePicker> = {
 export default meta
 type Story = StoryObj<typeof DatePicker>
 
-const ComponentWrapper = ({ defaultOptions, ...args }: any) => {
+interface ComponentWrapperProps extends Omit<DatePickerProps, 'options' | 'selectedOption' | 'customDate' | 'onSelectedOptionChange' | 'onSelectedCustomDate'> {
+  defaultOptions?: { text: string; id: number }[]
+}
+
+const ComponentWrapper: React.FC<ComponentWrapperProps> = ({ defaultOptions, ...args }) => {
   const [selectedOption, setSelectOption] = React.useState<DatePickerProps['selectedOption']>(null)
 
   const [customDate, setCustomDate] = React.useState<Date | null>(null)
@@ -59,9 +63,9 @@ const ComponentWrapper = ({ defaultOptions, ...args }: any) => {
 }
 
 export const SelecionarDataDeDatas: Story = {
-  render: args => <ComponentWrapper label="Data da Disputa" placeholder="Placeholder" />,
+  render: () => <ComponentWrapper label="Data da Disputa" placeholder="Placeholder" />,
 }
 
 export const SelecionarDatasSimples: Story = {
-  render: args => <ComponentWrapper defaultOptions={[]} />,
+  render: () => <ComponentWrapper defaultOptions={[]} label="Data da Disputa" placeholder="Placeholder" />,
 }
