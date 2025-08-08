@@ -9,7 +9,7 @@ export type { SelectProps, SelectRef } from '../Select'
 export type { DocumentNumberInputProps } from '../DocumentNumberInput'
 export type { CPFInputProps } from '../CPFInput'
 export type { CNPJInputProps } from '../CNPJInput'
-
+export type { PortalIconProps } from '../PortalIcon'
 export type {
   SidebarGroupData,
   SidebarItemData,

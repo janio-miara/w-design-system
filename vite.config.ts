@@ -9,7 +9,6 @@ import css from 'rollup-plugin-import-css'
 import image from '@rollup/plugin-image'
 import terser from '@rollup/plugin-terser'
 import path from 'path'
-import babel from 'vite-plugin-babel'
 
 export default defineConfig({
   plugins: [
@@ -23,14 +22,6 @@ export default defineConfig({
     }),
     eslint({
       exclude: ['/virtual:/**', 'node_modules/**'],
-    }),
-    babel({
-        babelConfig: {
-        plugins: [
-          ['babel-plugin-styled-components', { displayName: true, fileName: false }],
-          ['babel-plugin-react-compiler'],
-        ],
-      },
     }),
     dts({ include: ['src', 'src/index.tsx'], insertTypesEntry: true, outDir: 'dist' }),
   ],
