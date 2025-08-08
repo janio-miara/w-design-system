@@ -12,7 +12,6 @@ export const ContainerEmptyState = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${theme.spacing.space3};
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   .empty-state-logo {
     display: flex;

@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
-import { ButtonRound } from '../ButtonRound';
 import { dumpSVG, editSVG } from '../../assets/icon';
-import { Table } from './index';
+import { ButtonRound } from '../ButtonRound';
 import CardStories from '../CardStories';
 import { Paragraph } from '../Paragraph';
+import { Table } from './index';
 
 export interface TableData {
   id: number;
@@ -18,9 +17,7 @@ export interface TableData {
   containerColapsed?: (row: TableData) => React.ReactNode;
 }
 
-const meta: Meta<
-  typeof Table<TableData>
-> = {
+const meta: Meta<typeof Table<TableData>> = {
   title: 'Components/Table',
   component: Table,
   parameters: {
@@ -127,7 +124,6 @@ const columns: Column<{
   {
     header: 'Actions',
     accessor: 'valor_estimado_total',
-    width: '100px',
     align: 'center',
     Cell: (row, handleExpandClick: (id: number) => void) => (
       <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
@@ -219,9 +215,93 @@ export const Default: Story = {
             <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
           </div>
         )
+      },
+      {
+        id: 4,
+        item: 'Mad Max',
+        unidades: '1979',
+        marca_fabricante: 'puma',
+        modelo: 'modelo Z',
+        quantidade_solitada: '15000',
+        valor_estimado_unitario: '1500',
+        valor_estimado_total: '22500000',
+        containerColapsed: ({ item }) => (
+          <div>
+            <Paragraph size={'large'} heavyBod>
+              {item}
+            </Paragraph>
+            <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
+          </div>
+        )
+      },
+      {
+        id: 5,
+        item: 'Mad Max',
+        unidades: '1979',
+        marca_fabricante: 'puma',
+        modelo: 'modelo Z',
+        quantidade_solitada: '15000',
+        valor_estimado_unitario: '1500',
+        valor_estimado_total: '22500000',
+        containerColapsed: ({ item }) => (
+          <div>
+            <Paragraph size={'large'} heavyBod>
+              {item}
+            </Paragraph>
+            <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
+          </div>
+        )
+      },
+      {
+        id: 6,
+        item: 'Mad Max',
+        unidades: '1979',
+        marca_fabricante: 'puma',
+        modelo: 'modelo Z',
+        quantidade_solitada: '15000',
+        valor_estimado_unitario: '1500',
+        valor_estimado_total: '22500000',
+        containerColapsed: ({ item }) => (
+          <div>
+            <Paragraph size={'large'} heavyBod>
+              {item}
+            </Paragraph>
+            <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
+          </div>
+        )
+      },
+      {
+        id: 7,
+        item: 'Mad Max',
+        unidades: '1979',
+        marca_fabricante: 'puma',
+        modelo: 'modelo Z',
+        quantidade_solitada: '15000',
+        valor_estimado_unitario: '1500',
+        valor_estimado_total: '22500000',
+        containerColapsed: ({ item }) => (
+          <div>
+            <Paragraph size={'large'} heavyBod>
+              {item}
+            </Paragraph>
+            <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
+          </div>
+        )
       }
     ]
-  }
+  },
+  render: args => (
+    <CardStories title={'Tabela'} subTitle={'tabela-default'}>
+      <div style={{ width: '900px', height: '300px' }}>
+        <Table
+          {...args}
+          onRowClick={student => {
+            console.log('Linha selecionada:', student);
+          }}
+        />
+      </div>
+    </CardStories>
+  )
 };
 
 export const LoadingState: Story = {
