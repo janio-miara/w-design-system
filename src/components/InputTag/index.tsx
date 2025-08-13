@@ -124,17 +124,14 @@ export const InputTag: React.FC<InputProps> = ({
 
   return (
     <>
-      {/* ✅ Mantendo a borda dinâmica com ref */}
       <InputWrapper {...props}>
-        <StyledInputContent disabled={disabled} ref={contentRef} onClick={e => handleContainerClick(e)}>
-          {/* ✅ Mantendo a borda dinâmica */}
-          <StyledInputBorder content={contentPosition} label={labelPosition} />
+        <StyledInputContent $disabled={disabled} ref={contentRef} onClick={e => handleContainerClick(e)}>
+          <StyledInputBorder $content={contentPosition} $label={labelPosition} />
           <StyledLabel htmlFor={id} ref={labelRef}>
             {label}
           </StyledLabel>
           {leftIcon}
 
-          {/* ✅ Input controlado e foco garantido */}
           <StyledInput
             id={id}
             disabled={disabled}
