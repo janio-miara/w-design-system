@@ -2,20 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 
 interface ParagraphProps {
-  size?: 'x-small' | 'small' | 'medium' | 'large'
-  as?: 'span' | 'div' | 'label' | 'p'
+  children: React.ReactNode
   color?: string
-  textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase'
-  textAlign?: 'left' | 'center' | 'right' | 'justify'
-  lineHeight?: string
+  heavyBold?: boolean
   letterSpacing?: string
+  lightBold?: boolean
+  lineHeight?: string
   margin?: string
   padding?: string
-  children: React.ReactNode
-  lightBod?: boolean
-  semiBod?: boolean
-  strongBod?: boolean
-  heavyBod?: boolean
+  semiBold?: boolean
+  size?: 'x-small' | 'small' | 'medium' | 'large'
+  strongBold?: boolean
+  textAlign?: 'left' | 'center' | 'right' | 'justify'
+  textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase'
 }
 
 const sizes = {
@@ -26,35 +25,56 @@ const sizes = {
 }
 
 const weights = {
-  lightBod: 400,
-  semiBod: 600,
-  strongBod: 700,
-  heavyBod: 800,
+  lightBold: 400,
+  semiBold: 600,
+  strongBold: 700,
+  heavyBold: 800,
 }
 
-const getFontWeight = (props: ParagraphProps) => {
-  if (props.heavyBod) return weights.heavyBod
-  if (props.strongBod) return weights.strongBod
-  if (props.semiBod) return weights.semiBod
-  return weights.lightBod
+export interface FontWeightProps {
+  $heavyBold?: boolean
+  $semiBold?: boolean
+  $strongBold?: boolean
+  $lightBold?: boolean
 }
 
-const ParagraphStyled = styled.p<ParagraphProps>`
-  margin: ${({ margin = '0' }) => margin};
-  padding: ${({ padding = '0' }) => padding};
-  font-size: ${({ size = 'small' }) => sizes[size]};
+const getFontWeight = (props: FontWeightProps) => {
+  if (props.$heavyBold) return weights.heavyBold
+  if (props.$strongBold) return weights.strongBold
+  if (props.$semiBold) return weights.semiBold
+  return weights.lightBold
+}
+
+export interface StyledParagraphProps {
+  $color?: string
+  $heavyBold?: boolean
+  $letterSpacing?: string
+  $lightBold?: boolean
+  $lineHeight?: string
+  $margin?: string
+  $padding?: string
+  $semiBold?: boolean
+  $size?: 'x-small' | 'small' | 'medium' | 'large'
+  $strongBold?: boolean
+  $textAlign?: 'left' | 'center' | 'right' | 'justify'
+  $textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase'
+}
+
+const ParagraphStyled = styled.p<StyledParagraphProps>`
+  margin: ${({ $margin = '0' }) => $margin};
+  padding: ${({ $padding = '0' }) => $padding};
+  font-size: ${({ $size = 'small' }) => sizes[$size]};
   font-weight: ${props => getFontWeight(props)};
-  line-height: ${({ lineHeight = '140%' }) => lineHeight};
-  letter-spacing: ${({ letterSpacing = 'normal' }) => letterSpacing};
+  line-height: ${({ $lineHeight = '140%' }) => $lineHeight};
+  letter-spacing: ${({ $letterSpacing = 'normal' }) => $letterSpacing};
   font-family: 'Nunito Sans', sans-serif;
-  color: ${({ color = 'inherit' }) => color};
-  text-transform: ${({ textTransform = 'none' }) => textTransform};
-  text-align: ${({ textAlign = 'left' }) => textAlign};
+  color: ${({ $color = 'inherit' }) => $color};
+  text-transform: ${({ $textTransform = 'none' }) => $textTransform};
+  text-align: ${({ $textAlign = 'left' }) => $textAlign};
 `
 
 export const Paragraph: React.FC<ParagraphProps> = ({
   size = 'small',
-  as = 'p',
   color = 'inherit',
   textTransform = 'none',
   textAlign = 'left',
@@ -67,15 +87,18 @@ export const Paragraph: React.FC<ParagraphProps> = ({
 }) => {
   return (
     <ParagraphStyled
-      as={as}
-      size={size}
-      color={color}
-      textTransform={textTransform}
-      textAlign={textAlign}
-      lineHeight={lineHeight}
-      letterSpacing={letterSpacing}
-      margin={margin}
-      padding={padding}
+      $color={color}
+      $letterSpacing={letterSpacing}
+      $lineHeight={lineHeight}
+      $margin={margin}
+      $padding={padding}
+      $size={size}
+      $textAlign={textAlign}
+      $textTransform={textTransform}
+      $heavyBold={props.heavyBold}
+      $semiBold={props.semiBold}
+      $strongBold={props.strongBold}
+      $lightBold={props.lightBold}
       {...props}
     >
       {children}

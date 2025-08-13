@@ -325,7 +325,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
             {rightIcon}
             {badge != null && (
               <div>
-                <Paragraph strongBod color={theme.colors.honey30}>
+                <Paragraph strongBold color={theme.colors.honey30}>
                   {badge}
                 </Paragraph>
               </div>
@@ -381,7 +381,7 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
                         {option?.badge != null ? (
                           <OptionTextBadge>
                             <div>{option.text}</div>
-                            <Paragraph strongBod color={theme.colors.honey30}>
+                            <Paragraph strongBold color={theme.colors.honey30}>
                               {option.badge}
                             </Paragraph>
                           </OptionTextBadge>

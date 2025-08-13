@@ -37,9 +37,9 @@ const ContainerWrapperStyles = styled.div`
 `
 
 // Estilos para a imagem de loading
-const LoadingImage = styled.img<{ size: 'small' | 'medium' | 'large' }>`
-  width: ${({ size }) => (size === 'small' ? '30px' : size === 'medium' ? '50px' : '70px')};
-  height: ${({ size }) => (size === 'small' ? '30px' : size === 'medium' ? '50px' : '70px')};
+const LoadingImage = styled.img<{ $size: 'small' | 'medium' | 'large' }>`
+  width: ${({ $size }) => ($size === 'small' ? '30px' : $size === 'medium' ? '50px' : '70px')};
+  height: ${({ $size }) => ($size === 'small' ? '30px' : $size === 'medium' ? '50px' : '70px')};
   animation: ${spinAnimation} 2s linear infinite;
 `
 
@@ -52,7 +52,7 @@ interface LoadingProps {
 export const FullScreenLoading: React.FC<LoadingProps> = ({ size = 'medium' }) => (
   <FullScreenWrapper>
     <ContainerWrapperStyles>
-      <LoadingImage src={spinSVG} alt="loading" size={size} />
+      <LoadingImage src={spinSVG} alt="loading" $size={size} />
       <Paragraph color={theme.colors.shade50} size="x-small">
         CARREGANDO
       </Paragraph>
@@ -64,7 +64,7 @@ export const FullScreenLoading: React.FC<LoadingProps> = ({ size = 'medium' }) =
 export const ContainerLoading: React.FC<LoadingProps> = ({ size = 'medium' }) => (
   <ContainerWrapper>
     <ContainerWrapperStyles>
-      <LoadingImage src={spinSVG} alt="loading" size={size} />
+      <LoadingImage src={spinSVG} alt="loading" $size={size} />
       <Paragraph color={theme.colors.shade30} size="x-small">
         CARREGANDO
       </Paragraph>

@@ -62,7 +62,7 @@ const SidebarItem = ({
       {sidebarOpen && (
         <>
           <span className="title">
-            <Paragraph size={!isInsideGroup ? 'medium' : 'small'} color={textColor} heavyBod={isCurrentItem}>
+            <Paragraph size={!isInsideGroup ? 'medium' : 'small'} color={textColor} heavyBold={isCurrentItem}>
               {title}
             </Paragraph>
           </span>

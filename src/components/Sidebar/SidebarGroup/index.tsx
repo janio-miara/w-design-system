@@ -66,7 +66,7 @@ const SidebarGroup = ({
         <IconWrapper src={icon} color={color} width="20px" />
         {sidebarOpen && (
           <span className="title" title={warning}>
-            <Paragraph size="medium" heavyBod={isCurrentGroup} color={disabled ? theme.colors.shade40 : 'white'}>
+            <Paragraph size="medium" heavyBold={isCurrentGroup} color={disabled ? theme.colors.shade40 : 'white'}>
               {title}
             </Paragraph>
           </span>

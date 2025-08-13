@@ -12,7 +12,7 @@ interface ICardEmptyState {
 export const EmptyState = ({ title, subTitle, description }: ICardEmptyState) => {
   return (
     <ContainerEmptyState>
-      <Paragraph strongBod color={theme.colors.cyan50} size={'large'}>
+      <Paragraph strongBold color={theme.colors.cyan50} size={'large'}>
         {title}
       </Paragraph>
       <Paragraph color={theme.colors.shade50} size={'medium'}>

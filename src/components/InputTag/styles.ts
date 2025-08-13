@@ -113,7 +113,7 @@ export const StyledLabel = styled.label`
 `
 
 export interface StyledInputContentProps {
-  disabled?: boolean
+  $disabled?: boolean
 }
 
 export const StyledInputContent = styled.div<StyledInputContentProps>`
@@ -129,15 +129,15 @@ export const StyledInputContent = styled.div<StyledInputContentProps>`
   gap: 8px;
   border-radius: 4px;
 
-  background-color: ${({ disabled }: StyledInputContentProps) =>
-    disabled ? theme.colors.shade10 : theme.colors.white};
+  background-color: ${({ $disabled }: StyledInputContentProps) =>
+    $disabled ? theme.colors.shade10 : theme.colors.white};
 
-  cursor: ${({ disabled }: StyledInputContentProps) => (disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${({ $disabled }: StyledInputContentProps) => ($disabled ? 'not-allowed' : 'pointer')};
 `
 
 export interface StyledInputBorderProps {
-  label: Position
-  content: Position
+  $label: Position
+  $content: Position
 }
 
 /**
@@ -154,9 +154,9 @@ export const StyledInputBorder = styled.div<StyledInputBorderProps>`
   border: 1px solid ${theme.colors.shade20};
   clip-rule: evenodd;
   clip-path: path(
-    '${({ label, content }) =>
-      label.height !== 0 && label.width !== 0
-        ? `M ${content.x} ${content.y} l ${content.width} 0 l 0 ${content.height} l -${content.width} 0z M ${label.x} ${label.y} l 0 ${label.height} l ${label.width} 0 l 0 -${label.height}z`
+    '${({ $label, $content }) =>
+      $label.height !== 0 && $label.width !== 0
+        ? `M ${$content.x} ${$content.y} l ${$content.width} 0 l 0 ${$content.height} l -${$content.width} 0z M ${$label.x} ${$label.y} l 0 ${$label.height} l ${$label.width} 0 l 0 -${$label.height}z`
         : ''}'
   );
 `

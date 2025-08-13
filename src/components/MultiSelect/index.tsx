@@ -392,7 +392,7 @@ const MultiSelectFowardRef = <T extends { text: string; id: number; icon?: React
                       {option?.badge ? (
                         <OptionTextBadge>
                           <div>{option.text}</div>
-                          <Paragraph strongBod color={theme.colors.honey30}>
+                          <Paragraph strongBold color={theme.colors.honey30}>
                             {option.badge}
                           </Paragraph>
                         </OptionTextBadge>

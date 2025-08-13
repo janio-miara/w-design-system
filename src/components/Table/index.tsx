@@ -59,36 +59,36 @@ const Tbody = styled.tbody`
   overflow-y: auto;
 `;
 
-const Tr = styled.tr<{ striped?: boolean; clickable?: boolean; selected?: boolean }>`
+const Tr = styled.tr<{ $striped?: boolean; $clickable?: boolean; $selected?: boolean }>`
 
-  background-color: ${({ selected, striped }) => (selected ? theme.colors.cyan10 : striped ? 'white' : 'transparent')};
-  cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
+  background-color: ${({ $selected, $striped }) => ($selected ? theme.colors.cyan10 : $striped ? 'white' : 'transparent')};
+  cursor: ${({ $clickable }) => ($clickable ? 'pointer' : 'default')};
 
   &:nth-child(even) {
-    background-color: ${({ selected, striped }) =>
-      selected ? theme.colors.cyan10 : striped ? theme.colors.shade05 : 'transparent'};
+    background-color: ${({ $selected, $striped }) =>
+      $selected ? theme.colors.cyan10 : $striped ? theme.colors.shade05 : 'transparent'};
   }
 
   &:hover {
-    background-color: ${({ clickable, selected }) => (clickable && !selected ? theme.colors.cyan10 : '')};
+    background-color: ${({ $clickable, $selected }) => ($clickable && !$selected ? theme.colors.cyan10 : '')};
   }
 `;
 
-const Th = styled.th<{ width?: string; align?: 'left' | 'center' | 'right' }>`
+const Th = styled.th<{ $width?: string; $align?: 'left' | 'center' | 'right' }>`
   background-color: ${theme.colors.white};
   position: sticky;
   top: 0;
   padding: 10px;
-  text-align: ${({ align }) => align || 'left'};
-  width: ${({ width }) => width || 'auto'};
+  text-align: ${({ $align }) => $align || 'left'};
+  width: ${({ $width }) => $width || 'auto'};
   vertical-align: middle;
 
 `;
 
-const Td = styled.td<{ width?: string; align?: 'left' | 'center' | 'right' }>`
+const Td = styled.td<{ $width?: string; $align?: 'left' | 'center' | 'right' }>`
   padding: 12px;
-  width: ${({ width }) => width || 'auto'};
-  text-align: ${({ align }) => align || 'left'};
+  width: ${({ $width }) => $width || 'auto'};
+  text-align: ${({ $align }) => $align || 'left'};
 `;
 
 const ExpandableRow = styled.div`
@@ -145,8 +145,8 @@ export const Table = <T extends { id: number; containerColapsed?: (row: T) => Re
         <Thead>
           <Tr>
             {columns.map((col, index) => (
-              <Th key={index} width={col.width} align={col.align}>
-                <Paragraph color={theme.colors.shade30} textTransform="uppercase" strongBod>
+              <Th key={index} $width={col.width} $align={col.align}>
+                <Paragraph color={theme.colors.shade30} textTransform="uppercase" strongBold>
                   {col.header}
                 </Paragraph>
               </Th>
@@ -178,13 +178,13 @@ export const Table = <T extends { id: number; containerColapsed?: (row: T) => Re
             data.map(row => (
               <React.Fragment key={row.id}>
                 <Tr
-                  striped={striped}
-                  clickable={rowClickable && !!onRowClick}
-                  selected={selectedRowId === row.id}
+                  $striped={striped}
+                  $clickable={rowClickable && !!onRowClick}
+                  $selected={selectedRowId === row.id}
                   onClick={() => rowClickable && onRowClick && handleRowClick(row)}
                 >
                   {columns.map((col, colIndex) => (
-                    <Td key={colIndex} width={col.width} align={col.align}>
+                    <Td key={colIndex} $width={col.width} $align={col.align}>
                       {col.Cell
                         ? col.Cell(row, handleExpandClick)
                         : col.accessor && (

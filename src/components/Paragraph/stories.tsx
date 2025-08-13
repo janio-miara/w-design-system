@@ -13,10 +13,6 @@ const meta: Meta<typeof Paragraph> = {
       control: { type: 'select', options: ['x-small', 'small', 'medium', 'large'] },
       description: 'Select the size of the paragraph',
     },
-    as: {
-      control: { type: 'select', options: ['span', 'div', 'label', 'p'] },
-      description: 'Select the HTML element to render',
-    },
     color: {
       control: 'color',
       description: 'Select the color of the text',
@@ -45,9 +41,9 @@ const meta: Meta<typeof Paragraph> = {
       control: 'text',
       description: 'Content of the paragraph',
     },
-    semiBod: { control: 'boolean', description: 'Use semiBod weight' },
-    strongBod: { control: 'boolean', description: 'Use strongBod weight' },
-    heavyBod: { control: 'boolean', description: 'Use heavyBod weight' },
+    semiBold: { control: 'boolean', description: 'Use semiBold weight' },
+    strongBold: { control: 'boolean', description: 'Use strongBold weight' },
+    heavyBold: { control: 'boolean', description: 'Use heavyBold weight' },
   },
 } satisfies Meta<typeof Paragraph>
 
@@ -58,25 +54,25 @@ export const XSmall: Story = {
   args: {
     size: 'x-small',
     color: '#000000',
-    children: 'This is an X-small paragraph with LightBod weight.',
+    children: 'This is an X-small paragraph with lightBold weight.',
   },
 }
 
 export const Small: Story = {
   args: {
     size: 'small',
-    semiBod: true,
+    semiBold: true,
     color: '#333333',
-    children: 'This is a small paragraph with SemiBod weight.',
+    children: 'This is a small paragraph with semiBold weight.',
   },
 }
 
 export const Medium: Story = {
   args: {
     size: 'medium',
-    strongBod: true,
+    strongBold: true,
     color: '#666666',
-    children: 'This is a medium paragraph with StrongBod weight.',
+    children: 'This is a medium paragraph with strongBold weight.',
   },
 }
 
@@ -84,17 +80,16 @@ export const Large: Story = {
   args: {
     size: 'large',
     color: '#999999',
-    children: 'This is a large paragraph with LightBod weight.',
+    children: 'This is a large paragraph with lightBold weight.',
   },
 }
 
 export const CustomElement: Story = {
   args: {
     size: 'medium',
-    as: 'label',
     color: '#CC0000',
-    children: 'This is a medium paragraph rendered as a label with LightBod weight.',
-    strongBod: true,
+    children: 'This is a medium paragraph rendered as a label with lightBold weight.',
+    strongBold: true,
   },
 }
 
@@ -110,14 +105,13 @@ export const AllWeights: Story = {
   args: {
     size: 'medium',
     color: '#000000',
-    children: 'This paragraph weight can be adjusted to LightBod, SemiBod, StrongBod, or HeavyBod.',
+    children: 'This paragraph weight can be adjusted to lightBold, semiBold, strongBold, or heavyBold.',
   },
 }
 
 export const AllElements: Story = {
   args: {
     size: 'medium',
-    as: 'div',
     color: '#000000',
     children: 'This paragraph can be rendered as different HTML elements.',
   },

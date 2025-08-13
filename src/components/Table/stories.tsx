@@ -173,7 +173,7 @@ export const Default: Story = {
         valor_estimado_total: '10000000',
         containerColapsed: ({ item }) => (
           <div>
-            <Paragraph size={'large'} heavyBod>
+            <Paragraph size={'large'} heavyBold>
               {item}
             </Paragraph>
             <Paragraph>Esta é uma informação adicional sobre {item}.</Paragraph>
@@ -191,7 +191,7 @@ export const Default: Story = {
         valor_estimado_total: '40000000',
         containerColapsed: ({ item }) => (
           <div>
-            <Paragraph size={'large'} heavyBod>
+            <Paragraph size={'large'} heavyBold>
               {item}
             </Paragraph>
             <Paragraph>Detalhes adicionais sobre {item}.</Paragraph>
@@ -209,7 +209,7 @@ export const Default: Story = {
         valor_estimado_total: '22500000',
         containerColapsed: ({ item }) => (
           <div>
-            <Paragraph size={'large'} heavyBod>
+            <Paragraph size={'large'} heavyBold>
               {item}
             </Paragraph>
             <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
@@ -227,7 +227,7 @@ export const Default: Story = {
         valor_estimado_total: '22500000',
         containerColapsed: ({ item }) => (
           <div>
-            <Paragraph size={'large'} heavyBod>
+            <Paragraph size={'large'} heavyBold>
               {item}
             </Paragraph>
             <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
@@ -245,7 +245,7 @@ export const Default: Story = {
         valor_estimado_total: '22500000',
         containerColapsed: ({ item }) => (
           <div>
-            <Paragraph size={'large'} heavyBod>
+            <Paragraph size={'large'} heavyBold>
               {item}
             </Paragraph>
             <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
@@ -263,7 +263,7 @@ export const Default: Story = {
         valor_estimado_total: '22500000',
         containerColapsed: ({ item }) => (
           <div>
-            <Paragraph size={'large'} heavyBod>
+            <Paragraph size={'large'} heavyBold>
               {item}
             </Paragraph>
             <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
@@ -281,7 +281,7 @@ export const Default: Story = {
         valor_estimado_total: '22500000',
         containerColapsed: ({ item }) => (
           <div>
-            <Paragraph size={'large'} heavyBod>
+            <Paragraph size={'large'} heavyBold>
               {item}
             </Paragraph>
             <Paragraph>Mais informações sobre {item} aqui.</Paragraph>
