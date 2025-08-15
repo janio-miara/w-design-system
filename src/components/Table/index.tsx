@@ -77,6 +77,7 @@ const Tr = styled.tr<{ $striped?: boolean; $clickable?: boolean; $selected?: boo
 const Th = styled.th<{ $width?: string; $align?: 'left' | 'center' | 'right' }>`
   background-color: ${theme.colors.white};
   position: sticky;
+  z-index: 2;
   top: 0;
   padding: 10px;
   text-align: ${({ $align }) => $align || 'left'};
