@@ -21,7 +21,7 @@ type EmptyStateMessage = {
   description?: string;
 };
 
-type TableProps<T extends { id: number }> = {
+export type TableProps<T extends { id: number }> = {
   columns: Column<T>[];
   data: T[];
   height?: string;
