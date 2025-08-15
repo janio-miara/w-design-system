@@ -1,14 +1,12 @@
 import { Container } from './styles'
 import { IconWrapper } from '../IconWrapper'
 import { chevronLeftSVG, chevronRightSVG } from '../../assets/icon'
-import { Select } from '../Select'
+
 export type PaginateProps = {
   currentPage: number
   itemCount: number
   itemsPerPage?: number
   onChangePage: (page: number) => void
-  onChangeItemsPerPage: (itemsPerPage: number) => void
-  dropDownTop?: boolean
   itemPerPageOptions?: number[]
 }
 
@@ -17,9 +15,7 @@ export const Paginate = ({
   itemCount,
   onChangePage,
   itemsPerPage,
-  onChangeItemsPerPage,
   itemPerPageOptions = [],
-  dropDownTop,
 }: PaginateProps) => {
   // Se itemsPerPage for undefined, o valor default e 20
   const itemsPerPageValue = itemsPerPage || 20
@@ -56,13 +52,9 @@ export const Paginate = ({
     pages.push(pageCount)
   }
 
-  const minItem = (currentPage - 1) * itemsPerPageValue + 1
-  const maxItem = Math.min(currentPage * itemsPerPageValue, itemCount)
-
   const itemPerPageOptionsCopy = Array.from(itemPerPageOptions)
   if (itemsPerPage) itemPerPageOptionsCopy.push(itemsPerPage)
 
-  const itemPerPageOptionsSorted = Array.from(new Set(itemPerPageOptionsCopy)).sort((a, b) => a - b)
 
   return (
     <Container>
@@ -90,28 +82,6 @@ export const Paginate = ({
           onClick={() => currentPage !== pageCount && onChangePage(currentPage + 1)}
         />
       </ul>
-      <div className="items-per-page-wrapper">
-        <div className="item-per-page">Itens por página</div>
-        <Select
-          disableSearch
-          className="select"
-          dropDownTop={dropDownTop !== false}
-          value={itemsPerPageValue.toString()}
-          onOptionChange={option => {
-            if (option) {
-              onChangeItemsPerPage(option.id)
-            }
-          }}
-          disabled={itemPerPageOptions.length <= 1}
-          options={itemPerPageOptionsSorted.map(count => ({
-            id: count,
-            text: count?.toString(),
-          }))}
-        />
-        <div className="items-per-page-selected">
-          {minItem} - {maxItem} de {itemCount}
-        </div>
-      </div>
     </Container>
   )
 }

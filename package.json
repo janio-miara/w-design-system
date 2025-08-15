@@ -1,6 +1,6 @@
 {
   "name": "w-design-system",
-  "version": "0.4.139",
+  "version": "0.4.141",
   "type": "module",
   "main": "dist/w-design-system.js",
   "types": "dist/index.d.ts",
