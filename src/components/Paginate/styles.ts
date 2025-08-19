@@ -47,7 +47,7 @@ export const Container = styled.div`
     }
   }
 
-  .items-per-page-wrapper {
+  .items-count {
     display: flex;
     align-items: center;
     width: min-content;
@@ -57,7 +57,4 @@ export const Container = styled.div`
     color: ${theme.colors.shade50};
   }
 
-  .select {
-    min-width: 100px;
-  }
 `

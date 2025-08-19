@@ -37,18 +37,17 @@ const TableContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-
 `;
 
 export interface StyledTableProps {
-  height?: string;
+  $height?: string;
 }
 
 const StyledTable = styled.table<StyledTableProps>`
   width: 100%;
   position: relative;
   border-collapse: collapse;
-  height: ${props => props.height || '100%'};
+  height: ${props => props.$height || 'auto'};
 `;
 
 const Thead = styled.thead`
@@ -60,8 +59,8 @@ const Tbody = styled.tbody`
 `;
 
 const Tr = styled.tr<{ $striped?: boolean; $clickable?: boolean; $selected?: boolean }>`
-
-  background-color: ${({ $selected, $striped }) => ($selected ? theme.colors.cyan10 : $striped ? 'white' : 'transparent')};
+  background-color: ${({ $selected, $striped }) =>
+    $selected ? theme.colors.cyan10 : $striped ? 'white' : 'transparent'};
   cursor: ${({ $clickable }) => ($clickable ? 'pointer' : 'default')};
 
   &:nth-child(even) {
@@ -83,7 +82,6 @@ const Th = styled.th<{ $width?: string; $align?: 'left' | 'center' | 'right' }>`
   text-align: ${({ $align }) => $align || 'left'};
   width: ${({ $width }) => $width || 'auto'};
   vertical-align: middle;
-
 `;
 
 const Td = styled.td<{ $width?: string; $align?: 'left' | 'center' | 'right' }>`
@@ -117,7 +115,7 @@ const EmptyStateWrapper = styled.div`
 export const Table = <T extends { id: number; containerColapsed?: (row: T) => React.ReactNode }>({
   columns,
   data,
-  height = '100%',
+  height = 'auto',
   loading = false,
   emptyStateMessage = {
     title: 'Nenhum registro encontrado',
@@ -142,7 +140,7 @@ export const Table = <T extends { id: number; containerColapsed?: (row: T) => Re
 
   return (
     <TableContainer>
-      <StyledTable height={height}>
+      <StyledTable $height={height}>
         <Thead>
           <Tr>
             {columns.map((col, index) => (
@@ -188,7 +186,8 @@ export const Table = <T extends { id: number; containerColapsed?: (row: T) => Re
                     <Td key={colIndex} $width={col.width} $align={col.align}>
                       {col.Cell
                         ? col.Cell(row, handleExpandClick)
-                        : col.accessor && (
+                        : col.accessor &&
+                          row[col.accessor] && (
                             <Paragraph color={theme.colors.shade50}>{String(row[col.accessor])}</Paragraph>
                           )}
                     </Td>

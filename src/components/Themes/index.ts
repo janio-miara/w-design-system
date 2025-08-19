@@ -48,7 +48,7 @@ const special = {
 }
 
 const white = '#FFFFFF'
-const black = '#333333'
+const black = '#000000'
 const transparent = 'transparent'
 
 export const spacing = {
