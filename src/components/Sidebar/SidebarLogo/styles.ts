@@ -1,18 +1,17 @@
-import styled from 'styled-components'
-import { theme } from '../../Themes'
+import styled from 'styled-components';
+import { theme } from '../../Themes';
 
 interface SidebarLogoContainerProps {
-  $logoOpacity?: number
-  $sidebarOpen: boolean
-  $logoUrl: string
-  $baseColor?: string
+  $logoOpacity?: number;
+  $sidebarOpen: boolean;
+  $logoUrl: string;
+  $baseColor?: string;
 }
 
 export const SidebarLogoContainer = styled.div<SidebarLogoContainerProps>`
   position: relative;
 
   --padding: 8px;
-
 
   margin-bottom: 32px;
 
@@ -44,7 +43,7 @@ export const SidebarLogoContainer = styled.div<SidebarLogoContainerProps>`
 
     border-radius: 0 var(--width) var(--width) 0;
 
-    top: 42px;
+    top: 30px;
     right: calc((var(--padding) + var(--width)) * -1);
 
     border: none;
@@ -52,4 +51,4 @@ export const SidebarLogoContainer = styled.div<SidebarLogoContainerProps>`
 
     z-index: 2;
   }
-`
+`;
