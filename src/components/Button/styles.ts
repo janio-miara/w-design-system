@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components'
 import { theme } from '../Themes'
-import { ButtonTypes } from '../Types'
+import { ButtonTypes, ColorsVariant } from '../Types'
 
 const { colors } = theme
 
@@ -197,30 +197,43 @@ export const LoadingImage = styled.img<{
   animation: ${spinAnimation} 2s linear infinite;
 `
 
-export const ButtonStyled = styled.button<ButtonTypes>`
+export interface ButtonStyledProps {
+  $variant?: ColorsVariant
+  $icon?: string
+  $radius?: boolean
+  $outline?: boolean
+  $halfLeft?: boolean
+  $halfRight?: boolean
+  $disabled?: boolean
+  $fullWidth?: boolean
+  $size?: 'small' | 'medium' | 'large'
+  $loading?: boolean
+}
+
+export const ButtonStyled = styled.button<ButtonStyledProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   height: 48px;
-  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
+  width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
   font-weight: 600;
   line-height: 140%;
   border: none;
-  border-radius: ${({ radius }) => (radius ? '24px' : '5px')};
+  border-radius: ${({ $radius }) => ($radius ? '24px' : '5px')};
   font-family: 'Nunito Sans', sans-serif;
   transition:
     background-color 0.3s,
     opacity 0.3s;
   color: white;
   gap: 12px;
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
-  ${({ variant = 'primary', outline }) => (!outline ? colorScheme[variant] : colorSchemeOutilne[variant])};
-  ${({ size = 'medium' }) => sizeScheme[size]};
-  background: ${({ outline }) => outline && 'white'};
-  border-radius: ${({ halfLeft, halfRight, radius }) =>
-    !halfLeft && !halfRight ? (radius ? '24px' : '5px') : halfLeft ? '24px 0 0 24px' : '0 24px 24px 0'};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${({ $disabled }) => ($disabled ? 0.5 : 1)};
+  ${({ $variant = 'primary', $outline }) => (!$outline ? colorScheme[$variant] : colorSchemeOutilne[$variant])};
+  ${({ $size = 'medium' }) => sizeScheme[$size]};
+  background: ${({ $outline }) => $outline && 'white'};
+  border-radius: ${({ $halfLeft, $halfRight, $radius }) =>
+    !$halfLeft && !$halfRight ? ($radius ? '24px' : '5px') : $halfLeft ? '24px 0 0 24px' : '0 24px 24px 0'};
 
   .buttonRadiusWrapperIcon {
     margin-top: 4px;

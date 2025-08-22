@@ -19,7 +19,7 @@ export type {
   SidebarLayoutItemTypeSpacer,
   SidebarProps
 } from '../Sidebar'
-type ColorsVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'gray' | 'warning' | 'yellow'
+export type ColorsVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'gray' | 'warning' | 'yellow'
 type ColorsVariantBanner = 'notice' | 'success' | 'danger' | 'warning'
 export interface ButtonTypes extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ColorsVariant

@@ -1,54 +1,54 @@
-import { IconWrapper } from '../IconWrapper'
-import { ButtonStyled } from './styles'
-import { ButtonTypes } from '../Types'
-import { spinSVG } from '../../assets/icon'
-import { theme } from '../Themes'
-const { colors } = theme
+import { IconWrapper } from '../IconWrapper';
+import { ButtonStyled } from './styles';
+import { ButtonTypes } from '../Types';
+import { spinSVG } from '../../assets/icon';
+import { theme } from '../Themes';
+const { colors } = theme;
 
 interface ColorLoadingProps {
-  variant: ButtonTypes['variant']
-  outline?: boolean
+  variant: ButtonTypes['variant'];
+  outline?: boolean;
 }
 
 const handleColorLoading = ({ variant, outline }: ColorLoadingProps) => {
   if (outline) {
     if (variant === 'primary') {
-      return colors.cyan50
+      return colors.cyan50;
     }
     if (variant === 'secondary') {
-      return colors.cyan30
+      return colors.cyan30;
     }
     if (variant === 'danger') {
-      return colors.red40
+      return colors.red40;
     }
     if (variant === 'warning') {
-      return colors.honey30
+      return colors.honey30;
     }
     if (variant === 'gray') {
-      return colors.shade30
+      return colors.shade30;
     }
     if (variant === 'success') {
-      return colors.mint40
+      return colors.mint40;
     }
     if (variant === 'yellow') {
-      return colors.yellow30
+      return colors.yellow30;
     }
   }
   if (variant === 'primary') {
-    return 'white'
+    return 'white';
   }
   if (variant === 'warning') {
-    return colors.honey30
+    return colors.honey30;
   }
   if (variant === 'gray') {
-    return colors.shade40
+    return colors.shade40;
   }
 
   if (variant === 'yellow') {
-    return colors.yellow30
+    return colors.yellow30;
   }
-  return 'white'
-}
+  return 'white';
+};
 
 export const Button = ({
   variant = 'primary',
@@ -65,14 +65,16 @@ export const Button = ({
   ...props
 }: ButtonTypes) => (
   <ButtonStyled
-    variant={variant}
-    disabled={disabled}
-    radius={radius}
-    outline={outline}
-    halfLeft={halfLeft}
-    halfRight={halfRight}
-    fullWidth={fullWidth}
-    size={size}
+    $variant={variant}
+    $icon={icon}
+    $radius={radius}
+    $outline={outline}
+    $halfLeft={halfLeft}
+    $disabled={disabled}
+    $halfRight={halfRight}
+    $fullWidth={fullWidth}
+    $size={size}
+    $loading={loading}
     {...props}
   >
     {loading && <IconWrapper src={spinSVG} loading color={handleColorLoading({ variant, outline })} />}
@@ -87,4 +89,4 @@ export const Button = ({
     )}
     {children}
   </ButtonStyled>
-)
+);

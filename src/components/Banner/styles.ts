@@ -47,7 +47,7 @@ export const BannerStyled = styled.div<BannerTypes>`
   max-height: 100px;
   min-height: 56px;
   padding: 12px 24px;
-  border-radius: 16px;
+  border-radius: var(--component-border-radius, 5px);
   border: 1px dashed;
   ${({ variant = 'notice' }) => colorScheme[variant]};
 

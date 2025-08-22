@@ -8,7 +8,7 @@ export const ContainerEmptyState = styled.div`
   max-height: 550px;
   max-width: 800px;
   background: white;
-  border-radius: 8px;
+  border-radius: var(--component-border-radius, 5px);
   display: flex;
   flex-direction: column;
   gap: ${theme.spacing.space3};
