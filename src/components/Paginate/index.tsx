@@ -1,14 +1,14 @@
 import { Container } from './styles';
 import { IconWrapper } from '../IconWrapper';
 import { chevronLeftSVG, chevronRightSVG } from '../../assets/icon';
-export type PaginateProps = {
+export interface PaginateProps {
   currentPage: number;
   itemCount: number;
   itemsPerPage: number;
   onChangePage: (page: number) => void;
-};
+}
 
-export const Paginate = ({ currentPage, itemCount, onChangePage, itemsPerPage }: PaginateProps) => {
+export function Paginate({ currentPage, itemCount, onChangePage, itemsPerPage }: PaginateProps) {
   // Se itemsPerPage for undefined, o valor default e 20
   const itemsPerPageValue = itemsPerPage || 20;
 
@@ -78,4 +78,4 @@ export const Paginate = ({ currentPage, itemCount, onChangePage, itemsPerPage }:
       </div>
     </Container>
   );
-};
+}

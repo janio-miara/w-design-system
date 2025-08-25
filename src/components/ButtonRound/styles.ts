@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { theme } from '../Themes'
-import { ButtonRoundTypes } from '../Types'
+import { ColorsVariant } from 'components/Types'
 
 const { colors } = theme
 const buttonRadiusWrapperIconStyles = (color: string) => css`
@@ -93,13 +93,20 @@ const colorScheme = {
   `,
 } as const
 
-export const ButtonStyled = styled.button<ButtonRoundTypes>`
+
+export interface StyledButtonRoundProps {
+  $variant?: ColorsVariant;
+  $size?: 'small' | 'medium';
+}
+
+
+export const ButtonStyled = styled.button<StyledButtonRoundProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  height: ${({ size }) => (size === 'small' ? '32px' : '40px')};
-  width: ${({ size }) => (size === 'small' ? '32px' : '40px')};
+  height: ${({ $size }) => ($size === 'small' ? '32px' : '40px')};
+  width: ${({ $size }) => ($size === 'small' ? '32px' : '40px')};
   font-size: 16px;
   font-weight: 600;
   line-height: 140%;
@@ -111,10 +118,10 @@ export const ButtonStyled = styled.button<ButtonRoundTypes>`
     background-color 0.3s,
     opacity 0.3s;
   color: white;
-  gap: ${({ size }) => (size === 'small' ? '8' : '12px')};
+  gap: ${({ $size }) => ($size === 'small' ? '8' : '12px')};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
-  ${({ variant = 'primary' }) => colorScheme[variant]};
+  ${({ $variant = 'primary' }) => colorScheme[$variant]};
 
   .buttonRadiusWrapperIcon {
     margin-top: 4px;
@@ -124,8 +131,8 @@ export const ButtonStyled = styled.button<ButtonRoundTypes>`
     margin-bottom: 24px;
     margin-left: 54px;
     position: absolute;
-    width: ${({ size }) => (size === 'small' ? '16px' : '26px')};
-    height: ${({ size }) => (size === 'small' ? '16px' : '26px')};
+    width: ${({ $size }) => ($size === 'small' ? '16px' : '26px')};
+    height: ${({ $size }) => ($size === 'small' ? '16px' : '26px')};
     border-radius: 100%;
     font-size: 12px;
     display: flex;

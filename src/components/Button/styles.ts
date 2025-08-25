@@ -1,14 +1,14 @@
-import styled, { css, keyframes } from 'styled-components'
-import { theme } from '../Themes'
-import { ButtonTypes, ColorsVariant } from '../Types'
+import styled, { css, keyframes } from 'styled-components';
+import { theme } from '../Themes';
+import { ColorsVariant } from '../Types';
 
-const { colors } = theme
+const { colors } = theme;
 
 // Animação de rotação
 const spinAnimation = keyframes`
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-`
+`;
 
 const buttonRadiusWrapperIconStyles = (color: string) => css`
   .buttonRadiusWrapperIcon {
@@ -20,7 +20,7 @@ const buttonRadiusWrapperIconStyles = (color: string) => css`
       }
     }
   }
-`
+`;
 const colorScheme = {
   primary: css`
     background: ${colors.cyan50};
@@ -90,8 +90,8 @@ const colorScheme = {
       background-color: ${colors.yellow10};
     }
     ${buttonRadiusWrapperIconStyles(colors.yellow30)};
-  `,
-} as const
+  `
+} as const;
 
 const colorSchemeOutilne = {
   primary: css`
@@ -170,8 +170,8 @@ const colorSchemeOutilne = {
       background-color: ${colors.yellow10};
     }
     ${buttonRadiusWrapperIconStyles(colors.yellow30)};
-  `,
-} as const
+  `
+} as const;
 
 const sizeScheme = {
   small: css`
@@ -185,29 +185,29 @@ const sizeScheme = {
   large: css`
     padding: 12px 24px;
     font-size: 16px;
-  `,
-} as const
+  `
+} as const;
 
 export const LoadingImage = styled.img<{
-  size: 'small' | 'medium' | 'large'
-  variant: 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'gray' | 'yellow'
+  size: 'small' | 'medium' | 'large';
+  variant: 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'gray' | 'yellow';
 }>`
   width: ${({ size }) => (size === 'small' ? '20px' : size === 'medium' ? '24px' : '24px')};
   height: ${({ size }) => (size === 'small' ? '20px' : size === 'medium' ? '24px' : '24px')};
   animation: ${spinAnimation} 2s linear infinite;
-`
+`;
 
 export interface ButtonStyledProps {
-  $variant?: ColorsVariant
-  $icon?: string
-  $radius?: boolean
-  $outline?: boolean
-  $halfLeft?: boolean
-  $halfRight?: boolean
-  $disabled?: boolean
-  $fullWidth?: boolean
-  $size?: 'small' | 'medium' | 'large'
-  $loading?: boolean
+  $variant?: ColorsVariant;
+  $icon?: string;
+  $radius?: boolean;
+  $outline?: boolean;
+  $halfLeft?: boolean;
+  $halfRight?: boolean;
+  $disabled?: boolean;
+  $fullWidth?: boolean;
+  $size?: 'small' | 'medium' | 'large';
+  $loading?: boolean;
 }
 
 export const ButtonStyled = styled.button<ButtonStyledProps>`
@@ -238,4 +238,4 @@ export const ButtonStyled = styled.button<ButtonStyledProps>`
   .buttonRadiusWrapperIcon {
     margin-top: 4px;
   }
-`
+`;

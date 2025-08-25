@@ -1,29 +1,28 @@
-import React from 'react'
-import styled, { keyframes, css } from 'styled-components'
-import { ReactSVG } from 'react-svg'
+import styled, { keyframes, css } from 'styled-components';
+import { ReactSVG } from 'react-svg';
 
-interface IconWrapperProps {
-  src: string
-  color?: string
-  width?: string
-  height?: string
-  className?: string
-  onClick?: () => void
-  loading?: boolean
+export interface IconWrapperProps {
+  src: string;
+  color?: string;
+  width?: string;
+  height?: string;
+  className?: string;
+  onClick?: () => void;
+  loading?: boolean;
 }
 
 interface StyledIconWrapperProps {
-  $color?: string
-  $width?: string
-  $height?: string
-  $clickable?: boolean
-  $loading?: boolean
+  $color?: string;
+  $width?: string;
+  $height?: string;
+  $clickable?: boolean;
+  $loading?: boolean;
 }
 
 const spinAnimation = keyframes`
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-`
+`;
 
 const StyledIconWrapper = styled.div<StyledIconWrapperProps>`
   height: 100%;
@@ -49,18 +48,20 @@ const StyledIconWrapper = styled.div<StyledIconWrapperProps>`
       fill: ${({ $color: color }) => color || 'black'};
     }
   }
-`
+`;
 
-export const IconWrapper: React.FC<IconWrapperProps> = ({ src, color, width, height, className, onClick, loading }) => (
-  <StyledIconWrapper
-    $color={color}
-    $width={width}
-    $height={height}
-    className={className}
-    $clickable={!!onClick}
-    $loading={loading}
-    onClick={onClick}
-  >
-    <ReactSVG src={src} />
-  </StyledIconWrapper>
-)
+export function IconWrapper({ src, color, width, height, className, onClick, loading }: IconWrapperProps) {
+  return (
+    <StyledIconWrapper
+      $color={color}
+      $width={width}
+      $height={height}
+      className={className}
+      $clickable={!!onClick}
+      $loading={loading}
+      onClick={onClick}
+    >
+      <ReactSVG src={src} />
+    </StyledIconWrapper>
+  );
+}

@@ -1,9 +1,7 @@
-import styled, { css } from 'styled-components'
-import { theme } from '../Themes'
+import styled, { css } from 'styled-components';
+import { theme } from '../Themes';
 
-import { BannerTypes } from '../Types'
-
-const { colors } = theme
+const { colors } = theme;
 const buttonRadiusWrapperIconStyles = (color: string) => css`
   .buttonRadiusWrapperIcon {
     svg {
@@ -13,7 +11,7 @@ const buttonRadiusWrapperIconStyles = (color: string) => css`
       }
     }
   }
-`
+`;
 const colorScheme = {
   notice: css`
     background: ${colors.cyan10};
@@ -34,10 +32,14 @@ const colorScheme = {
     background: ${colors.mint10};
     border-color: ${colors.mint40};
     ${buttonRadiusWrapperIconStyles(colors.mint40)};
-  `,
-} as const
+  `
+} as const;
 
-export const BannerStyled = styled.div<BannerTypes>`
+export interface StyledBannerProps {
+  $variant?: 'notice' | 'success' | 'danger' | 'warning';
+}
+
+export const StyledBanner = styled.div<StyledBannerProps>`
   display: flex;
   box-sizing: border-box;
   justify-content: space-between;
@@ -49,11 +51,11 @@ export const BannerStyled = styled.div<BannerTypes>`
   padding: 12px 24px;
   border-radius: var(--component-border-radius, 5px);
   border: 1px dashed;
-  ${({ variant = 'notice' }) => colorScheme[variant]};
+  ${({ $variant = 'notice' }) => colorScheme[$variant]};
 
   .bannerWrapper {
     display: flex;
     align-items: center;
     gap: 12px;
   }
-`
+`;

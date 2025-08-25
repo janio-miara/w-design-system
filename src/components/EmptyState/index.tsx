@@ -3,13 +3,13 @@ import { Paragraph } from '../Paragraph'
 import { theme } from '../Themes'
 import { logoWaveGrayPNG } from '../../assets/icon'
 
-interface ICardEmptyState {
+export interface EmptyStateProps {
   title: string
   subTitle?: string
   description?: string
 }
 
-export const EmptyState = ({ title, subTitle, description }: ICardEmptyState) => {
+export function EmptyState({ title, subTitle, description }: EmptyStateProps) {
   return (
     <ContainerEmptyState>
       <Paragraph strongBold color={theme.colors.cyan50} size={'large'}>

@@ -1,33 +1,37 @@
-import React from 'react'
-import styled from 'styled-components'
-import { theme } from '../Themes'
-
-interface ParagraphProps {
-  size: 'medium' | 'large'
-  bold?: boolean
-  as?: 'h1' | 'h2' | 'h3'
-  color?: string // Adicionando a propriedade color
-  children: React.ReactNode
-}
+import { PropsWithChildren } from 'react';
+import styled from 'styled-components';
+import { theme } from '../Themes';
 
 const sizes = {
-  ...theme.title,
+  ...theme.title
+};
+
+export interface StyledTitleProps {
+  $size: 'medium' | 'large';
+  $bold?: boolean;
+  $color?: string;
 }
 
-const TitleStyled = styled.p<ParagraphProps>`
+const StyledTitle = styled.p<StyledTitleProps>`
   margin: 0;
   padding: 0;
-  font-size: ${props => sizes[props.size]};
-  font-weight: ${props => (props.bold ? 800 : 400)};
+  font-size: ${props => sizes[props.$size]};
+  font-weight: ${props => (props.$bold ? 800 : 400)};
   line-height: 130%;
   font-family: 'Nunito Sans', sans-serif;
-  color: ${props => props.color || 'inherit'}; // Aplicando a cor
-`
+  color: ${props => props.$color || 'inherit'};
+`;
 
-export const Title: React.FC<ParagraphProps> = ({ size = 'medium', bold, as = 'h2', color, children }) => {
+export interface TitleProps {
+  size: 'medium' | 'large';
+  bold?: boolean;
+  color?: string;
+}
+
+export function Title({ size = 'medium', bold, color, children }: PropsWithChildren<TitleProps>) {
   return (
-    <TitleStyled as={as} size={size} bold={bold} color={color}>
+    <StyledTitle $size={size} $bold={bold} $color={color}>
       {children}
-    </TitleStyled>
-  )
+    </StyledTitle>
+  );
 }

@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { InputProps, InputTag } from './index'
+import { InputTagProps, InputTag } from './index'
 import { useState } from 'react'
 import { JSX } from 'react/jsx-runtime'
 
@@ -17,7 +17,7 @@ const meta: Meta<typeof InputTag> = {
 export default meta
 type Story = StoryObj<typeof InputTag>
 
-const Template = (args: JSX.IntrinsicAttributes & InputProps) => {
+const Template = (args: JSX.IntrinsicAttributes & InputTagProps) => {
   const [tags, setTags] = useState<string[]>(['Tag1', 'Tag2'])
 
   return <InputTag {...args} tags={tags} setTags={setTags} />

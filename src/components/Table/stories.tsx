@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { dumpSVG, editSVG } from '../../assets/icon';
 import { ButtonRound } from '../ButtonRound';
-import CardStories from '../CardStories';
+import { CardStories } from '../CardStories';
 import { Paragraph } from '../Paragraph';
 import { Table } from './index';
 

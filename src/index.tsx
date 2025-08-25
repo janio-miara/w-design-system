@@ -1,72 +1,42 @@
-export { Banner } from './components/Banner/index'
-export { Button } from './components/Button/index'
-export { ButtonRadiusIcon } from './components/ButtonRadiusIcon/index'
-export { ButtonRound } from './components/ButtonRound/index'
-export { CNPJInput } from './components/CNPJInput/index'
-export { CountryStateSelect } from './components/CountryStateSelector/index'
-export { CPFInput } from './components/CPFInput/index'
-export { DatePicker } from './components/DatePicker/index'
-export { DateRangePicker } from './components/DateRangePicker/index'
-export { DocumentNumberInput } from './components/DocumentNumberInput/index'
-export { EmptyState } from './components/EmptyState/index'
-export { IconWrapper } from './components/IconWrapper/index'
-export { Input } from './components/Input/index'
-export { InputTag } from './components/InputTag/index'
-export { LegacyTheme } from './components/LegacyTheme/index'
-export { Modal } from './components/Modal/index'
-export { MultiSelect } from './components/MultiSelect/index'
-export { Paginate } from './components/Paginate/index'
-export { Paragraph } from './components/Paragraph/index'
-export { PortalSelect } from './components/PortalSelect/index'
-export { PortalIcon } from './components/PortalIcon/index'
-export { Select } from './components/Select/index'
-export { Sidebar } from './components/Sidebar/index'
-export { Table } from './components/Table/index'
-export { Tabs } from './components/Tabs/index'
-export { theme } from './components/Themes/index'
-export { Title } from './components/Title/index'
-export * from './components/Types/index'
+export { Banner } from './components/Banner/index';
+export { Button } from './components/Button/index';
+export { ButtonRadiusIcon } from './components/ButtonRadiusIcon/index';
+export { ButtonRound } from './components/ButtonRound/index';
+export { CNPJInput } from './components/CNPJInput/index';
+export { CountryStateSelect } from './components/CountryStateSelector/index';
+export { CPFInput } from './components/CPFInput/index';
+export { DatePicker } from './components/DatePicker/index';
+export { DateRangePicker } from './components/DateRangePicker/index';
+export { DocumentNumberInput } from './components/DocumentNumberInput/index';
+export { EmptyState } from './components/EmptyState/index';
+export { IconWrapper } from './components/IconWrapper/index';
+export { Input } from './components/Input/index';
+export { InputTag } from './components/InputTag/index';
+export { Modal } from './components/Modal/index';
+export { MultiSelect } from './components/MultiSelect/index';
+export { Paginate } from './components/Paginate/index';
+export { Paragraph } from './components/Paragraph/index';
+export { PortalIcon } from './components/PortalIcon/index';
+export { PortalSelect } from './components/PortalSelect/index';
+export { Select } from './components/Select/index';
+export { Sidebar } from './components/Sidebar/index';
+export { Table } from './components/Table/index';
+export { Tabs } from './components/Tabs/index';
+export { theme } from './components/Themes/index';
+export { Title } from './components/Title/index';
+export { Avatar } from './components/Avatar/index';
+export { BadgeWord as BadgeWords } from './components/BadgeWords/index';
+export { Checkbox } from './components/Checkbox/index';
+export { Divisor } from './components/Divisor/index';
+export { Empty } from './components/Empty';
+export { Heading } from './components/Heading/index';
+export { Highlight } from './components/Highlight/index';
+export { ContainerLoading, FullScreenLoading } from './components/Loading/index';
+export { ModalDrawer } from './components/ModalDrawer/index';
+export { Text } from './components/Text/index';
+export { TextArea } from './components/TextArea/index';
+export { TextLink } from './components/TextLink/index';
 
-export {
-  addSVG,
-  alertSVG,
-  appsSVG,
-  bellSVG,
-  bindSVG,
-  bookmarkSVG,
-  calendarSVG,
-  checkSVG,
-  chevronDownSVG,
-  chevronLeftSVG,
-  chevronRightSVG,
-  closeSVG,
-  coinsSVG,
-  commentSVG,
-  dashboardSVG,
-  docCheckSVG,
-  docDownloadSVG,
-  docSVG,
-  docUploadSVG,
-  dumpSVG,
-  editalSVG,
-  editSVG,
-  eyesSVG,
-  fileSVG,
-  financeSVG,
-  gavelSVG,
-  gearSVG,
-  grid2PlusSVG,
-  imageSVG,
-  lockSVG,
-  logoWaveGrayPNG,
-  moneySVG,
-  monitoringSVG,
-  orderSVG,
-  portalSVG,
-  settingSVG,
-  spinSVG,
-  spreadsheetSVG,
-  warningSVG,
-  wavePulseSVG
-} from './assets/icon/index'
+export * from './assets/icon/index';
+export * from './components/Types/index';
 

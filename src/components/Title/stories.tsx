@@ -19,10 +19,6 @@ const meta: Meta<typeof Title> = {
       control: 'boolean',
       description: 'Apply bold font weight',
     },
-    as: {
-      control: { type: 'select', options: ['h1', 'h2', 'h3'] },
-      description: 'HTML element to render',
-    },
     color: {
       control: 'color',
       description: 'Font color of the title',
@@ -41,7 +37,6 @@ export const LargeBoldTitle: Story = {
   args: {
     size: 'large',
     bold: true,
-    as: 'h1',
     color: '#1A3D7F', // Example color
     children: 'Large Bold Title',
   },
@@ -51,7 +46,6 @@ export const MediumTitle: Story = {
   args: {
     size: 'medium',
     bold: false,
-    as: 'h2',
     color: '#025FDE', // Example color
     children: 'Medium Title',
   },
@@ -61,7 +55,6 @@ export const CustomColorTitle: Story = {
   args: {
     size: 'large',
     bold: true,
-    as: 'h3',
     color: '#FF5733', // Custom color
     children: 'Custom Color Title',
   },

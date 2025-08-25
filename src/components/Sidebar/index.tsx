@@ -1,54 +1,54 @@
-import { useState } from 'react'
-import SidebarGroup from './SidebarGroup'
-import SidebarItem from './SidebarItem'
-import SidebarLogo from './SidebarLogo'
+import { useState } from 'react';
+import SidebarGroup from './SidebarGroup';
+import SidebarItem from './SidebarItem';
+import SidebarLogo from './SidebarLogo';
 
-import { SidebarContainer, SidebarScrollContainer, SidebarScrollWrapperContainer, SidebarSpacer } from './styles'
+import { SidebarContainer, SidebarScrollContainer, SidebarScrollWrapperContainer, SidebarSpacer } from './styles';
 
 export interface SidebarLayoutItemTypeItem {
-  id: string
-  type: 'item'
+  id: string;
+  type: 'item';
 }
 
 export interface SidebarLayoutItemTypeGroup {
-  id: string
-  type: 'group'
+  id: string;
+  type: 'group';
 }
 
 export interface SidebarLayoutItemTypeSpacer {
-  type: 'spacer'
+  type: 'spacer';
 }
 
 export interface SidebarItemData {
-  showInMenu?: boolean
-  menuTitle: string
-  icon: string
-  disabled: boolean
-  warning?: string
-  link?: string
+  showInMenu?: boolean;
+  menuTitle: string;
+  icon: string;
+  disabled: boolean;
+  warning?: string;
+  link?: string;
 }
 
 export interface SidebarGroupData {
-  name: string
-  link?: string
-  icon: string
-  warning?: string
-  itemIds?: string[]
+  name: string;
+  link?: string;
+  icon: string;
+  warning?: string;
+  itemIds?: string[];
 }
 
 export interface SidebarProps {
-  layout: (SidebarLayoutItemTypeItem | SidebarLayoutItemTypeGroup | SidebarLayoutItemTypeSpacer)[]
-  currentItemId: string
-  currentGroupId: string
-  setLink: (link: string) => void
-  items: Record<string, SidebarItemData>
-  groups: Record<string, SidebarGroupData>
-  logoUrl: string
-  logoOpacity?: number
-  baseColor?: string
+  layout: (SidebarLayoutItemTypeItem | SidebarLayoutItemTypeGroup | SidebarLayoutItemTypeSpacer)[];
+  currentItemId: string;
+  currentGroupId: string;
+  setLink: (link: string) => void;
+  items: Record<string, SidebarItemData>;
+  groups: Record<string, SidebarGroupData>;
+  logoUrl: string;
+  logoOpacity?: number;
+  baseColor?: string;
 }
 
-export const Sidebar = ({
+export function Sidebar({
   logoUrl,
   layout,
   currentItemId,
@@ -57,14 +57,14 @@ export const Sidebar = ({
   items,
   logoOpacity,
   groups,
-  baseColor,
-}: SidebarProps) => {
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  baseColor
+}: SidebarProps) {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const sidebarItemClickHandler = (itemId: string) => {
-    const item = items[itemId]
-    const link = item?.link
-    if (link) setLink(link)
-  }
+    const item = items[itemId];
+    const link = item?.link;
+    if (link) setLink(link);
+  };
 
   return (
     <SidebarContainer $sidebarOpen={sidebarOpen} $baseColor={baseColor}>
@@ -80,9 +80,9 @@ export const Sidebar = ({
           {layout
             .map((item, index) => ({ id: index, disabled: undefined, ...item }))
             .map(item => {
-              if (item.type === 'spacer') return <SidebarSpacer key={item.id} />
+              if (item.type === 'spacer') return <SidebarSpacer key={item.id} />;
               if (item.type === 'item') {
-                const itemRouter = items[item.id]
+                const itemRouter = items[item.id];
                 return (
                   <SidebarItem
                     key={item.id}
@@ -94,13 +94,13 @@ export const Sidebar = ({
                     sidebarOpen={sidebarOpen}
                     isCurrentItem={currentItemId === item.id}
                   />
-                )
+                );
               }
               if (item.type === 'group') {
-                const group = groups[item.id]
-                const itemShowInMenu = group.itemIds?.some(id => items[id]?.showInMenu !== false)
+                const group = groups[item.id];
+                const itemShowInMenu = group.itemIds?.some(id => items[id]?.showInMenu !== false);
                 if (group.itemIds == null || group.itemIds.length === 0 || !itemShowInMenu) {
-                  const itemRouter = items[item.id]
+                  const itemRouter = items[item.id];
                   return (
                     <SidebarItem
                       key={item.id}
@@ -112,7 +112,7 @@ export const Sidebar = ({
                       title={itemRouter.menuTitle}
                       icon={itemRouter.icon}
                     />
-                  )
+                  );
                 } else {
                   return (
                     <SidebarGroup
@@ -140,13 +140,13 @@ export const Sidebar = ({
                           />
                         ))}
                     </SidebarGroup>
-                  )
+                  );
                 }
               }
-              return null
+              return null;
             })}
         </SidebarScrollContainer>
       </SidebarScrollWrapperContainer>
     </SidebarContainer>
-  )
+  );
 }

@@ -44,7 +44,7 @@ import portalImg48 from '../../assets/icon/portals/48.svg';
 import portalImg49 from '../../assets/icon/portals/49.png';
 import portalImg54 from '../../assets/icon/portals/54.png';
 import { PortalIconImage } from './styles';
-import defaultIcon from '../../assets/icon/portals/default.svg'
+import defaultIcon from '../../assets/icon/portals/default.svg';
 
 const portalIcons: Record<number, string> = {
   1: portalImg01,
@@ -101,7 +101,7 @@ export interface PortalIconProps extends HTMLAttributes<HTMLImageElement> {
   borderRadius?: string;
 }
 
-export const PortalIcon = ({ portalId, portalName, ...props }: PortalIconProps) => {
+export function PortalIcon({ portalId, portalName, ...props }: PortalIconProps) {
   return (
     <PortalIconImage
       src={portalId ? portalIcons[portalId] || defaultIcon : defaultIcon}
@@ -112,4 +112,4 @@ export const PortalIcon = ({ portalId, portalName, ...props }: PortalIconProps) 
       {...props}
     />
   );
-};
+}

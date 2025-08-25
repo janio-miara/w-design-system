@@ -19,19 +19,20 @@ export const ModalContainer = styled.div`
   min-width: 360px;
   width: auto;
   height: auto;
-  padding: 30px;
+  padding: 16px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
+  gap: 16px;
   flex-shrink: 0;
-  border-radius: 24px;
+  border-radius: 5px;
   border: 1px solid ${shade20};
   background: white;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(149, 157, 165, 0.1) 0px 0px 24px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   z-index: ${z9};
 
   .modalContainer {

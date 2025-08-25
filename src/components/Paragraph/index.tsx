@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface ParagraphProps {
+export interface ParagraphProps {
   children: React.ReactNode;
   color?: string;
   heavyBold?: boolean;
@@ -73,7 +73,7 @@ const ParagraphStyled = styled.p<StyledParagraphProps>`
   text-align: ${({ $textAlign = 'left' }) => $textAlign};
 `;
 
-export const Paragraph: React.FC<ParagraphProps> = ({
+export function Paragraph({
   size = 'small',
   color = 'inherit',
   textTransform = 'none',
@@ -88,7 +88,7 @@ export const Paragraph: React.FC<ParagraphProps> = ({
   lightBold,
   children,
   ...props
-}) => {
+}: ParagraphProps) {
   return (
     <ParagraphStyled
       $color={color}
@@ -108,4 +108,4 @@ export const Paragraph: React.FC<ParagraphProps> = ({
       {children}
     </ParagraphStyled>
   );
-};
+}

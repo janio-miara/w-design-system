@@ -1,23 +1,44 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { theme } from '../Themes';
+import { Color } from '../Types/index';
+import handleColor from '../../utils/handleColor';
 
-export const TabsContainerStyled = styled.div`
+interface PropsTabs {
+  $colorActive?: Color;
+}
+
+export const Container = styled.div`
   display: flex;
-  align-items: flex-end;
-`
-
-export const TabStyled = styled.div<{ active: boolean }>`
-  padding: 8px 16px;
+  transition: transform 0.2s;
   cursor: pointer;
-  border-radius: 24px 24px 0 0;
-  background: white;
-  opacity: ${props => (props.active ? 1 : 0.8)};
-  height: ${props => (props.active ? '45px' : '40px')};
-  min-width: 95px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Nunito Sans', sans-serif;
-  font-weight: ${props => (props.active ? 'bold' : 'normal')};
-  color: ${props => (props.active ? 'var(--PrimaryColor, #000)' : 'var(--SecondaryColor, #666)')};
-  transition: opacity 0.3s;
-`
+`;
+
+export const Wrapper = styled.div<PropsTabs>`
+  transition: transform 0.3s;
+  cursor: pointer;
+  height: 100%;
+
+  margin-right: ${theme.spacing.space3};
+
+  .divider {
+    margin-top: 4px;
+    border-radius: 5px;
+    animation: 0.7s ease 0s 0.7 normal scale-in-hor-center;
+    height: 2px;
+    background-color: ${({ $colorActive }) => ($colorActive ? handleColor($colorActive) : theme.colors.cyan40)};
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+  @keyframes scale-in-hor-center {
+    0% {
+      transform: scaleX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
+`;

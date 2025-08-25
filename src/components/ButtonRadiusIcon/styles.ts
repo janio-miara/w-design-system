@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { theme } from '../Themes'
-import { ButtonRadiusIconTypes } from '../Types'
+import { ColorsVariant } from 'components/Types'
 
 const { colors } = theme
 const buttonRadiusWrapperIconStyles = (color: string) => css`
@@ -110,7 +110,12 @@ const sizeScheme = {
   `,
 } as const
 
-export const ButtonStyled = styled.button<ButtonRadiusIconTypes>`
+export interface StyledButtonRadiusIconProps {
+  $variant?: ColorsVariant;
+  $size?: 'small' | 'medium' | 'large';
+}
+
+export const StyledButton = styled.button<StyledButtonRadiusIconProps>`
   display: inline-flex;
   box-sizing: border-box;
 
@@ -131,8 +136,8 @@ export const ButtonStyled = styled.button<ButtonRadiusIconTypes>`
 
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
-  ${({ variant = 'primary' }) => colorScheme[variant]};
-  ${({ size = 'medium' }) => sizeScheme[size]};
+  ${({ $variant = 'primary' }) => colorScheme[$variant]};
+  ${({ $size = 'medium' }) => sizeScheme[$size]};
 
   .buttonRadiusIconContainer {
     display: flex;

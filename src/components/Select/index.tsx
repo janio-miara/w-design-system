@@ -76,6 +76,8 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
     disableSearch,
     badge,
     onOpenChange,
+    dropDownMaxHeight,
+    dropDownTop,
     error,
     border,
     ...props
@@ -358,9 +360,9 @@ const SelectFowardRef = <T extends { text: string; id: number; icon?: ReactNode;
         <DropdownWrapper>
           <Dropdown
             ref={dropdownRef}
-            $dropDownTop={props.dropDownTop}
+            $dropDownTop={dropDownTop}
             $dropDownWidth={dropDownWidth}
-            $dropDownMaxHeight={props.dropDownMaxHeight}
+            $dropDownMaxHeight={dropDownMaxHeight}
           >
             {(options?.length ?? 0) > 0 && (
               <>

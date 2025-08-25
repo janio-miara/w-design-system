@@ -1,24 +1,43 @@
-import React, { useState } from 'react'
-import { TabsTypes } from '../Types'
-import { TabsContainerStyled, TabStyled } from './styles'
+import { useState } from 'react';
+import * as S from './styles';
+import { Text } from '../Text';
+import { Color, SizeText } from '../Types';
 
-export const Tabs: React.FC<TabsTypes> = ({ tabs, defaultActiveTab, onTabChange }) => {
-  const [activeTab, setActiveTab] = useState(defaultActiveTab || tabs[0])
+export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  tabs: string[];
+  onChange?: (tab: string) => void;
+  disabled?: boolean;
+  colorActive?: Color;
+  colorDefault?: Color;
+  size?: SizeText;
+}
 
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab)
-    if (onTabChange) {
-      onTabChange(tab)
+export function Tabs({ onChange, tabs, size, colorActive, colorDefault }: TabsProps) {
+  const [active, setActive] = useState(tabs[0]);
+
+  const handleTab = (tab: string) => {
+    setActive(tab);
+    if (onChange) {
+      onChange(tab);
     }
-  }
-
+  };
   return (
-    <TabsContainerStyled>
-      {tabs.map(tab => (
-        <TabStyled key={tab} active={tab === activeTab} onClick={() => handleTabClick(tab)}>
-          {tab}
-        </TabStyled>
-      ))}
-    </TabsContainerStyled>
-  )
+    <S.Container>
+      {tabs.map(tab => {
+        return (
+          <S.Wrapper key={tab} onClick={() => handleTab(tab)} $colorActive={colorActive}>
+            <Text
+              element="span"
+              bold={active === tab}
+              size={size || 'p2'}
+              color={active === tab ? colorActive || 'secondary' : colorDefault || 'default'}
+            >
+              {tab}
+            </Text>
+            {active === tab && <div className="divider" />}
+          </S.Wrapper>
+        );
+      })}
+    </S.Container>
+  );
 }

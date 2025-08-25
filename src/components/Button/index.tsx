@@ -1,12 +1,25 @@
 import { IconWrapper } from '../IconWrapper';
 import { ButtonStyled } from './styles';
-import { ButtonTypes } from '../Types';
 import { spinSVG } from '../../assets/icon';
 import { theme } from '../Themes';
+import { ButtonHTMLAttributes } from 'react';
+import { ColorsVariant } from 'components/Types';
 const { colors } = theme;
 
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ColorsVariant;
+  icon?: string;
+  radius?: boolean;
+  outline?: boolean;
+  halfLeft?: boolean;
+  halfRight?: boolean;
+  fullWidth?: boolean;
+  size?: 'small' | 'medium' | 'large';
+  loading?: boolean;
+}
+
 interface ColorLoadingProps {
-  variant: ButtonTypes['variant'];
+  variant: ButtonProps['variant'];
   outline?: boolean;
 }
 
@@ -50,7 +63,7 @@ const handleColorLoading = ({ variant, outline }: ColorLoadingProps) => {
   return 'white';
 };
 
-export const Button = ({
+export function Button({
   variant = 'primary',
   children,
   disabled = false,
@@ -63,30 +76,32 @@ export const Button = ({
   size,
   loading,
   ...props
-}: ButtonTypes) => (
-  <ButtonStyled
-    $variant={variant}
-    $icon={icon}
-    $radius={radius}
-    $outline={outline}
-    $halfLeft={halfLeft}
-    $disabled={disabled}
-    $halfRight={halfRight}
-    $fullWidth={fullWidth}
-    $size={size}
-    $loading={loading}
-    {...props}
-  >
-    {loading && <IconWrapper src={spinSVG} loading color={handleColorLoading({ variant, outline })} />}
-    {icon && (
-      <IconWrapper
-        src={icon}
-        color={'white'}
-        className={'buttonRadiusWrapperIcon'}
-        width={size !== 'large' ? '20px' : '24px'}
-        height={size !== 'large' ? '20px' : '24px'}
-      />
-    )}
-    {children}
-  </ButtonStyled>
-);
+}: ButtonProps) {
+  return (
+    <ButtonStyled
+      $variant={variant}
+      $icon={icon}
+      $radius={radius}
+      $outline={outline}
+      $halfLeft={halfLeft}
+      $disabled={disabled}
+      $halfRight={halfRight}
+      $fullWidth={fullWidth}
+      $size={size}
+      $loading={loading}
+      {...props}
+    >
+      {loading && <IconWrapper src={spinSVG} loading color={handleColorLoading({ variant, outline })} />}
+      {icon && (
+        <IconWrapper
+          src={icon}
+          color={'white'}
+          className={'buttonRadiusWrapperIcon'}
+          width={size !== 'large' ? '20px' : '24px'}
+          height={size !== 'large' ? '20px' : '24px'}
+        />
+      )}
+      {children}
+    </ButtonStyled>
+  );
+}

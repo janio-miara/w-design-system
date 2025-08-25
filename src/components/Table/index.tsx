@@ -112,7 +112,7 @@ const EmptyStateWrapper = styled.div`
   padding: 20px;
 `;
 
-export const Table = <T extends { id: number; containerColapsed?: (row: T) => React.ReactNode }>({
+export function Table<T extends { id: number; containerColapsed?: (row: T) => React.ReactNode }>({
   columns,
   data,
   height = 'auto',
@@ -125,7 +125,7 @@ export const Table = <T extends { id: number; containerColapsed?: (row: T) => Re
   striped = false,
   rowClickable = false,
   onRowClick
-}: TableProps<T>) => {
+}: TableProps<T>) {
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
 
@@ -206,4 +206,4 @@ export const Table = <T extends { id: number; containerColapsed?: (row: T) => Re
       </StyledTable>
     </TableContainer>
   );
-};
+}

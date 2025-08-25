@@ -40,7 +40,7 @@ interface CardStoriesProps {
   subTitle?: string
   children?: React.ReactNode
 }
-const CardStories = ({ title, subTitle, children }: CardStoriesProps) => {
+export function CardStories({ title, subTitle, children }: CardStoriesProps) {
   return (
     <ContainerCardStories>
       <Wrapper>{children}</Wrapper>
@@ -56,4 +56,3 @@ const CardStories = ({ title, subTitle, children }: CardStoriesProps) => {
   )
 }
 
-export default CardStories

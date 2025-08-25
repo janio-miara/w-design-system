@@ -1,16 +1,22 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { closeSVG } from '../../assets/icon'
-import { theme } from '../Themes'
-import { Title } from '../Title'
-import { IconWrapper } from '../IconWrapper'
-import { ModalTypes } from '../Types'
-import { ModalContainer, Overlay } from './styles'
+import { HTMLAttributes, ReactNode } from 'react';
+import ReactDOM from 'react-dom';
+import { closeSVG } from '../../assets/icon';
+import { theme } from '../Themes';
+import { Title } from '../Title';
+import { IconWrapper } from '../IconWrapper';
+import { ModalContainer, Overlay } from './styles';
 const {
-  colors: { cyan50, shade30 },
-} = theme
+  colors: { cyan50, shade30 }
+} = theme;
 
-export const Modal: React.FC<ModalTypes> = ({ title, children, onClose, footer, ...props }) => {
+export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+  onClose: () => void;
+  title: string;
+  footer?: ReactNode;
+}
+
+export function Modal({ title, children, onClose, footer, ...props }: ModalProps) {
   return ReactDOM.createPortal(
     <>
       <Overlay onClick={onClose} />
@@ -25,6 +31,6 @@ export const Modal: React.FC<ModalTypes> = ({ title, children, onClose, footer, 
         <div className={'modalFooter'}>{footer}</div>
       </ModalContainer>
     </>,
-    document.body,
-  )
+    document.body
+  );
 }
