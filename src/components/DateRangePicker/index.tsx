@@ -1,5 +1,5 @@
 import { HTMLAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { calendarSVG, chevronLeftSVG, chevronRightSVG } from '../../assets/icon';
+import { calendarTodaySVG, chevronLeftSVG, chevronRightSVG } from '../../assets/icon';
 import { IconWrapper } from '../IconWrapper';
 import { Select, SelectProps, SelectRef } from '../Select';
 import { theme } from '../Themes';
@@ -230,7 +230,7 @@ export function DateRangePicker<T extends GetElementType<SelectProps['options']>
       label={label}
       value={value}
       leftIcon={
-        <IconWrapper className="icon" src={calendarSVG} width="20px" height="20px" color={theme.colors.shade30} />
+        <IconWrapper className="icon" src={calendarTodaySVG} width="20px" height="20px" color={theme.colors.shade30} />
       }
       options={optionComputed}
       selectedOption={selectedOption ?? (firstDate ? customOption : null)}
