@@ -225,6 +225,7 @@ export const ButtonStyled = styled.button<ButtonStyledProps>`
   transition:
     background-color 0.3s,
     opacity 0.3s;
+  text-transform: uppercase;
   color: white;
   gap: 12px;
   cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};

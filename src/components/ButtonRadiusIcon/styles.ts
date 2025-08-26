@@ -129,6 +129,7 @@ export const StyledButton = styled.button<StyledButtonRadiusIconProps>`
   border-radius: 24px;
   overflow: hidden;
   font-family: 'Nunito Sans', sans-serif;
+  text-transform: uppercase;
   transition:
     background-color 0.3s,
     opacity 0.3s;

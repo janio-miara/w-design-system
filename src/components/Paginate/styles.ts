@@ -51,7 +51,7 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     width: min-content;
-    text-wrap: nowrap;
+    white-space: nowrap;
     gap: 1rem;
     font-family: 'Nunito Sans', sans-serif;
     color: ${theme.colors.shade50};

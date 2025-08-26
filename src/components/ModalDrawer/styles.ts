@@ -71,7 +71,7 @@ export const ContainerFilter = styled.div<ContainerFilterProps>`
   }
 
   .button-wrapp {
-    border-top: 1px solid ${theme.colors.shade30};
+    border-top: 1px solid ${theme.colors.shade20};
     background-color: ${theme.colors.shade20};
     text-align: end;
     min-height: 20px;

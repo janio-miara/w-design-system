@@ -12,7 +12,8 @@ export interface InputTagProps extends HTMLAttributes<HTMLDivElement> {
   label?: string;
   readonly?: boolean;
   disabled?: boolean;
-  value?: string;
+  value: string;
+  onChangeValue: (value: string) => void;
   tags: string[];
   setTags: (tags: string[]) => void;
 }
@@ -33,13 +34,14 @@ export function InputTag({
   tags,
   setTags,
   placeholder,
+  value,
+  onChangeValue,
   ...props
 }: InputTagProps) {
   const id = useId();
   const contentRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLLabelElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState('');
 
   const [labelPosition, setLabelPosition] = useState<Position>({
     x: 0,
@@ -104,11 +106,11 @@ export function InputTag({
     updatePositions();
   }, [label, updatePositions]);
 
-  const addTag = (e?: React.MouseEvent<HTMLButtonElement>) => {
-    if (e) e.stopPropagation();
-    if (inputValue.trim() && !tags.includes(inputValue.trim())) {
-      setTags([...tags, inputValue.trim()]);
-      setInputValue('');
+  const addTag = (event?: React.MouseEvent<HTMLButtonElement>) => {
+    if (event) event.stopPropagation();
+    if (value.trim() && !tags.includes(value.trim())) {
+      setTags([...tags, value.trim()]);
+      onChangeValue('');
       inputRef.current?.focus();
     }
   };
@@ -136,8 +138,8 @@ export function InputTag({
             id={id}
             disabled={disabled}
             ref={inputRef}
-            value={inputValue}
-            onChange={e => setInputValue(e.target.value)}
+            value={value}
+            onChange={e => onChangeValue(e.target.value)}
             placeholder={placeholder}
             onKeyDown={e => {
               if (e.key === 'Enter') {

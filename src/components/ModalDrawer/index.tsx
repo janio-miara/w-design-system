@@ -71,10 +71,10 @@ export function ModalDrawer({
             )}
             {footer !== false && (
               <div className="button-wrapp">
-                {action}
-                <Button size="small" color="primary" onClick={closeModal}>
+                <Button size="small" variant="gray" onClick={closeModal}>
                   Fechar
                 </Button>
+                {action}
               </div>
             )}
           </Style.ContainerFilter>

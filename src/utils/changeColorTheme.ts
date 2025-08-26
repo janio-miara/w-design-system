@@ -32,7 +32,7 @@ export const changeBackground = {
     color: ${theme.colors.white};
   `,
   lightDark: css`
-    background: ${theme.colors.shade30};
+    background: ${theme.colors.shade20};
     color: ${theme.colors.white};
   `,
   dark: css`

@@ -37,7 +37,7 @@ export const Container = styled.div<SidebarItemContainerProps>`
   .title {
     text-decoration: none;
     width: 100%;
-    text-wrap: nowrap;
+    white-space: nowrap;
   }
 
   .lock {

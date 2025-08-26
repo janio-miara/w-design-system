@@ -109,7 +109,7 @@ export const StyledLabel = styled.label`
   font-family: 'Nunito Sans', sans-serif;
   font-size: ${theme.paragraph.small};
   font-weight: 600;
-  text-wrap: nowrap;
+  white-space: nowrap;
 `
 
 export interface StyledInputContentProps {

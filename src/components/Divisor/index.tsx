@@ -7,8 +7,7 @@ export interface DivisorProps {
   color?: Color;
 }
 
-export function Divisor({ size, color, ...props }: DivisorProps) {
-  const { orientation } = props;
+export function Divisor({ orientation, size, color, ...props }: DivisorProps) {
   return (
     <span>
       {orientation === 'vertical' ? (

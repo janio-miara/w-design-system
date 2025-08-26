@@ -51,7 +51,7 @@ export const SidebarGroupHeaderContainer = styled.div<SidebarGroupContainerHeade
   min-height: ${({ $groupOpen: groupOpen, $sidebarOpen: sidebarOpen }) => (groupOpen && sidebarOpen ? '40px' : '40px')};
   ${({ $groupOpen: groupOpen, $sidebarOpen: sidebarOpen }) => groupOpen && sidebarOpen && 'border-bottom: 1px solid rgba(255, 255, 255, 0.1)'};
   justify-content: ${({ $sidebarOpen: sidebarOpen }) => (sidebarOpen ? 'space-between' : 'center')};
-  text-wrap: nowrap;
+  white-space: nowrap;
 
   padding: 8px 8px;
   cursor: pointer;
