@@ -1,10 +1,16 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import * as Style from './styles';
 import { Color, SizeText } from '../Types';
 
+export interface SearchWordsOptions {
+  partialMatch?: boolean;
+  words: string[];
+  color?: Color;
+}
+
 export interface HighlightProps {
   text: string;
-  searchWords: string[];
+  searchWords: (string | SearchWordsOptions)[];
   color?: Color;
   size?: SizeText;
   fontWeight?: 'bold' | 'lighter' | 'normal';
@@ -20,40 +26,79 @@ const escapeRegExp = (str: string) => {
 };
 
 export function Highlight({ partialMatch, text, searchWords, color, size, fontWeight }: HighlightProps) {
-  const slices = useMemo(() => {
-    const validSearchWords = new Set(searchWords.filter(word => word !== ''));
-    if (!text || !validSearchWords || validSearchWords.size === 0) {
-      return [{ start: 0, text, lighted: false }];
-    }
-    const textComposition = text.normalize('NFC');
-    const lighted: boolean[] = Array(text.length).fill(false);
-    const textNormalized = text
-      .normalize('NFD')
-      .toLowerCase()
-      .replace(/[\u0300-\u036f]/g, '');
-    const searchWordsNormalized = Array.from(validSearchWords).map(word =>
-      word
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-    );
-    for (const word of searchWordsNormalized) {
-      let regex;
-      if (partialMatch) {
-        regex = new RegExp(`${escapeRegExp(word)}`, 'gi');
+  
+  /**
+   * Prepara as opções de palavras de busca, garantindo que cada palavra ou conjunto de palavras
+   * tenha suas próprias configurações de correspondência parcial e cor.
+   * Se uma palavra for fornecida como string, ela é convertida em um objeto com as opções padrão.
+   * 
+   * OBS: Eu crio um objeto SearchWordsOptions para cada string, porque
+   * a ordenação é importante para definir as cores corretamente.
+   * Se eu simplesmente juntasse todas as strings em um único objeto,
+   * todas as palavras teriam a mesma propriedade de cor, o que não é o desejado.
+   */
+  const searchWordsOptions = useMemo(() => {
+    const options: SearchWordsOptions[] = [];
+    searchWords.forEach(word => {
+      if (typeof word === 'string') {
+        options.push({ words: [word], partialMatch: partialMatch || false, color });
       } else {
-        regex = new RegExp(`\\b${escapeRegExp(word.trim())}\\b`, 'gi');
+        options.push(word);
       }
-      let match;
+    });
+    return options;
+  }, [searchWords, partialMatch, color]);
 
-      while ((match = regex.exec(textNormalized)) !== null) {
-        for (let i = match.index; i < match.index + match[0].length; i += 1) {
-          lighted[i] = true;
+  const normalizeWord = useCallback((word: string) => word
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, ''), []);
+
+
+  const textNormalized = useMemo(() => normalizeWord(text), [text]);
+  const textComposition = useMemo(() => text.normalize('NFC'), [text]);
+
+  const lightedToColor = useMemo(() => {
+    const map: { [key: number]: Color } = {};
+    searchWordsOptions.forEach((option, index) => {
+      map[index + 1] = option.color || 'primary';
+    });
+    return map;
+  }, [searchWordsOptions]);
+
+  const slices: { start: number; text: string; lighted: number }[] = useMemo(() => {
+
+    if (!text) {
+      return [{ start: 0, text, lighted: 0 }];
+    }
+
+    const lighted: number[] = Array(text.length).fill(0);
+
+    for (let i = 0; i < searchWordsOptions.length; i += 1) {
+      const option = searchWordsOptions[i];
+      for (const word of option.words) {
+        if (!word) {
+          continue;
+        }
+
+        let regex;
+        if (option.partialMatch) {
+          regex = new RegExp(`${escapeRegExp(word)}`, ' gi');
+        } else {
+          regex = new RegExp(`\\b${escapeRegExp(word.trim())}\\b`, 'gi');
+        }
+        let match;
+
+        while ((match = regex.exec(textNormalized)) !== null) {
+          for (let j = match.index; j < match.index + match[0].length; j += 1) {
+            lighted[j] = i + 1;
+          }
         }
       }
     }
-    const slices: { start: number; text: string; lighted: boolean }[] = [];
-    let currentSlice = { start: 0, text: '', lighted: false };
+    const slices: { start: number; text: string; lighted: number }[] = [];
+    let currentSlice = { start: 0, text: '', lighted: 0 };
+
     for (let i = 0; i < text.length; i += 1) {
       if (lighted[i] !== currentSlice.lighted) {
         if (currentSlice.text) {
@@ -66,16 +111,20 @@ export function Highlight({ partialMatch, text, searchWords, color, size, fontWe
     if (currentSlice.text) {
       slices.push(currentSlice);
     }
+
     return slices;
-  }, [text, searchWords, partialMatch]);
+  }, [text, searchWordsOptions, partialMatch]);
 
   return (
-    <Style.Container $color={color} $size={size} $fontWeight={fontWeight}>
-      {slices.map(slice => (
-        <span key={slice.start} className={slice.lighted ? 'highlight' : ''}>
+    <Style.Container $size={size} $fontWeight={fontWeight}>
+      {slices.map(slice => {
+        if (slice.lighted === 0) {
+          return <span key={slice.start}>{slice.text}</span>;
+        }
+        return <Style.HighlightStyled key={slice.start} $color={lightedToColor[slice.lighted]}>
           {slice.text}
-        </span>
-      ))}
+        </Style.HighlightStyled>
+      })}
     </Style.Container>
   );
 }
