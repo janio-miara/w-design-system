@@ -16,7 +16,7 @@ export const changeBackground = {
     color: ${theme.colors.white};
   `,
   secondary: css`
-    background: ${theme.colors.cyan40};
+    background: ${theme.colors.cyan30};
     color: ${theme.colors.white};
   `,
   success: css`
@@ -100,7 +100,7 @@ export const changeColor = {
     color: ${theme.colors.shade50};
   `,
   secondary: css`
-    color: ${theme.colors.cyan40};
+    color: ${theme.colors.cyan30};
   `,
   success: css`
     color: ${theme.colors.mint40};

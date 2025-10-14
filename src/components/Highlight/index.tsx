@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import * as Style from './styles';
 import { Color, SizeText } from '../Types';
 
-export interface SearchWordsOptions {
+export interface HighlightSearchWordsOptions {
   partialMatch?: boolean;
   words: string[];
   color?: Color;
@@ -10,7 +10,7 @@ export interface SearchWordsOptions {
 
 export interface HighlightProps {
   text: string;
-  searchWords: (string | SearchWordsOptions)[];
+  searchWords: (string | HighlightSearchWordsOptions)[];
   color?: Color;
   size?: SizeText;
   fontWeight?: 'bold' | 'lighter' | 'normal';
@@ -38,7 +38,7 @@ export function Highlight({ partialMatch, text, searchWords, color, size, fontWe
    * todas as palavras teriam a mesma propriedade de cor, o que não é o desejado.
    */
   const searchWordsOptions = useMemo(() => {
-    const options: SearchWordsOptions[] = [];
+    const options: HighlightSearchWordsOptions[] = [];
     searchWords.forEach(word => {
       if (typeof word === 'string') {
         options.push({ words: [word], partialMatch: partialMatch || false, color });
@@ -49,14 +49,14 @@ export function Highlight({ partialMatch, text, searchWords, color, size, fontWe
     return options;
   }, [searchWords, partialMatch, color]);
 
-  const normalizeWord = useCallback((word: string) => word
-    .toLowerCase()
+  const normalizeWord = useCallback((word: string | null | undefined) => word ?
+    word.toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, ''), []);
+    .replace(/[\u0300-\u036f]/g, '') : '', []);
 
 
-  const textNormalized = useMemo(() => normalizeWord(text), [text]);
-  const textComposition = useMemo(() => text.normalize('NFC'), [text]);
+  const textNormalized = useMemo(() => normalizeWord(text), [text, normalizeWord]);
+  const textComposition = useMemo(() => text ? text.normalize('NFC') : '', [text]);
 
   const lightedToColor = useMemo(() => {
     const map: { [key: number]: Color } = {};
@@ -68,11 +68,11 @@ export function Highlight({ partialMatch, text, searchWords, color, size, fontWe
 
   const slices: { start: number; text: string; lighted: number }[] = useMemo(() => {
 
-    if (!text) {
-      return [{ start: 0, text, lighted: 0 }];
+    if (!textComposition) {
+      return [{ start: 0, text: textComposition, lighted: 0 }];
     }
 
-    const lighted: number[] = Array(text.length).fill(0);
+    const lighted: number[] = Array(textComposition.length).fill(0);
 
     for (let i = 0; i < searchWordsOptions.length; i += 1) {
       const option = searchWordsOptions[i];
@@ -80,12 +80,12 @@ export function Highlight({ partialMatch, text, searchWords, color, size, fontWe
         if (!word) {
           continue;
         }
-
+        const wordNormalized = normalizeWord(word).trim();
         let regex;
         if (option.partialMatch) {
-          regex = new RegExp(`${escapeRegExp(word)}`, ' gi');
+          regex = new RegExp(`${escapeRegExp(wordNormalized)}`, 'gi');
         } else {
-          regex = new RegExp(`\\b${escapeRegExp(word.trim())}\\b`, 'gi');
+          regex = new RegExp(`\\b${escapeRegExp(wordNormalized)}\\b`, 'gi');
         }
         let match;
 
@@ -99,7 +99,7 @@ export function Highlight({ partialMatch, text, searchWords, color, size, fontWe
     const slices: { start: number; text: string; lighted: number }[] = [];
     let currentSlice = { start: 0, text: '', lighted: 0 };
 
-    for (let i = 0; i < text.length; i += 1) {
+    for (let i = 0; i < textComposition.length; i += 1) {
       if (lighted[i] !== currentSlice.lighted) {
         if (currentSlice.text) {
           slices.push(currentSlice);
@@ -113,7 +113,7 @@ export function Highlight({ partialMatch, text, searchWords, color, size, fontWe
     }
 
     return slices;
-  }, [text, searchWordsOptions, partialMatch]);
+  }, [textComposition, textNormalized, searchWordsOptions, normalizeWord]);
 
   return (
     <Style.Container $size={size} $fontWeight={fontWeight}>

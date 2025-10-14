@@ -44,6 +44,7 @@ export type { TextAreaProps } from '../TextArea/index';
 export type { TextLinkProps } from '../TextLink/index';
 export type { TextProps } from '../Text/index';
 export type { TitleProps } from '../Title/index';
+
 export type Color = keyof typeof changeColor;
 export type ColorsVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'gray' | 'warning' | 'yellow';
 export type SizeBasic = 'large' | 'medium' | 'small';

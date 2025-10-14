@@ -1,0 +1,102 @@
+:root {
+  /* Colors: Cyan */
+  --theme-colors-cyan50: #001640;
+  --theme-colors-cyan40: #1A3D7F;
+  --theme-colors-cyan30: #025FDE;
+  --theme-colors-cyan20: #217EFD;
+  --theme-colors-cyan15: #bad8ff;
+  --theme-colors-cyan10: #EEF5FF;
+
+  /* Colors: Shades */
+  --theme-colors-shade70: #262930;
+  --theme-colors-shade60: #4A4F58;
+  --theme-colors-shade50: #333333;
+  --theme-colors-shade40: #666666;
+  --theme-colors-shade30: #999999;
+  --theme-colors-shade20: #EEEEEE;
+  --theme-colors-shade10: #EFF1F3;
+  --theme-colors-shade05: #FAFAFA;
+
+  /* Colors: Red */
+  --theme-colors-red40: #981010;
+  --theme-colors-red30: #B41313;
+  --theme-colors-red20: #F3D9D9;
+  --theme-colors-red10: #F9EDED;
+
+  /* Colors: Honey */
+  --theme-colors-honey40: #F77202;
+  --theme-colors-honey30: #F77202;
+  --theme-colors-honey20: #FCCEA7;
+  --theme-colors-honey10: #FDE3CC;
+
+  /* Colors: Yellow */
+  --theme-colors-yellow30: #D08007;
+  --theme-colors-yellow20: #EFD3A8;
+  --theme-colors-yellow10: #FAF2E6;
+
+  /* Colors: Mint */
+  --theme-colors-mint40: #059D2F;
+  --theme-colors-mint30: #06B737;
+  --theme-colors-mint20: #D7EFDE;
+  --theme-colors-mint10: #EBF8EF;
+
+  /* Colors: Special */
+  --theme-colors-cyan30opacity16: rgba(33, 126, 253, 0.16);
+
+  /* Colors: Base */
+  --theme-colors-white: #FFFFFF;
+  --theme-colors-black: #000000;
+  --theme-colors-transparent: transparent;
+
+  /* Spacing */
+  --theme-spacing-space1: 4px;
+  --theme-spacing-space2: 8px;
+  --theme-spacing-space3: 16px;
+  --theme-spacing-space4: 24px;
+  --theme-spacing-space5: 32px;
+  --theme-spacing-space6: 40px;
+  --theme-spacing-space7: 48px;
+  --theme-spacing-space8: 56px;
+  --theme-spacing-space9: 64px;
+
+  /* Z-Index */
+  --theme-zIndex-z1: 1;
+  --theme-zIndex-z2: 2;
+  --theme-zIndex-z3: 3;
+  --theme-zIndex-z4: 4;
+  --theme-zIndex-z5: 5;
+  --theme-zIndex-z6: 6;
+  --theme-zIndex-z7: 7;
+  --theme-zIndex-z8: 8;
+  --theme-zIndex-z9: 9;
+  --theme-zIndex-full: 10000;
+
+  /* Fonts */
+  --theme-fonts: 'Nunito Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+
+  /* Title Sizes */
+  --theme-title-medium: 24px;
+  --theme-title-large: 34px;
+
+  /* Paragraph Sizes */
+  --theme-paragraph-xx-small: 10px;
+  --theme-paragraph-x-small: 12px;
+  --theme-paragraph-small: 14px;
+  --theme-paragraph-medium: 16px;
+  --theme-paragraph-large: 18px;
+
+  /* Font Sizes */
+  --theme-fontSizes-small: 1em;
+  --theme-fontSizes-medium: 2em;
+  --theme-fontSizes-large: 3em;
+  --theme-fontSizes-h1: 36px;
+  --theme-fontSizes-h2: 34px;
+  --theme-fontSizes-h3: 32px;
+  --theme-fontSizes-h4: 28px;
+  --theme-fontSizes-h5: 24px;
+  --theme-fontSizes-p0: 20px;
+  --theme-fontSizes-p1: 16px;
+  --theme-fontSizes-p2: 14px;
+  --theme-fontSizes-p3: 13px;
+  --theme-fontSizes-p4: 11px;
+}

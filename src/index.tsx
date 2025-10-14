@@ -1,3 +1,5 @@
+import './components/Themes/theme.css';
+
 export { Banner } from './components/Banner/index';
 export { Button } from './components/Button/index';
 export { ButtonRadiusIcon } from './components/ButtonRadiusIcon/index';
