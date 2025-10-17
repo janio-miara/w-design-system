@@ -38,6 +38,7 @@ export { ModalDrawer } from './components/ModalDrawer/index';
 export { Text } from './components/Text/index';
 export { TextArea } from './components/TextArea/index';
 export { TextLink } from './components/TextLink/index';
+export { SmallPaginate } from './components/SmallPaginate/index';
 
 export * from './assets/icon/index';
 export * from './components/Types/index';

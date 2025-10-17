@@ -177,14 +177,17 @@ const sizeScheme = {
   small: css`
     padding: 6px 12px;
     font-size: 12px;
+    height: 32px;
   `,
   medium: css`
     padding: 8px 16px;
     font-size: 14px;
+    height: 40px;
   `,
   large: css`
     padding: 12px 24px;
     font-size: 16px;
+    height: 48px;
   `
 } as const;
 
